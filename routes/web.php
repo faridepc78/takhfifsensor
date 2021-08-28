@@ -19,6 +19,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'check_admin'
 
     Route::resource('sliders', 'SliderController')->except('show');
 
+    Route::resource('banners', 'BannerController')->except('show');
+
     Route::resource('brands', 'BrandController')->except('show');
 
     Route::resource('users', 'UserController')->except('show');
@@ -87,6 +89,15 @@ Route::group(['prefix' => '/', 'middleware' => ['web', 'throttle:50,1', 'block_u
     'namespace' => 'App\Http\Controllers\Site'], function () {
 
     Route::get('/', 'MainController@home')->name('home');
+
+    Route::get('categories/{slug}', 'MainController@categories')->name('categories');
+
+    Route::get('brands/{slug}', 'MainController@brands')->name('brands');
+
+    Route::get('blog', 'BlogController@index')->name('blog');
+    Route::get('blog/category/{slug}', 'BlogController@category')->name('blog.category');
+    Route::get('blog/post/{slug}', 'BlogController@post')->name('blog.post');
+    Route::get('blog/search', 'BlogController@search')->name('blog.search');
 
 });
 

@@ -2,5 +2,8 @@
     "admin": "مدیر",
     "user": "کاربر",
     "active": "فعال",
-    "inactive": "غیر فعال"
+    "inactive": "غیر فعال",
+    "short_top": "بالا کوتاه",
+    "long_top": "بالا بلند",
+    "bottom": "پایین"
 }

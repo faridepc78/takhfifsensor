@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Vinkla\Hashids\Facades\Hashids;
 
 class Category extends Model
 {
@@ -31,5 +32,10 @@ class Category extends Model
     public function sub()
     {
         return $this->hasMany(Category::class, 'parent_id', 'id');
+    }
+
+    public function path()
+    {
+        return route('categories', Hashids::encode($this->id) . '-' . $this->slug);
     }
 }

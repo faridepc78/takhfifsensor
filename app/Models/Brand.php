@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Vinkla\Hashids\Facades\Hashids;
 
 class Brand extends Model
 {
@@ -25,5 +26,10 @@ class Brand extends Model
     public function image()
     {
         return $this->belongsTo(Media::class, 'image_id', 'id')->withDefault();
+    }
+
+    public function path()
+    {
+        return route('brands', Hashids::encode($this->id) . '-' . $this->slug);
     }
 }

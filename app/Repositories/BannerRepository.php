@@ -2,23 +2,24 @@
 
 namespace App\Repositories;
 
-use App\Models\Slider;
+use App\Models\Banner;
 
-class SliderRepository
+class BannerRepository
 {
     public function store($values)
     {
-        return Slider::query()
+        return Banner::query()
             ->create([
                 'name' => $values['name'],
                 'url' => $values['url'],
-                'image_id' => null
+                'image_id' => null,
+                'type' => $values['type']
             ]);
     }
 
     public function addImage($image_id, $id)
     {
-        return Slider::query()
+        return Banner::query()
             ->where('id', '=', $id)
             ->update([
                 'image_id' => $image_id
@@ -27,31 +28,32 @@ class SliderRepository
 
     public function paginate()
     {
-        return Slider::query()
+        return Banner::query()
             ->latest()
             ->paginate(10);
     }
 
     public function findById($id)
     {
-        return Slider::query()
+        return Banner::query()
             ->findOrFail($id);
     }
 
     public function update($values, $image_id, $id)
     {
-        return Slider::query()
+        return Banner::query()
             ->where('id', '=', $id)
             ->update([
                 'name' => $values['name'],
                 'url' => $values['url'],
-                'image_id' => $image_id
+                'image_id' => $image_id,
+                'type' => $values['type']
             ]);
     }
 
     public function getAll()
     {
-        return Slider::query()
+        return Banner::query()
             ->latest()
             ->get();
     }

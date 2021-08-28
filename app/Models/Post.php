@@ -50,10 +50,10 @@ class Post extends Model
         return $this->hasMany(PostMedia::class, 'post_id', 'id');
     }
 
-//    public function path()
-//    {
-//        return route('post', Hashids::encode($this->id) . '-' . $this->slug);
-//    }
+    public function path()
+    {
+        return route('blog.post', Hashids::encode($this->id) . '-' . $this->slug);
+    }
 
     public function status()
     {

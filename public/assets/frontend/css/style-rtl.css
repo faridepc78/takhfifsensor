@@ -4591,6 +4591,7 @@ body.can-uppercase .section-categories-carousel.section-top-categories .readmore
 .site-header.header-v4,
 .site-header.header-v9,
 .site-header.header-v10 {
+    background-color: #fd6602;
   padding-bottom: 1em; }
   .site-header.header-v2 .row,
   .site-header.header-v3 .row,
@@ -9279,6 +9280,7 @@ a#variations_clear:before {
   padding: 1em 0;
   border-width: 1px 0;
   text-align: center;
+    direction: ltr;
   clear: both; }
   .pagination .page-numbers,
   .woocommerce-pagination .page-numbers {
@@ -10410,7 +10412,7 @@ a#variations_clear:before {
   border: 2px solid #eee;
   top: 34px; }*/
 
-.page-template-template-homepage-v1 .header-v3 .departments-menu button::after,
+/*.page-template-template-homepage-v1 .header-v3 .departments-menu button::after,
 .page-template-template-homepage-v2 .header-v3 .departments-menu button::after,
 .page-template-template-homepage-v6 .header-v3 .departments-menu button::after {
   content: "";
@@ -10421,7 +10423,7 @@ a#variations_clear:before {
   position: absolute;
   bottom: -26px;
   left: 33px;
-  z-index: 9; }
+  z-index: 9; }*/
 
 .page-template-template-homepage-v4 .header-v3 .departments-menu.show button::before,
 .page-template-template-homepage-v6 .header-v3 .departments-menu.show button::before,
@@ -11657,6 +11659,7 @@ article.post {
   z-index: 9999;
   box-shadow: 0px 0px 17px -1px rgba(0, 0, 0, 0.66); }
   .sticky-wrapper .techmarket-sticky-wrap.stuck.faster {
+      background-color: #fd6602;
     animation-duration: 0.25s; }
   @media (min-width: 768px) {
     .sticky-wrapper .techmarket-sticky-wrap.stuck .secondary-navigation .nav > li {

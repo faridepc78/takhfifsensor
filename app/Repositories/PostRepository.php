@@ -65,22 +65,24 @@ class PostRepository
             ]);
     }
 
-    /*public function new()
-    {
-        return Post::query()
-            ->where('status', '=', Post::ACTIVE)
-            ->latest()
-            ->limit(3)
-            ->get();
-    }
-
     public function getAllByPaginate()
     {
         return Post::query()
             ->where('status', '=', Post::ACTIVE)
             ->latest()
-            ->paginate(10);
+            ->paginate(6);
     }
+
+    public function random()
+    {
+        return Post::query()
+            ->where('status', '=', Post::ACTIVE)
+            ->inRandomOrder()
+            ->limit(4)
+            ->get();
+    }
+
+    /*
 
     public function findByCategoryId($category_id)
     {
