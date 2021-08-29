@@ -90,9 +90,22 @@ Route::group(['prefix' => '/', 'middleware' => ['web', 'throttle:50,1', 'block_u
 
     Route::get('/', 'MainController@home')->name('home');
 
-    Route::get('categories/{slug}', 'MainController@categories')->name('categories');
+    Route::get('about-us', 'MainController@about_us')->name('about-us');
 
-    Route::get('brands/{slug}', 'MainController@brands')->name('brands');
+    Route::get('contact-us', 'MainController@contact_us')->name('contact-us');
+    Route::post('contact-us', 'MainController@contact_us_post')->name('contact-us');
+
+    Route::get('faq', 'MainController@faq')->name('faq');
+
+    Route::get('terms-and-conditions', 'MainController@terms_and_conditions')->name('terms-and-conditions');
+
+    Route::get('products/category/{slug}', 'ProductController@category')->name('products.category');
+
+    Route::get('products/brand/{slug}', 'ProductController@brand')->name('products.brand');
+
+    Route::get('products/search', 'ProductController@search')->name('products.search');
+
+    Route::get('product/{slug}', 'ProductController@index')->name('products.single');
 
     Route::get('blog', 'BlogController@index')->name('blog');
     Route::get('blog/category/{slug}', 'BlogController@category')->name('blog.category');

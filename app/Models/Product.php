@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Lang;
+use Vinkla\Hashids\Facades\Hashids;
 
 class Product extends Model
 {
@@ -64,10 +65,10 @@ class Product extends Model
         return $this->hasMany(ProductMedia::class, 'product_id', 'id');
     }
 
-//    public function path()
-//    {
-//        return route('product', Hashids::encode($this->id) . '-' . $this->slug);
-//    }
+    public function path()
+    {
+        return route('products.single', Hashids::encode($this->id) . '-' . $this->slug);
+    }
 
     public function status()
     {

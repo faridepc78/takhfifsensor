@@ -76,6 +76,32 @@ class ProductRepository
             ]);
     }
 
+    public function findByCategoryId($category_id)
+    {
+        $data =
+            [
+                ['status', '=', Product::ACTIVE],
+                ['category_id', '=', $category_id]
+            ];
+        return Product::query()
+            ->where($data)
+            ->latest()
+            ->paginate(20);
+    }
+
+    public function findByBrandId($brand_id)
+    {
+        $data =
+            [
+                ['status', '=', Product::ACTIVE],
+                ['brand_id', '=', $brand_id]
+            ];
+        return Product::query()
+            ->where($data)
+            ->latest()
+            ->paginate(20);
+    }
+
     /*START MEDIA*/
 
     public function findMediaByProductId($product_id)

@@ -288,6 +288,16 @@
                 menu.css('display', 'none');
             }
         });
+
+        $('#search_post_form').on('submit', function (e) {
+            e.preventDefault();
+            let search = $('#search').val();
+
+            if (search.length !== 0) {
+                this.submit();
+            }
+
+        });
     });
 
 </script>

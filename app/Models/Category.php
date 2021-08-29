@@ -36,6 +36,6 @@ class Category extends Model
 
     public function path()
     {
-        return route('categories', Hashids::encode($this->id) . '-' . $this->slug);
+        return route('products.category', Hashids::encode($this->id) . '-' . $this->slug);
     }
 }

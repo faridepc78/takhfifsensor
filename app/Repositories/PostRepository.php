@@ -82,8 +82,6 @@ class PostRepository
             ->get();
     }
 
-    /*
-
     public function findByCategoryId($category_id)
     {
         $data =
@@ -97,28 +95,13 @@ class PostRepository
             ->paginate(10);
     }
 
-    public function related($category_id, $post_id)
-    {
-        $data =
-            [
-                ['status', '=', Post::ACTIVE],
-                ['category_id', '=', $category_id]
-            ];
-        return Post::query()
-            ->where($data)
-            ->whereNotIn('id', [$post_id])
-            ->latest()
-            ->limit(5)
-            ->get();
-    }
-
     public function search($keyword)
     {
         return Post::query()
             ->where('name', 'like', '%' . $keyword . '%')
             ->where('status', '=', Post::ACTIVE)
             ->paginate(10);
-    }*/
+    }
 
     /*START MEDIA*/
 

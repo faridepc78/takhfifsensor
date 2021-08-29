@@ -30,6 +30,6 @@ class Brand extends Model
 
     public function path()
     {
-        return route('brands', Hashids::encode($this->id) . '-' . $this->slug);
+        return route('products.brand', Hashids::encode($this->id) . '-' . $this->slug);
     }
 }

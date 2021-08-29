@@ -3,23 +3,29 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Site\ContactUs\ContactUsRequest;
 use App\Repositories\BannerRepository;
 use App\Repositories\BrandRepository;
+use App\Repositories\ContactUsRepository;
 use App\Repositories\SliderRepository;
+use Exception;
 
 class MainController extends Controller
 {
     private $sliderRepository;
     private $brandRepository;
     private $bannerRepository;
+    private $contactUsRepository;
 
     public function __construct(SliderRepository $sliderRepository,
                                 BrandRepository $brandRepository,
-                                BannerRepository $bannerRepository)
+                                BannerRepository $bannerRepository,
+                                ContactUsRepository $contactUsRepository)
     {
         $this->sliderRepository = $sliderRepository;
         $this->brandRepository = $brandRepository;
         $this->bannerRepository = $bannerRepository;
+        $this->contactUsRepository = $contactUsRepository;
     }
 
     public function home()
@@ -30,48 +36,34 @@ class MainController extends Controller
         return view('site.home.index', compact('sliders', 'brands', 'banners'));
     }
 
-    public function categories($slug)
+    public function about_us()
     {
-
+        return view('site.about-us.index');
     }
 
-    public function brands($slug)
+    public function contact_us()
     {
-
+        return view('site.contact-us.index');
     }
 
-    public function sendSms()
+    public function contact_us_post(ContactUsRequest $request)
     {
         try {
-
-
-            date_default_timezone_set("Asia/Tehran");
-
-            // your sms.ir panel configuration
-            $APIKey = "c94888d415d71123efe288d4";
-            $SecretKey = "&SKCNOWIHD&*W^*c7d8&*DC&";
-            $LineNumber = "30002189";
-
-            // your mobile numbers
-            $MobileNumbers = array('09162154221');
-
-            // your text messages
-            $Messages = array('text1');
-
-            // sending date
-            @$SendDateTime = date("Y-m-d") . "T" . date("H:i:s");
-
-            $SmsIR_SendMessage = new SendMessage2($APIKey, $SecretKey, $LineNumber);
-            $SendMessage = $SmsIR_SendMessage->SendMessage($MobileNumbers, $Messages, $SendDateTime);
-            var_dump($SendMessage);
-
-        } catch (Exeption $e) {
-            echo 'Error SendMessage : ' . $e->getMessage();
+            $this->contactUsRepository->store($request);
+            newFeedback('پیام', 'پیام شما با موفقیت ارسال شد', 'success');
+        } catch (Exception $exception) {
+            newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
         }
+        return redirect()->route('contact-us');
+    }
 
-        /*$t = new Test('c94888d415d71123efe288d4','&SKCNOWIHD&*W^*c7d8&*DC&','');
-        return $t->SendMessage('09162154221','egdgsgsgsgsg');*/
-//        $send = new SendMessage('c94888d415d71123efe288d4', '&SKCNOWIHD&*W^*c7d8&*DC&', 'https://ws.sms.ir/');
-//        return $send->verificationCode('123456', '09162154221');
+    public function faq()
+    {
+        return view('site.faq.index');
+    }
+
+    public function terms_and_conditions()
+    {
+        return view('site.terms-and-conditions.index');
     }
 }

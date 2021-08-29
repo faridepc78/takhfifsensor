@@ -35,8 +35,8 @@ Images License: GNU General Public License v2 or later
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("../fonts/fontawesome-webfont.eot?v=4.7.0");
-  src: url("../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0") format("embedded-opentype"), url("../fonts/fontawesome-webfont.woff2?v=4.7.0") format("woff2"), url("../fonts/fontawesome-webfont.woff?v=4.7.0") format("woff"), url("../fonts/fontawesome-webfont.ttf?v=4.7.0") format("truetype"), url("../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular") format("svg");
+  src: url("../fonts/fontawesome-webfont.eot");
+  src: url("../fonts/fontawesome-webfont.eot?#iefix&") format("embedded-opentype"), url("../fonts/fontawesome-webfont.woff2") format("woff2"), url("../fonts/fontawesome-webfont.woff") format("woff"), url("../fonts/fontawesome-webfont.ttf") format("truetype"), url("../fonts/fontawesome-webfont.svg#fontawesomeregular") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -22238,7 +22238,7 @@ form.checkout {
       #payment .payment_methods li .payment_box .wc-credit-card-form-card-expiry,
       #payment .payment_methods li .payment_box .wc-credit-card-form-card-cvc {
         font-size: 1.41575em; }
-      #payment .payment_methods li .payment_box .wc-credit-card-form-card-number {
+      /*#payment .payment_methods li .payment_box .wc-credit-card-form-card-number {
         background-repeat: no-repeat;
         background-position: left 0.6180469716em center;
         background-size: 31px 20px;
@@ -22258,7 +22258,7 @@ form.checkout {
         #payment .payment_methods li .payment_box .wc-credit-card-form-card-number.amex {
           background-image: url(../../../assets/images/credit-cards/amex.svg); }
         #payment .payment_methods li .payment_box .wc-credit-card-form-card-number.discover {
-          background-image: url(../../../assets/images/credit-cards/discover.svg); }
+          background-image: url(../../../assets/images/credit-cards/discover.svg); }*/
 
 #payment .terms {
   width: 100%;
