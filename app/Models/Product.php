@@ -78,4 +78,13 @@ class Product extends Model
             return '<td class="alert alert-danger">' . Lang::get(self::INACTIVE) . '</td>';
         }
     }
+
+    public function finalPrice()
+    {
+        if ($this->discount!=null) {
+            return ($this->price-($this->price*$this->discount));
+        }else{
+            return  $this->price;
+        }
+    }
 }

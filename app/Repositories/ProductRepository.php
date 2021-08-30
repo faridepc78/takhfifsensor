@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Filters\Product\Search;
 use App\Filters\Product\Status;
+use App\Models\Post;
 use App\Models\Product;
 use App\Models\ProductGallery;
 use App\Models\ProductMedia;
@@ -76,6 +77,15 @@ class ProductRepository
             ]);
     }
 
+    public function new($count)
+    {
+        return Product::query()
+            ->where('status', '=', Post::ACTIVE)
+            ->latest()
+            ->limit($count)
+            ->get();
+    }
+
     public function findByCategoryId($category_id)
     {
         $data =
@@ -86,7 +96,7 @@ class ProductRepository
         return Product::query()
             ->where($data)
             ->latest()
-            ->paginate(20);
+            ->paginate(21);
     }
 
     public function findByBrandId($brand_id)
@@ -99,7 +109,21 @@ class ProductRepository
         return Product::query()
             ->where($data)
             ->latest()
-            ->paginate(20);
+            ->paginate(21);
+    }
+
+    public function search($keyword)
+    {
+        return Product::query()
+            ->where('name', 'like', '%' . $keyword . '%')
+            ->where('status', '=', Post::ACTIVE)
+            ->orWhereHas('category', function ($query) use ($keyword) {
+                $query->where('name', 'like', '%' . $keyword . '%');
+            })
+            ->orWhereHas('brand', function ($query) use ($keyword) {
+                $query->where('name', 'like', '%' . $keyword . '%');
+            })
+            ->paginate(21);
     }
 
     /*START MEDIA*/

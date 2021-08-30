@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\BrandRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\ProductRepository;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -40,13 +41,18 @@ class ProductController extends Controller
             compact('brand', 'products'));
     }
 
-    public function search()
+    public function search(Request $request)
     {
-
+        $keyword = $request->input('search');
+        $products = $this->productRepository->search($keyword);
+        return view('site.products.search.index',
+            compact('keyword', 'products'));
     }
 
-    public function single()
+    public function single($slug)
     {
-
+        $product_id = extractId($slug);
+        $product=$this->productRepository->findById($product_id);
+        return view('site.products.index', compact('product'));
     }
 }

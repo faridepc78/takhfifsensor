@@ -91,14 +91,14 @@
     </ul>
 </div>
 
-<form class="navbar-search" method="get" action="home-v1.html">
+<form class="navbar-search" method="get" action="{{route('products.search')}}">
     <label class="sr-only screen-reader-text" for="search">جستجو:</label>
     <div class="input-group">
-        <input type="text" id="search" class="form-control search-field product-search-field"
-               dir="rtl" value="" name="s" placeholder="جستحوی محتوای سایت"/>
+
+        <input onkeyup="this.value=removeSpaces(this.value)" type="search" id="search" class="form-control search-field product-search-field"
+               dir="rtl" value="{{request()->input('search')}}" name="search" placeholder="جستحوی محصولات (نام،دسته بندی و برند)"/>
 
         <div class="input-group-btn input-group-append">
-            <input type="hidden" id="search-param" name="post_type" value="product"/>
             <button type="submit" class="btn btn-primary">
                 <i class="fa fa-search"></i>
                 <span class="search-btn">جستجو</span>
@@ -106,7 +106,6 @@
         </div>
 
     </div>
-
 </form>
 
 <ul id="site-header-cart" class="site-header-cart menu">

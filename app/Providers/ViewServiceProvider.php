@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Http\View\Composers\BlogComposer;
 use App\Http\View\Composers\HeaderComposer;
+use App\Http\View\Composers\ProductComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 

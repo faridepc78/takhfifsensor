@@ -97,13 +97,12 @@
         <div class="site-search">
             <div class="widget woocommerce widget_product_search">
                 <form role="search" method="get" class="woocommerce-product-search"
-                      action="home-v1.html">
-                    <label class="screen-reader-text" for="woocommerce-product-search-field-0">جستجو
+                      action="{{route('products.search')}}">
+                    <label class="screen-reader-text" for="search">جستجو
                         برای:</label>
-                    <input type="search" id="woocommerce-product-search-field-0" class="search-field"
-                           placeholder="جستجو در میان محصولات ..." value="" name="s"/>
+                    <input onkeyup="this.value=removeSpaces(this.value)" type="search" id="search" class="search-field"
+                           placeholder="جستحوی محصولات (نام،دسته بندی و برند)" value="{{request()->input('search')}}" name="search"/>
                     <input type="submit" value="Search"/>
-                    <input type="hidden" name="post_type" value="product"/>
                 </form>
             </div>
 
