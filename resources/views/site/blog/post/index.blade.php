@@ -16,7 +16,7 @@
                     <a href="{{route('home')}}">صفحه اصلی</a>
                     <span class="delimiter">
 							<i class="tm tm-arrow-left"></i>
-						</span>{{$post->name}}
+						</span>پست ({{$post->name}})
                 </nav>
 
                 <div id="primary" class="content-area">

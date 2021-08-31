@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Filters\Product\Search;
 use App\Filters\Product\Status;
-use App\Models\Post;
 use App\Models\Product;
 use App\Models\ProductGallery;
 use App\Models\ProductMedia;
@@ -80,9 +79,33 @@ class ProductRepository
     public function new($count)
     {
         return Product::query()
-            ->where('status', '=', Post::ACTIVE)
+            ->where('status', '=', Product::ACTIVE)
             ->latest()
             ->limit($count)
+            ->get();
+    }
+
+    public function mostSales()
+    {
+        return Product::query()
+            ->where('status', '=', Product::ACTIVE)
+            ->orderBy('sale', 'desc')
+            ->limit(14)
+            ->get();
+    }
+
+    public function related($category_id, $product_id)
+    {
+        $data =
+            [
+                ['status', '=', Product::ACTIVE],
+                ['category_id', '=', $category_id]
+            ];
+        return Product::query()
+            ->where($data)
+            ->whereNotIn('id', [$product_id])
+            ->latest()
+            ->limit(14)
             ->get();
     }
 
@@ -116,7 +139,7 @@ class ProductRepository
     {
         return Product::query()
             ->where('name', 'like', '%' . $keyword . '%')
-            ->where('status', '=', Post::ACTIVE)
+            ->where('status', '=', Product::ACTIVE)
             ->orWhereHas('category', function ($query) use ($keyword) {
                 $query->where('name', 'like', '%' . $keyword . '%');
             })

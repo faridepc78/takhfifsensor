@@ -20,8 +20,6 @@
 
                     @include('site.home.newest-products')
 
-                    @include('site.home.popular-products')
-
                     @include('site.home.bestSellers-products')
 
                     @include('site.home.top-banners')

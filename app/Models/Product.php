@@ -29,7 +29,8 @@ class Product extends Model
             'feature',
             'text',
             'count',
-            'status'
+            'status',
+            'sale'
         ];
 
     const ACTIVE = 'active';

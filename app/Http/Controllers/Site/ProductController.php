@@ -49,10 +49,11 @@ class ProductController extends Controller
             compact('keyword', 'products'));
     }
 
-    public function single($slug)
+    public function index($slug)
     {
         $product_id = extractId($slug);
-        $product=$this->productRepository->findById($product_id);
-        return view('site.products.index', compact('product'));
+        $product = $this->productRepository->findById($product_id);
+        $related_products = $this->productRepository->related($product->category->id, $product_id);
+        return view('site.products.index', compact('product', 'related_products'));
     }
 }

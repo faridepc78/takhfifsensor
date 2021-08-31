@@ -26,6 +26,7 @@ class CreateProductsTable extends Migration
             $table->longText('text');
             $table->unsignedBigInteger('count');
             $table->enum('status', \App\Models\Product::$statuses);
+            $table->unsignedBigInteger('sale')->default(0);
             $table->timestamps();
 
             $table->foreign('category_id')
