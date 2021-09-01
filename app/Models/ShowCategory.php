@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class showCategory extends Model
+class ShowCategory extends Model
 {
     protected $table = 'show_categories';
 
@@ -19,4 +19,9 @@ class showCategory extends Model
         [
             'category_id'
         ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id')->withDefault();
+    }
 }

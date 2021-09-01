@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Category;
+use App\Models\showCategory;
 
 class CategoryRepository
 {
@@ -79,4 +80,29 @@ class CategoryRepository
             return 1;
         }
     }
+
+    /*START SHOW*/
+
+    public function storeShow($values)
+    {
+        return ShowCategory::query()
+            ->create([
+                'category_id' => $values['category_id']
+            ]);
+    }
+
+    public function getShow()
+    {
+        return ShowCategory::query()
+            ->latest()
+            ->get();
+    }
+
+    public function findShowById($id)
+    {
+        return ShowCategory::query()
+            ->findOrFail($id);
+    }
+
+    /*END SHOW*/
 }

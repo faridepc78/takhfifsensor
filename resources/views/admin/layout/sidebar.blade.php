@@ -17,7 +17,7 @@
                          class="img-circle elevation-2" alt="Profile">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">{{auth()->user()->getFullNameAttribute()}}</a>
+                    <a href="{{route('profile')}}" class="d-block">{{auth()->user()->getFullNameAttribute()}}</a>
                 </div>
             </div>
 
@@ -58,13 +58,15 @@
                     <li class="nav-item has-treeview {{ request()->routeIs(['categories.index',
 'categories.create',
 'categories.show',
-'categories.edit']) ? 'menu-open' : '' }}">
+'categories.edit',
+'categories.index_show']) ? 'menu-open' : '' }}">
 
                         <a href="#"
                            class="nav-link {{ request()->routeIs(['categories.index',
 'categories.create',
 'categories.show',
-'categories.edit']) ? 'active' : '' }}">
+'categories.edit',
+'categories.index_show']) ? 'active' : '' }}">
                             <i class="nav-icon fa fa-tasks"></i>
                             <p>
                                 دسته بندی ها
@@ -87,6 +89,14 @@
                                    class="nav-link {{ request()->routeIs('categories.create') ? 'active' : '' }}">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>ایجاد دسته بندی ها</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('categories.index_show') }}"
+                                   class="nav-link {{ request()->routeIs(['categories.index_show']) ? 'active' : '' }}">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p style="font-size: 12px;font-weight: bold">مدیریت دسته بندی های نمایشی</p>
                                 </a>
                             </li>
 

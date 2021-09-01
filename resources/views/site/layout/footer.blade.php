@@ -273,10 +273,28 @@
 <script type="text/javascript" src="{{asset('assets/common/plugins/toast/js/toast-options.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/common/plugins/validation/js/jquery.validate.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/common/plugins/validation/js/methods.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/common/plugins/sweetalert/js/sweetalert2@10.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/common/js/public.js')}}"></script>
 <script type="text/javascript">@include('site.layout.feedbacks')</script>
 
 <script type="text/javascript">
+
+    function destroyCartItem(event, id) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'آیا از حذف اطمینان دارید ؟',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: 'rgb(221, 51, 51)',
+            cancelButtonColor: 'rgb(48, 133, 214)',
+            confirmButtonText: 'بله',
+            cancelButtonText: 'خیر'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(`destroy-CartItem-${id}`).submit()
+            }
+        })
+    }
 
     $(document).ready(function () {
         let menu = $('#menu-departments-menu');
@@ -296,8 +314,8 @@
             if (search.length !== 0) {
                 this.submit();
             }
-
         });
+
     });
 
 </script>

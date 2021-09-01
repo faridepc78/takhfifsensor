@@ -35,7 +35,8 @@
 
                     <li class="yamm-tfw menu-item menu-item-has-children animate-dropdown dropdown-submenu">
                         <a title="Computers &amp; Laptops" data-toggle="dropdown" class="dropdown-toggle"
-                           aria-haspopup="true" href="{{$value->path()}}">{{$value->name}}<span class="caret"></span></a>
+                           aria-haspopup="true" href="{{$value->path()}}">{{$value->name}}<span
+                                class="caret"></span></a>
                         <ul role="menu" class=" dropdown-menu">
                             <li class="menu-item menu-item-object-static_block animate-dropdown">
                                 <div class="yamm-content">
@@ -48,7 +49,9 @@
                                                 <div class="kc-col-container">
                                                     <div class="kc_text_block">
                                                         <ul>
-                                                            <li class="nav-title" style="font-weight: bold;font-size: 18px"><a href="{{$item->path()}}">{{$item->name}}</a></li>
+                                                            <li class="nav-title"
+                                                                style="font-weight: bold;font-size: 18px"><a
+                                                                    href="{{$item->path()}}">{{$item->name}}</a></li>
 
                                                             @if (count($item->sub))
 
@@ -95,8 +98,10 @@
     <label class="sr-only screen-reader-text" for="search">جستجو:</label>
     <div class="input-group">
 
-        <input onkeyup="this.value=removeSpaces(this.value)" type="search" id="search" class="form-control search-field product-search-field"
-               dir="rtl" value="{{request()->input('search')}}" name="search" placeholder="جستحوی محصولات (نام،دسته بندی و برند)"/>
+        <input onkeyup="this.value=removeSpaces(this.value)" type="search" id="search"
+               class="form-control search-field product-search-field"
+               dir="rtl" value="{{request()->input('search')}}" name="search"
+               placeholder="جستحوی محصولات (نام،دسته بندی و برند)"/>
 
         <div class="input-group-btn input-group-append">
             <button type="submit" class="btn btn-primary">
@@ -110,60 +115,76 @@
 
 <ul id="site-header-cart" class="site-header-cart menu">
     <li class="animate-dropdown dropdown ">
-        <a class="cart-contents" href="cart.html" data-toggle="dropdown"
+        <a class="cart-contents" href="{{route('cart.index')}}" data-toggle="dropdown"
            title="سبد خرید خود را مشاهده کنید">
             <i class="tm tm-shopping-bag"></i>
-            <span class="count">2</span>
+            <span class="count">{{$basketBuy_count}}</span>
             <span class="amount">
 									<span class="price-label">سبد خرید</span></span>
         </a>
+
         <ul class="dropdown-menu dropdown-menu-mini-cart">
             <li>
                 <div class="widget woocommerce widget_shopping_cart">
                     <div class="widget_shopping_cart_content">
-                        <ul class="woocommerce-mini-cart cart_list product_list_widget ">
-                            <li class="woocommerce-mini-cart-item mini_cart_item">
-                                <a href="#" class="remove" aria-label="این مورد را حذف کنید"
-                                   data-product_id="65" data-product_sku="">×</a>
-                                <a href="single-product-sidebar.html">
-                                    <img src="assets/frontend/images/products/mini-cart1.jpg"
-                                         class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
-                                         alt="">هدفون بی سیم بیتس
-                                </a>
-                                <span class="quantity">1 ×
+
+                        <ul class="woocommerce-mini-cart cart_list product_list_widget">
+
+                            @if (count($basketBuy_data))
+
+                                @foreach($basketBuy_data as $data)
+
+                                    @php
+                                        $sum=0
+                                    @endphp
+
+                                    @foreach($data as $value)
+
+                                        <li class="woocommerce-mini-cart-item mini_cart_item">
+
+                                            <a href="{{route('cart.destroy',$value['id'])}}"
+                                               onclick="destroyCartItem(event, {{ $value['id'] }})"
+                                               class="remove" aria-label="این مورد را حذف کنید">×</a>
+                                            <form action="{{ route('cart.destroy', \Vinkla\Hashids\Facades\Hashids::encode($value['id'])) }}"
+                                                  method="post" id="destroy-CartItem-{{ $value['id'] }}">
+                                                @csrf
+                                                @method('delete')
+                                            </form>
+
+                                            <a href="{{$value['route']}}">
+                                                <img src="{{$value['image']}}"
+                                                     class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
+                                                     alt="{{$value['name']}}">{{$value['name']}}
+                                            </a>
+                                            <span class="quantity">{{$value['count']}} ×
 														<span
-                                                            class="woocommerce-Price-amount amount">64.999 هزار تومان</span>
+                                                            class="woocommerce-Price-amount amount">{{number_format($value['price'])}} تومان</span>
 													</span>
-                            </li>
-                            <li class="woocommerce-mini-cart-item mini_cart_item">
-                                <a href="#" class="remove" aria-label="این مورد را حذف کنید"
-                                   data-product_id="27" data-product_sku="">×</a>
-                                <a href="single-product-sidebar.html">
-                                    <img src="assets/frontend/images/products/mini-cart2.jpg"
-                                         class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
-                                         alt="">هدفون بی سیم بیتس
-                                </a>
-                                <span class="quantity">1 ×
-														<span
-                                                            class="woocommerce-Price-amount amount">64.999 هزار تومان</span>
-													</span>
-                            </li>
+                                        </li>
+
+                                        @php
+                                            $sum+=($value['price']*$value['count']);
+                                        @endphp
+
+                                    @endforeach
+
+                                @endforeach
+
+                            @endif
+
                         </ul>
-                        <!-- .cart_list -->
+
                         <p class="woocommerce-mini-cart__total total">
                             <strong>جمع کل:</strong>
-                            <span class="woocommerce-Price-amount amount">136.909 هزار تومان</span>
+                            <span class="woocommerce-Price-amount amount">{{number_format($sum)}} تومان</span>
                         </p>
                         <p class="woocommerce-mini-cart__buttons buttons">
-                            <a href="cart.html" class="button wc-forward">نمایش سبد</a>
+                            <a href="{{route('cart.index')}}" class="button wc-forward">نمایش سبد</a>
                             <a href="checkout.html" class="button checkout wc-forward">صورتحساب</a>
                         </p>
                     </div>
-                    <!-- .widget_shopping_cart_content -->
                 </div>
-                <!-- .widget_shopping_cart -->
             </li>
         </ul>
-        <!-- .dropdown-menu-mini-cart -->
     </li>
 </ul>

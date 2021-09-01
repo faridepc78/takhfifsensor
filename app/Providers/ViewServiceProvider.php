@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\View\Composers\BlogComposer;
+use App\Http\View\Composers\CartComposer;
 use App\Http\View\Composers\HeaderComposer;
 use App\Http\View\Composers\ProductComposer;
 use Illuminate\Support\Facades\View;
@@ -19,6 +20,12 @@ class ViewServiceProvider extends ServiceProvider
                 'site.blog.category.index',
                 'site.blog.post.index'
             ], BlogComposer::class);
+
+        View::composer([
+            'site.layout.categories.desktop.index',
+            'site.layout.categories.android.index',
+            'site.cart.index'
+        ],CartComposer::class);
 
         View::composer('site.layout.header', HeaderComposer::class);
     }

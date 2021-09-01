@@ -117,7 +117,7 @@ class BasketBuyService implements BasketBuyServiceContract
                 }
             } else {
                 //NoExist Item In Cookie Data
-                return ['message' => 'این آیتم وجود ندارد', 'status' => 'fail'];
+                return ['message' => 'این آیتم وجود ندارد', 'status' => 'noSetItem'];
             }
         } else {
             //Unset Cookie Data

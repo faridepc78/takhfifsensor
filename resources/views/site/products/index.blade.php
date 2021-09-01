@@ -147,7 +147,7 @@
                                                 @if ($product->discount!=null)
                                                     <del>
                                                     <span class="woocommerce-Price-amount amount"><span
-                                                            class="woocommerce-Price-currencySymbol">{{number_format($value->price)}} تومان</span></span>
+                                                            class="woocommerce-Price-currencySymbol">{{number_format($product->price)}} تومان</span></span>
                                                     </del>
                                                 @endif
                                                 <ins>
@@ -156,15 +156,15 @@
                                                 </ins>
                                             </p>
 
-                                            <form enctype="multipart/form-data" method="post" class="cart">
+                                            <form action="{{route('cart.addOrUpdate')}}" method="post" class="cart">
+                                                @csrf
                                                 <div class="quantity">
-                                                    <label for="quantity-input">تعداد</label>
-                                                    <input type="number" size="4" class="input-text qty text" title=""
-                                                           value="1" name="quantity" id="quantity-input">
+                                                    <label for="count">تعداد</label>
+                                                    <input max="50" type="number" size="4" class="input-text qty text" title="تعداد"
+                                                           value="1" name="count" id="count">
+                                                    <input type="hidden" value="{{\Vinkla\Hashids\Facades\Hashids::encode($product['id'])}}" name="product_id">
                                                 </div>
-                                                <!-- .quantity -->
-                                                <button class="single_add_to_cart_button button alt" value="185"
-                                                        name="add-to-cart" type="submit">افزودن به سبد
+                                                <button class="single_add_to_cart_button button alt" type="submit">افزودن به سبد
                                                 </button>
                                             </form>
 
@@ -221,7 +221,7 @@
                                                         <h2 class="woocommerce-loop-product__title">{{$value->name}}</h2>
                                                     </a>
                                                     <div class="hover-area">
-                                                        <a class="button add_to_cart_button" href="cart.html"
+                                                        <a class="button add_to_cart_button" href="{{route('cart.add',[\Vinkla\Hashids\Facades\Hashids::encode($value->id),\Vinkla\Hashids\Facades\Hashids::encode(1)])}}"
                                                            rel="nofollow">افزودن به سبد</a>
                                                     </div>
                                                 </div>

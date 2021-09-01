@@ -83,7 +83,7 @@ class Product extends Model
     public function finalPrice()
     {
         if ($this->discount!=null) {
-            return ($this->price-($this->price*$this->discount));
+            return ($this->price-($this->price*$this->discount/100));
         }else{
             return  $this->price;
         }

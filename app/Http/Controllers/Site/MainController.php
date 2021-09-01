@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Site\ContactUs\ContactUsRequest;
 use App\Repositories\BannerRepository;
 use App\Repositories\BrandRepository;
+use App\Repositories\CategoryRepository;
 use App\Repositories\ContactUsRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\SliderRepository;
@@ -18,18 +19,21 @@ class MainController extends Controller
     private $bannerRepository;
     private $contactUsRepository;
     private $productRepository;
+    private $categoryRepository;
 
     public function __construct(SliderRepository $sliderRepository,
                                 BrandRepository $brandRepository,
                                 BannerRepository $bannerRepository,
                                 ContactUsRepository $contactUsRepository,
-                                ProductRepository $productRepository)
+                                ProductRepository $productRepository,
+                                CategoryRepository $categoryRepository)
     {
         $this->sliderRepository = $sliderRepository;
         $this->brandRepository = $brandRepository;
         $this->bannerRepository = $bannerRepository;
         $this->contactUsRepository = $contactUsRepository;
         $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function home()
@@ -39,9 +43,10 @@ class MainController extends Controller
         $banners = $this->bannerRepository->getAll();
         $new_products = $this->productRepository->new(14);
         $mostSales_products = $this->productRepository->mostSales();
+        $show_categories = $this->categoryRepository->getShow();
         return view('site.home.index',
             compact('sliders', 'brands',
-                'banners', 'new_products', 'mostSales_products'));
+                'banners', 'new_products', 'mostSales_products', 'show_categories'));
     }
 
     public function about_us()
@@ -73,5 +78,10 @@ class MainController extends Controller
     public function terms_and_conditions()
     {
         return view('site.terms-and-conditions.index');
+    }
+
+    public function checkout()
+    {
+        return view('site.checkout.index');
     }
 }

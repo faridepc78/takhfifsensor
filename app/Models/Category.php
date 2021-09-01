@@ -38,4 +38,14 @@ class Category extends Model
     {
         return route('products.category', Hashids::encode($this->id) . '-' . $this->slug);
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id', 'id');
+    }
+
+    public function scopeGetProducts()
+    {
+        return $this->products()->limit(8)->latest()->get();
+    }
 }

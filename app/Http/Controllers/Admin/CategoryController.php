@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Category\Show\ShowCategoryRequest;
 use App\Http\Requests\Admin\Category\StoreCategoryRequest;
 use App\Http\Requests\Admin\Category\UpdateCategoryRequest;
 use App\Repositories\CategoryRepository;
 use Exception;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -107,5 +107,37 @@ class CategoryController extends Controller
             newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
         }
         return redirect()->route('categories.index');
+    }
+
+    public function index_show()
+    {
+        $categories = $this->categoryRepository->getParents();
+        $getShow = $this->categoryRepository->getShow();
+        $array_selectShowCategories = $getShow->pluck('category_id')->toArray();
+        return view('admin.categories.show.index',
+            compact('categories', 'getShow', 'array_selectShowCategories'));
+    }
+
+    public function store_show(ShowCategoryRequest $request)
+    {
+        try {
+            $this->categoryRepository->storeShow($request);
+            newFeedback();
+        } catch (Exception $exception) {
+            newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
+        }
+        return redirect()->route('categories.index_show');
+    }
+
+    public function destroy_show($id)
+    {
+        try {
+            $showCategory = $this->categoryRepository->findShowById($id);
+            $showCategory->delete();
+            newFeedback();
+        } catch (Exception $exception) {
+            newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
+        }
+        return redirect()->route('categories.index_show');
     }
 }

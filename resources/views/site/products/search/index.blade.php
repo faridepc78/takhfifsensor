@@ -60,7 +60,7 @@
                                                         <h2 class="woocommerce-loop-product__title">{{$value->name}}</h2>
                                                     </a>
                                                     <div class="hover-area">
-                                                        <a class="button add_to_cart_button" href="cart.html"
+                                                        <a class="button add_to_cart_button" href="{{route('cart.add',[\Vinkla\Hashids\Facades\Hashids::encode($value->id),\Vinkla\Hashids\Facades\Hashids::encode(1)])}}"
                                                            rel="nofollow">افزودن به سبد</a>
                                                     </div>
                                                 </div>

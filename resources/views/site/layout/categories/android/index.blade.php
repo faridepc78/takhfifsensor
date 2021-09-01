@@ -108,9 +108,9 @@
 
         </div>
 
-        <a class="handheld-header-cart-link has-icon" href="cart.html" title="">
+        <a class="handheld-header-cart-link has-icon" href="{{route('cart.index')}}" title="سبد خرید">
             <i class="tm tm-shopping-bag"></i>
-            <span class="count">2</span>
+            <span class="count">{{$basketBuy_count}}</span>
         </a>
     </div>
 

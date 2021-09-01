@@ -15,6 +15,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'check_admin'
     Route::get('profile', 'ProfileController@index')->name('profile');
     Route::patch('profile', 'ProfileController@update')->name('update_profile');
 
+    Route::get('categories/show','CategoryController@index_show')->name('categories.index_show');
+    Route::post('categories/show','CategoryController@store_show')->name('categories.store_show');
+    Route::delete('categories/show/destroy/{id}','CategoryController@destroy_show')->name('categories.destroy_show');
     Route::resource('categories', 'CategoryController');
 
     Route::resource('sliders', 'SliderController')->except('show');
@@ -106,6 +109,16 @@ Route::group(['prefix' => '/', 'middleware' => ['web', 'throttle:50,1', 'block_u
     Route::get('products/search', 'ProductController@search')->name('products.search');
 
     Route::get('product/{slug}', 'ProductController@index')->name('products.single');
+
+    Route::get('cart/test','CartController@test')->name('cart.test');
+
+    Route::get('cart','CartController@index')->name('cart.index');
+    Route::get('cart/add/{product_id}/{value}','CartController@add')->name('cart.add');
+    Route::delete('cart/{product_id}','CartController@destroy')->name('cart.destroy');
+    Route::post('cart/update/items','CartController@update')->name('cart.update');
+    Route::post('cart/addOrUpdate/item', 'CartController@addOrUpdate')->name('cart.addOrUpdate');
+
+    Route::get('checkout','MainController@checkout')->name('checkout');
 
     Route::get('blog', 'BlogController@index')->name('blog');
     Route::get('blog/category/{slug}', 'BlogController@category')->name('blog.category');
