@@ -29,8 +29,6 @@ class User extends Authenticatable
             'remember_token'
         ];
 
-    protected $filters = ['like'];
-
     const ADMIN = 'admin';
     const USER = 'user';
     static $roles =

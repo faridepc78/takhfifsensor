@@ -24,7 +24,8 @@ class ViewServiceProvider extends ServiceProvider
         View::composer([
             'site.layout.categories.desktop.index',
             'site.layout.categories.android.index',
-            'site.cart.index'
+            'site.cart.index',
+            'site.checkout.index'
         ],CartComposer::class);
 
         View::composer('site.layout.header', HeaderComposer::class);

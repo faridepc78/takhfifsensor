@@ -15,6 +15,17 @@ function extractId($slug)
     return Hashids::decode(Str::before($slug, '-'))[0];
 }
 
+function make_token($count)
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randomString = '';
+    for ($i = 0; $i < $count; $i++) {
+        $index = rand(0, strlen($characters) - 1);
+        $randomString .= $characters[$index];
+    }
+    return $randomString;
+}
+
 function randomNumbers($count)
 {
     $numbers = '0123456789';

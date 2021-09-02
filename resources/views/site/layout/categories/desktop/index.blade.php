@@ -123,68 +123,70 @@
 									<span class="price-label">سبد خرید</span></span>
         </a>
 
-        <ul class="dropdown-menu dropdown-menu-mini-cart">
-            <li>
-                <div class="widget woocommerce widget_shopping_cart">
-                    <div class="widget_shopping_cart_content">
+        @if (count($basketBuy_data))
 
-                        <ul class="woocommerce-mini-cart cart_list product_list_widget">
+            <ul class="dropdown-menu dropdown-menu-mini-cart">
+                <li>
+                    <div class="widget woocommerce widget_shopping_cart">
+                        <div class="widget_shopping_cart_content">
 
-                            @if (count($basketBuy_data))
+                            <ul class="woocommerce-mini-cart cart_list product_list_widget">
 
-                                @foreach($basketBuy_data as $data)
+                                    @foreach($basketBuy_data as $data)
 
-                                    @php
-                                        $sum=0
-                                    @endphp
+                                        @php
+                                            $sum=0
+                                        @endphp
 
-                                    @foreach($data as $value)
+                                        @foreach($data as $value)
 
-                                        <li class="woocommerce-mini-cart-item mini_cart_item">
+                                            <li class="woocommerce-mini-cart-item mini_cart_item">
 
-                                            <a href="{{route('cart.destroy',$value['id'])}}"
-                                               onclick="destroyCartItem(event, {{ $value['id'] }})"
-                                               class="remove" aria-label="این مورد را حذف کنید">×</a>
-                                            <form action="{{ route('cart.destroy', \Vinkla\Hashids\Facades\Hashids::encode($value['id'])) }}"
-                                                  method="post" id="destroy-CartItem-{{ $value['id'] }}">
-                                                @csrf
-                                                @method('delete')
-                                            </form>
+                                                <a href="{{route('cart.destroy',$value['id'])}}"
+                                                   onclick="destroyCartItem(event, {{ $value['id'] }})"
+                                                   class="remove" aria-label="این مورد را حذف کنید">×</a>
+                                                <form action="{{ route('cart.destroy', \Vinkla\Hashids\Facades\Hashids::encode($value['id'])) }}"
+                                                      method="post" id="destroy-CartItem-{{ $value['id'] }}">
+                                                    @csrf
+                                                    @method('delete')
+                                                </form>
 
-                                            <a href="{{$value['route']}}">
-                                                <img src="{{$value['image']}}"
-                                                     class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
-                                                     alt="{{$value['name']}}">{{$value['name']}}
-                                            </a>
-                                            <span class="quantity">{{$value['count']}} ×
+                                                <a href="{{$value['route']}}">
+                                                    <img src="{{$value['image']}}"
+                                                         class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
+                                                         alt="{{$value['name']}}">{{$value['name']}}
+                                                </a>
+                                                <span class="quantity">{{$value['count']}} ×
 														<span
                                                             class="woocommerce-Price-amount amount">{{number_format($value['price'])}} تومان</span>
 													</span>
-                                        </li>
+                                            </li>
 
-                                        @php
-                                            $sum+=($value['price']*$value['count']);
-                                        @endphp
+                                            @php
+                                                $sum+=($value['price']*$value['count']);
+                                            @endphp
+
+                                        @endforeach
 
                                     @endforeach
 
-                                @endforeach
+                            </ul>
 
-                            @endif
+                                <p class="woocommerce-mini-cart__total total">
+                                    <strong>جمع کل:</strong>
+                                    <span class="woocommerce-Price-amount amount">{{number_format($sum)}} تومان</span>
+                                </p>
+                                <p class="woocommerce-mini-cart__buttons buttons">
+                                    <a href="{{route('cart.index')}}" class="button wc-forward">نمایش سبد</a>
+                                    <a href="{{route('checkout')}}" class="button checkout wc-forward">صورتحساب</a>
+                                </p>
 
-                        </ul>
-
-                        <p class="woocommerce-mini-cart__total total">
-                            <strong>جمع کل:</strong>
-                            <span class="woocommerce-Price-amount amount">{{number_format($sum)}} تومان</span>
-                        </p>
-                        <p class="woocommerce-mini-cart__buttons buttons">
-                            <a href="{{route('cart.index')}}" class="button wc-forward">نمایش سبد</a>
-                            <a href="checkout.html" class="button checkout wc-forward">صورتحساب</a>
-                        </p>
+                        </div>
                     </div>
-                </div>
-            </li>
-        </ul>
+                </li>
+            </ul>
+
+        @endif
+
     </li>
 </ul>

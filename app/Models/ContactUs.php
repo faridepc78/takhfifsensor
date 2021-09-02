@@ -42,9 +42,27 @@ class ContactUs extends Model
     public function type()
     {
         if ($this->type == ContactUs::READ) {
-            return '<td class="alert alert-success">'.Lang::get(self::READ).'</td>';
+            return '<td class="alert alert-success">' . Lang::get(self::READ) . '</td>';
         } elseif ($this->type == ContactUs::UNREAD) {
-            return '<td class="alert alert-danger">'.Lang::get(self::UNREAD).'</td>';
+            return '<td class="alert alert-danger">' . Lang::get(self::UNREAD) . '</td>';
+        }
+    }
+
+    public function scopeFullName()
+    {
+        if ($this->user_id == null) {
+            return $this->f_name . ' ' . $this->l_name;
+        } else {
+            return $this->user->fullName;
+        }
+    }
+
+    public function scopeMobile()
+    {
+        if ($this->user_id == null) {
+            return $this->mobile;
+        } else {
+            return $this->user->mobile;
         }
     }
 }

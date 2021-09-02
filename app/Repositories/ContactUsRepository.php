@@ -2,7 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Filters\Contact\Search;
+use App\Filters\Contact\Type;
 use App\Models\ContactUs;
+use Illuminate\Pipeline\Pipeline;
 
 class ContactUsRepository
 {
@@ -17,6 +20,20 @@ class ContactUsRepository
                 'subject' => $values['subject'],
                 'text' => $values['text']
             ]);
+    }
+
+    public function paginate()
+    {
+        return app(Pipeline::class)
+            ->send(ContactUs::query())
+            ->through([
+                Type::class,
+                Search::class
+            ])
+            ->thenReturn()
+            ->orderBy('type','desc')
+            ->orderBy('id','desc')
+            ->paginate(10);
     }
 
     public function findById($id)

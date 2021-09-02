@@ -26,7 +26,8 @@
                                 <div class="woocommerce">
                                     <div class="card-header">
 
-                                        <form method="post" action="{{route('cart.update')}}" class="woocommerce-cart-form">
+                                        <form method="post" action="{{route('cart.update')}}"
+                                              class="woocommerce-cart-form">
 
                                             @csrf
 
@@ -56,14 +57,21 @@
 
                                                                 <td class="product-thumbnail">
                                                                     <a href="{{$value['route']}}">
-                                                                        <img width="180" height="180" alt="{{$value['name']}}" class="wp-post-image" src="{{$value['image']}}">
+                                                                        <img width="180" height="180"
+                                                                             alt="{{$value['name']}}"
+                                                                             class="wp-post-image"
+                                                                             src="{{$value['image']}}">
                                                                     </a>
                                                                 </td>
 
-                                                                <td data-title="{{$value['name']}}" class="product-name">
+                                                                <td data-title="{{$value['name']}}"
+                                                                    class="product-name">
                                                                     <div class="media cart-item-product-detail">
                                                                         <a href="{{$value['route']}}">
-                                                                            <img width="180" height="180" alt="{{$value['name']}}" class="wp-post-image" src="{{$value['image']}}">
+                                                                            <img width="180" height="180"
+                                                                                 alt="{{$value['name']}}"
+                                                                                 class="wp-post-image"
+                                                                                 src="{{$value['image']}}">
                                                                         </a>
                                                                         <div class="media-body align-self-center">
                                                                             <a href="{{$value['route']}}">{{$value['name']}}</a>
@@ -77,8 +85,15 @@
 
                                                                 <td class="product-quantity" data-title="تعداد">
                                                                     <div class="quantity">
-                                                                        <label for="{{\Vinkla\Hashids\Facades\Hashids::encode($value['id'])}}">تعداد</label>
-                                                                        <input id="{{\Vinkla\Hashids\Facades\Hashids::encode($value['id'])}}" type="number" name="{{\Vinkla\Hashids\Facades\Hashids::encode($value['id'])}}" max="50" value="{{$value['count']}}" title="تعداد" class="input-text qty text" size="4">
+                                                                        <label
+                                                                            for="{{\Vinkla\Hashids\Facades\Hashids::encode($value['id'])}}">تعداد</label>
+                                                                        <input
+                                                                            id="{{\Vinkla\Hashids\Facades\Hashids::encode($value['id'])}}"
+                                                                            type="number"
+                                                                            name="{{\Vinkla\Hashids\Facades\Hashids::encode($value['id'])}}"
+                                                                            max="50" value="{{$value['count']}}"
+                                                                            title="تعداد" class="input-text qty text"
+                                                                            size="4">
                                                                     </div>
                                                                 </td>
 
@@ -87,10 +102,11 @@
                                                                     <a href="{{route('cart.destroy',$value['id'])}}"
                                                                        onclick="destroyCartItem(event, {{ $value['id'] }})"
                                                                        class="remove" aria-label="این مورد را حذف کنید">×</a>
-                                                                    <form action="{{ route('cart.destroy', \Vinkla\Hashids\Facades\Hashids::encode($value['id'])) }}"
-                                                                          method="post" id="destroy-CartItem-{{ $value['id'] }}">
+                                                                    <form
+                                                                        action="{{ route('cart.destroy', \Vinkla\Hashids\Facades\Hashids::encode($value['id'])) }}"
+                                                                        method="post"
+                                                                        id="destroy-CartItem-{{ $value['id'] }}">
                                                                         @csrf
-                                                                        @method('delete')
                                                                     </form>
                                                                 </td>
                                                             </tr>
@@ -103,54 +119,66 @@
 
                                                     @endforeach
 
-                                                @endif
+                                                    <tr>
+                                                        <td class="actions" colspan="6">
+                                                            <button type="submit" class="button">بروزرسانی سبد</button>
+                                                        </td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <td class="actions" colspan="6">
-                                                        <input type="submit" value="بروزرسانی سبد" class="button">
-                                                    </td>
-                                                </tr>
+                                                @else
+
+                                                    <div class="alert alert-danger text-center">سبد خرید خالی است</div>
+
+                                                @endif
 
                                                 </tbody>
                                             </table>
 
                                         </form>
 
-                                        <div class="cart-collaterals">
-                                            <div class="cart_totals">
-                                                <h2>جمع کل سبد</h2>
-                                                <table class="shop_table_responsive">
-                                                    <tbody>
-                                                    <tr class="cart-subtotal">
-                                                        <th>جمع کل</th>
-                                                        <td data-title="جمع کل">
-                                                            <span style="font-size: 18px;font-weight: bold" class="woocommerce-Price-amount amount">{{number_format($sum)}} تومان</span>
-                                                        </td>
-                                                    </tr>
-                                                    {{--<tr class="shipping">
-                                                        <th>هزینه ارسال</th>
-                                                        <td data-title="Shipping">نرخ ثابت</td>
-                                                    </tr>--}}
-                                                    {{--<tr class="order-total">
-                                                        <th>جمع کل سبد</th>
-                                                        <td data-title="جمع کل سبد">
-                                                            <strong>
-                                                                <span class="woocommerce-Price-amount amount">99 هزار تومان</span>
-                                                            </strong>
-                                                        </td>
-                                                    </tr>--}}
-                                                    </tbody>
-                                                </table>
+                                        @if (count($basketBuy_data))
 
-                                                <div class="wc-proceed-to-checkout">
+                                            <div class="cart-collaterals">
+                                                <div class="cart_totals">
+                                                    <h2>جمع کل سبد</h2>
+                                                    <table class="shop_table_responsive">
+                                                        <tbody>
+                                                        <tr class="cart-subtotal">
+                                                            <th>جمع کل</th>
+                                                            <td data-title="جمع کل">
+                                                                <span style="font-size: 18px;font-weight: bold"
+                                                                      class="woocommerce-Price-amount amount">{{number_format($sum)}} تومان</span>
+                                                            </td>
+                                                        </tr>
+                                                        {{--<tr class="shipping">
+                                                            <th>هزینه ارسال</th>
+                                                            <td data-title="Shipping">نرخ ثابت</td>
+                                                        </tr>--}}
+                                                        {{--<tr class="order-total">
+                                                            <th>جمع کل سبد</th>
+                                                            <td data-title="جمع کل سبد">
+                                                                <strong>
+                                                                    <span class="woocommerce-Price-amount amount">99 هزار تومان</span>
+                                                                </strong>
+                                                            </td>
+                                                        </tr>--}}
+                                                        </tbody>
+                                                    </table>
 
-                                                    <a class="checkout-button button alt wc-forward" href="checkout.html">
-                                                        برو به پرداخت</a>
-                                                    <a class="back-to-shopping" href="{{route('home')}}">برو به صفحه اصلی</a>
+                                                    <div class="wc-proceed-to-checkout">
+
+                                                        <a class="checkout-button button alt wc-forward"
+                                                           href="{{route('checkout')}}">
+                                                            برو به صورتحساب</a>
+                                                        <a class="back-to-shopping" href="{{route('home')}}">برو به صفحه
+                                                            اصلی</a>
+                                                    </div>
+
                                                 </div>
-
                                             </div>
-                                        </div>
+
+                                        @endif
+
                                     </div>
                                 </div>
                             </div>

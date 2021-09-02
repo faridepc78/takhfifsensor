@@ -377,13 +377,15 @@
                         </ul>
                     </li>
 
-                    {{--<li class="nav-item has-treeview {{ request()->routeIs(['settings.index']) ? 'menu-open' : '' }}">
+                    <li class="nav-item has-treeview {{ request()->routeIs(['contacts.index',
+'contacts.single']) ? 'menu-open' : '' }}">
 
                         <a href="#"
-                           class="nav-link {{ request()->routeIs(['settings.index']) ? 'active' : '' }}">
-                            <i class="nav-icon fa fa-cogs"></i>
+                           class="nav-link {{ request()->routeIs(['contacts.index',
+'contacts.single']) ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-phone"></i>
                             <p>
-                                تنظیمات
+                                تماس ها
                                 <i class="fa fa-angle-left right"></i>
                             </p>
                         </a>
@@ -391,15 +393,15 @@
                         <ul class="nav nav-treeview">
 
                             <li class="nav-item">
-                                <a href="{{ route('settings.index') }}"
-                                   class="nav-link {{ request()->routeIs(['settings.index']) ? 'active' : '' }}">
+                                <a href="{{ route('contacts.index') }}"
+                                   class="nav-link {{ request()->routeIs(['contacts.index','contacts.single']) ? 'active' : '' }}">
                                     <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>مدیریت تنظیمات</p>
+                                    <p>مدیریت تماس ها</p>
                                 </a>
                             </li>
 
                         </ul>
-                    </li>--}}
+                    </li>
 
                     <li class="nav-item">
 

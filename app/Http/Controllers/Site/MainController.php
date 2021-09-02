@@ -4,13 +4,21 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Site\ContactUs\ContactUsRequest;
+use App\Http\Requests\Site\Order\OrderRequest;
 use App\Repositories\BannerRepository;
 use App\Repositories\BrandRepository;
 use App\Repositories\CategoryRepository;
+use App\Repositories\CityRepository;
 use App\Repositories\ContactUsRepository;
+use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
+use App\Repositories\ProvinceRepository;
 use App\Repositories\SliderRepository;
+use App\Services\BasketBuy\BasketBuyService;
 use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class MainController extends Controller
 {
@@ -20,13 +28,21 @@ class MainController extends Controller
     private $contactUsRepository;
     private $productRepository;
     private $categoryRepository;
+    private $provinceRepository;
+    private $cityRepository;
+    private $orderRepository;
+    private $basketBuyService;
 
     public function __construct(SliderRepository $sliderRepository,
                                 BrandRepository $brandRepository,
                                 BannerRepository $bannerRepository,
                                 ContactUsRepository $contactUsRepository,
                                 ProductRepository $productRepository,
-                                CategoryRepository $categoryRepository)
+                                CategoryRepository $categoryRepository,
+                                ProvinceRepository $provinceRepository,
+                                CityRepository $cityRepository,
+                                OrderRepository $orderRepository,
+                                BasketBuyService $basketBuyService)
     {
         $this->sliderRepository = $sliderRepository;
         $this->brandRepository = $brandRepository;
@@ -34,6 +50,10 @@ class MainController extends Controller
         $this->contactUsRepository = $contactUsRepository;
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->provinceRepository = $provinceRepository;
+        $this->cityRepository = $cityRepository;
+        $this->orderRepository = $orderRepository;
+        $this->basketBuyService = $basketBuyService;
     }
 
     public function home()
@@ -82,6 +102,54 @@ class MainController extends Controller
 
     public function checkout()
     {
-        return view('site.checkout.index');
+        $count_data = $this->basketBuyService::countItems();
+        if ($count_data >= 1) {
+            $provinces = $this->provinceRepository->getAll();
+            return view('site.checkout.index', compact('provinces'));
+        } else {
+            newFeedback('پیام', 'شما اجازه دسترسی به این صفحه را ندارید', 'error');
+            return redirect()->route('home');
+        }
+    }
+
+    public function getCities(Request $request)
+    {
+        try {
+            $province_id = $request->get('province_id');
+            $cities = $this->cityRepository->findByProvinceId($province_id);
+            return response()->json(['cities' => $cities, 'status' => 'success'], Response::HTTP_OK);
+        } catch (Exception $exception) {
+            return response()->json(['message' => 'عملیات با شکست مواجه شد'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function checkout_post(OrderRequest $request)
+    {
+        try {
+            DB::transaction(function () use ($request) {
+                $order = $this->orderRepository->storeOrder($request);
+
+                $data = $this->basketBuyService::readData();
+
+                foreach ($data as $datum) {
+                    foreach ($datum as $value) {
+                        $array = [
+                            'product_id' => $value['id'],
+                            'price' => $value['price'],
+                            'count' => $value['count']
+                        ];
+                        $this->orderRepository->storeOrderItem($order['id'], $array);
+                    }
+                }
+
+                $this->basketBuyService::deleteData();
+            });
+            DB::commit();
+            newFeedback('پیام', 'سفارشات شما ثبت شد لطفا برای پرداخت نهایی منتظر تایید مدیریت باشید', 'success');
+        } catch (Exception $exception) {
+            DB::rollBack();
+            newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
+        }
+        return redirect()->route('home');
     }
 }

@@ -34,7 +34,7 @@ class ContactUsRequest extends FormRequest
             return [
                 'f_name' => ['required', 'string', 'max:255'],
                 'l_name' => ['required', 'string', 'max:255'],
-                'mobile' => ['required', 'numeric', 'digits:11', 'unique:users,mobile', new ValidationMobile()],
+                'mobile' => ['required', 'numeric', 'digits:11', new ValidationMobile()],
                 'subject' => ['required', 'string', 'max:255'],
                 'text' => ['required', 'string'],
                 'g-recaptcha-response' => ['required', 'captcha']

@@ -45,7 +45,7 @@ class CartController extends Controller
                 'time' => time()
             ];
 
-            $result = BasketBuyService::addItem($item);
+            $result = $this->basketBuyService::addItem($item);
             if ($result['status'] == 'success') {
                 newFeedback('پیام', 'محصول به سبد خرید اضافه شد', 'success');
             } else {
@@ -66,7 +66,7 @@ class CartController extends Controller
             $item = [
                 'id' => $product->id
             ];
-            $result = BasketBuyService::deleteItem($item);
+            $result = $this->basketBuyService::deleteItem($item);
             if ($result['status'] == 'success') {
                 newFeedback('پیام', 'محصول از سبد خرید حذف شد', 'success');
             } else {
@@ -101,7 +101,7 @@ class CartController extends Controller
                 }
             }
 
-            $result = BasketBuyService::updateItems($data);
+            $result = $this->basketBuyService::updateItems($data);
 
             if ($result['status'] == 'success') {
                 newFeedback('پیام', 'سبد خرید با موفقیت بروزرسانی شد', 'success');
@@ -128,7 +128,7 @@ class CartController extends Controller
                     'count' => $request->get('count')
                 ];
 
-                $result = BasketBuyService::updateItem($item);
+                $result = $this->basketBuyService::updateItem($item);
 
                 if ($result['status'] == 'success') {
                     newFeedback('پیام', 'تعداد محصول در سبد خرید با موفقیت بروزرسانی شد', 'success');

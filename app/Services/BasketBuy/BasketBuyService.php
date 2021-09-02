@@ -207,7 +207,7 @@ class BasketBuyService implements BasketBuyServiceContract
 
     public static function deleteData()
     {
-        Cookie::queue(self::$name, null, time() - self::$time);
+        Cookie::queue(Cookie::forget(self::$name));
         return ['message' => 'اطلاعات با موفقیت حذف شد', 'status' => 'success'];
     }
 
