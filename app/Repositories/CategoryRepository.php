@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Category;
-use App\Models\showCategory;
+use App\Models\ShowCategory;
 
 class CategoryRepository
 {
