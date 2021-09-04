@@ -403,6 +403,42 @@
                         </ul>
                     </li>
 
+                    <li class="nav-item has-treeview {{ request()->routeIs(['orders.index',
+'orders.pending',
+'orders.items']) ? 'menu-open' : '' }}">
+
+                        <a href="#"
+                           class="nav-link {{ request()->routeIs(['orders.index',
+'orders.pending',
+'orders.items']) ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-first-order"></i>
+                            <p>
+                                سفارشات
+                                <i class="fa fa-angle-left right"></i>
+                            </p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+
+                            <li style="font-size: 14px" class="nav-item">
+                                <a href="{{ route('orders.pending') }}"
+                                   class="nav-link {{ request()->routeIs(['orders.pending']) ? 'active' : '' }}">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>مدیریت سفارشات تایید نشده</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('orders.index') }}"
+                                   class="nav-link {{ request()->routeIs(['orders.index','orders.items']) ? 'active' : '' }}">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>مدیریت سفارشات</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
                     <li class="nav-item">
 
                         <a href="{{route('logout')}}"

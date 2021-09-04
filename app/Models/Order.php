@@ -29,13 +29,11 @@ class Order extends Model
         ];
 
     const ACCEPT = 'accept';
-    const REJECT = 'reject';
     const PENDING = 'pending';
     const UPDATED = 'updated';
     static $statuses =
         [
             self::ACCEPT,
-            self::REJECT,
             self::PENDING,
             self::UPDATED
         ];

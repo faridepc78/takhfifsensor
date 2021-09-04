@@ -2,8 +2,12 @@
 
 namespace App\Repositories;
 
+use App\Filters\Order\Search;
+use App\Filters\Order\Status;
+use App\Filters\Order\Type;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Illuminate\Pipeline\Pipeline;
 
 class OrderRepository
 {
@@ -20,7 +24,7 @@ class OrderRepository
             ]);
     }
 
-    public function storeOrderItem($order_id,$values)
+    public function storeOrderItem($order_id, $values)
     {
         return OrderItem::query()
             ->create([
@@ -29,5 +33,29 @@ class OrderRepository
                 'price' => $values['price'],
                 'count' => $values['count']
             ]);
+    }
+
+    public function paginatePendingBySearch()
+    {
+        return Order::query()
+            ->where('status', '=', Order::PENDING)
+            ->latest()
+            ->paginate(10);
+    }
+
+    public function paginateByFilters()
+    {
+        return app(Pipeline::class)
+            ->send(Order::query())
+            ->through([
+                Status::class,
+                Type::class,
+                Search::class
+            ])
+            ->thenReturn()
+            ->orderBy('status', 'desc')
+            ->orderBy('id', 'desc')
+            ->pluck('id')
+            ->toArray();
     }
 }

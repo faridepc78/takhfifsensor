@@ -51,6 +51,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'check_admin'
     Route::get('contacts','ContactController@index')->name('contacts.index');
     Route::get('contacts/single/{id}','ContactController@single')->name('contacts.single');
 
+    Route::get('orders/pending','OrderController@pending')->name('orders.pending');
+    Route::get('orders','OrderController@index')->name('orders.index');
+    Route::get('orders/items/{id}','OrderController@items')->name('orders.items');
+
 });
 
 /*END ADMIN*/
