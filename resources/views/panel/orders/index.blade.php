@@ -1,15 +1,15 @@
-@section('admin_title')
-    <title>پنل مدیریت تخفیف سنسور | سفارشات</title>
+@section('panel_title')
+    <title>پنل کاربری تخفیف سنسور | سفارشات</title>
 @endsection
 
-@section('admin_css')
+@section('panel_css')
     <link type="text/css" rel="stylesheet"
           href="{{asset('assets/backend/plugins/persianDatepicker/css/persianDatepicker-default.css')}}">
 @endsection
 
-@include('admin.layout.header')
+@include('panel.layout.header')
 
-@include('admin.layout.sidebar')
+@include('panel.layout.sidebar')
 
 <div class="content-wrapper">
 
@@ -19,7 +19,7 @@
 
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a class="my-active" href="{{route('orders.index')}}">مدیریت
+                        <li class="breadcrumb-item"><a class="my-active" href="{{route('user.orders.index')}}">مدیریت
                                 سفارشات</a></li>
                     </ol>
                 </div>
@@ -39,7 +39,7 @@
 
                             <div class="card-tools">
                                 <form id="filterForm" method="get"
-                                      action="{{route('orders.index')}}">
+                                      action="{{route('user.orders.index')}}">
                                     <div class="input-group input-group-sm" style="width: 300px;">
                                         <input readonly id="search" value="{{request()->input('search')}}" type="text"
                                                name="search"
@@ -54,19 +54,19 @@
                                 </form>
                             </div>
 
-                            <a href="{{route('orders.index','status='.\App\Models\Order::ACCEPT)}}"
+                            <a href="{{route('user.orders.index','status='.\App\Models\Order::ACCEPT)}}"
                                class="btn btn-success">تایید شده</a>
 
-                            <a href="{{route('orders.index','status='.\App\Models\Order::UPDATED)}}"
+                            <a href="{{route('user.orders.index','status='.\App\Models\Order::UPDATED)}}"
                                class="btn btn-primary">بروزرسانی شده</a>
 
-                            <a href="{{route('orders.index','status='.\App\Models\Order::PENDING)}}"
+                            <a href="{{route('user.orders.index','status='.\App\Models\Order::PENDING)}}"
                                class="btn btn-warning">برسی نشده</a>
 
-                            <a href="{{route('orders.index','type='.\App\Models\Order::PAID)}}"
+                            <a href="{{route('user.orders.index','type='.\App\Models\Order::PAID)}}"
                                class="btn btn-info">پرداخت شده</a>
 
-                            <a href="{{route('orders.index','type='.\App\Models\Order::UNPAID)}}"
+                            <a href="{{route('user.orders.index','type='.\App\Models\Order::UNPAID)}}"
                                class="btn btn-danger">پرداخت نشده</a>
 
                         </div>
@@ -87,7 +87,8 @@
                                     <th>محصولات</th>
                                     <th>وضعیت</th>
                                     <th>نوع</th>
-                                    <th>تایید</th>
+                                    <th>پیام مدیریت</th>
+                                    <th>پرداخت</th>
                                 </tr>
 
                                 @if(count($orders))
@@ -110,30 +111,34 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                <a target="_blank" href="{{route('orders.items',$value->id)}}">
+                                                <a target="_blank" href="{{route('user.orders.items',$value->id)}}">
                                                     <i class="fa fa-database text-success"></i>
                                                 </a>
                                             </td>
                                             <td>@lang($value['status'])</td>
                                             <td>@lang($value['type'])</td>
 
-                                            @if ($value['status']==\App\Models\Order::PENDING)
+                                            @if ($value['status']==\App\Models\Order::UPDATED)
                                                 <td>
-                                                    <a href="{{ route('orders.confirm', $value->id) }}"
-                                                       onclick="confirmOrders(event, {{ $value->id }})"><i
-                                                            class="fa fa-check text-info"></i></a>
-                                                    <form action="{{ route('orders.confirm', $value->id) }}"
-                                                          method="post" id="confirm-Orders-{{ $value->id }}">
-                                                        @csrf
-                                                        @method('patch')
-                                                    </form>
+                                                    <a href="javascript:void(0)" data-toggle="modal"
+                                                       data-target="#orderMessage{{$value['id']}}">
+                                                        <i class="fa fa-eye text-success"></i>
+                                                    </a>
                                                 </td>
                                             @else
-                                                <td>
-                                                    <i class="fa fa-close text-danger"></i>
-                                                </td>
+                                                <td><i class="fa fa-close"></i></td>
                                             @endif
 
+                                            @if ($value['status']==\App\Models\Order::ACCEPT ||$value['status']==\App\Models\Order::UPDATED && $value['type']==\App\Models\Order::UNPAID)
+<td>
+    <form method="post" action="{{route('payment.result')}}">
+        @csrf
+        <button class="btn btn-success" type="submit"><i class="fa fa-check text-warning"></i></button>
+    </form>
+</td>
+                                            @else
+                                                <td><i class="fa fa-close"></i></td>
+                                            @endif
                                         </tr>
 
                                         <div class="modal fade mt-lg-5"
@@ -163,7 +168,46 @@
 
                                                     <div class="modal-body">
 
-                                                        <textarea readonly class="form-control" rows="5" style="resize: vertical">{{$value['address']}}</textarea>
+                                                        <textarea readonly class="form-control" rows="5"
+                                                                  style="resize: vertical">{{$value['address']}}</textarea>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="modal fade mt-lg-5"
+                                             id="orderMessage{{$value['id']}}" tabindex="-1"
+                                             role="dialog"
+                                             aria-hidden="true">
+
+                                            <div class="modal-dialog modal-lg" role="document">
+
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+
+                                                        <h6 class="modal-title">
+                                                            پیام مدیریت برای سفارش
+                                                            ({{$value->user->fullName}})
+                                                            با کد
+                                                            {{$value['code']}}
+                                                        </h6>
+
+                                                        <a style="color: red;cursor: pointer"
+                                                           data-dismiss="modal" aria-label="Close">
+                                                            <i style="color: red" class="fa fa-close"></i>
+                                                        </a>
+
+                                                    </div>
+
+                                                    <div class="modal-body">
+
+                                                        <textarea readonly class="form-control" rows="5"
+                                                                  style="resize: vertical">{{$value['message']}}</textarea>
 
                                                     </div>
 
@@ -200,12 +244,12 @@
 
 </div>
 
-@section('admin_js')
+@section('panel_js')
     <script type="text/javascript"
             src="{{asset('assets/backend/plugins/persianDatepicker/js/persianDatepicker.min.js')}}"></script>
 @endsection
 
-@include('admin.layout.footer')
+@include('panel.layout.footer')
 
 <script type="text/javascript">
 
@@ -214,7 +258,7 @@
     $('#filterForm').on('submit', function (e) {
         e.preventDefault();
         var base_url = window.location.href;
-        var route = "{{route('orders.index')}}";
+        var route = "{{route('user.orders.index')}}";
         var search = $('#search').val();
 
         if (search.length !== 0) {
@@ -232,22 +276,5 @@
         }
 
     })
-
-    function confirmOrders(event, id) {
-        event.preventDefault();
-        Swal.fire({
-            title: 'آیا از تایید اطمینان دارید ؟',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: 'rgb(221, 51, 51)',
-            cancelButtonColor: 'rgb(48, 133, 214)',
-            confirmButtonText: 'بله',
-            cancelButtonText: 'خیر'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById(`confirm-Orders-${id}`).submit()
-            }
-        })
-    }
 
 </script>

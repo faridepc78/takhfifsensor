@@ -32,7 +32,7 @@ class OrderController extends Controller
 
     public function items($id)
     {
-        $order = $this->orderRepository->findById(1);
+        $order = $this->orderRepository->findById($id);
         $items = $this->orderRepository->getAllItemsByOrderId($id);
         return view('admin.orders.items', compact('order', 'items'));
     }

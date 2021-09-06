@@ -141,3 +141,25 @@ Route::group(['prefix' => '/', 'middleware' => ['web', 'throttle:50,1', 'block_u
 });
 
 /*END SITE*/
+
+/*START PANEL*/
+
+Route::group(['prefix' => 'panel', 'middleware' => ['web', 'auth', 'throttle:50,1'],
+    'namespace' => 'App\Http\Controllers\Panel'], function () {
+
+    Route::get('/', function () {
+        return redirect()->route('user.profile');
+    });
+
+    Route::get('profile', 'ProfileController@index')->name('user.profile');
+    Route::patch('profile', 'ProfileController@update')->name('user.update_profile');
+
+    Route::get('orders','OrderController@index')->name('user.orders.index');
+    Route::get('orders/items/{id}','OrderController@items')->name('user.orders.items');
+
+    Route::post('payment/result','PaymentController@result')->name('payment.result');
+    Route::post('payment/verify','PaymentController@verify')->name('payment.verify');
+
+});
+
+/*END PANEL*/

@@ -102,6 +102,21 @@ class OrderRepository
             ->paginate(10);
     }
 
+    public function paginateForUserIdByFilters($user_id)
+    {
+        return app(Pipeline::class)
+            ->send(Order::query())
+            ->through([
+                Status::class,
+                Type::class,
+                Search::class
+            ])
+            ->thenReturn()
+            ->where('user_id', '=', $user_id)
+            ->latest()
+            ->paginate(10);
+    }
+
     public function getAllItemsByOrderId($order_id)
     {
         return OrderItem::query()

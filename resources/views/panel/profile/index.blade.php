@@ -1,10 +1,10 @@
-@section('admin_title')
-    <title>پنل مدیریت تخفیف سنسور | پروفایل</title>
+@section('panel_title')
+    <title>پنل کاربری تخفیف سنسور | پروفایل</title>
 @endsection
 
-@include('admin.layout.header')
+@include('panel.layout.header')
 
-@include('admin.layout.sidebar')
+@include('panel.layout.sidebar')
 
 <div class="content-wrapper">
 
@@ -15,7 +15,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a class="my-active"
-                                                       href="{{route('profile')}}">ویرایش
+                                                       href="{{route('user.profile')}}">ویرایش
                                 پروفایل ({{$user->fullName}})</a></li>
                     </ol>
                 </div>
@@ -35,7 +35,7 @@
                             <h3 class="card-title">ویرایش پروفایل ({{$user->fullName}})</h3>
                         </div>
 
-                        <form id="update_profile_form" action="{{route('update_profile')}}"
+                        <form id="update_profile_form" action="{{route('user.update_profile')}}"
                               method="post">
 
                             @csrf
@@ -126,7 +126,7 @@
     </section>
 </div>
 
-@include('admin.layout.footer')
+@include('panel.layout.footer')
 
 <script type="text/javascript">
 
