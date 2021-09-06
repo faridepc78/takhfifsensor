@@ -35,9 +35,54 @@ class OrderRepository
             ]);
     }
 
-    public function paginatePendingBySearch()
+    public function findById($id)
     {
         return Order::query()
+            ->findOrFail($id);
+    }
+
+    public function findByItemId($id)
+    {
+        return OrderItem::query()
+            ->findOrFail($id);
+    }
+
+    public function updateItem($values, $id)
+    {
+        return OrderItem::query()
+            ->where('id', '=', $id)
+            ->update([
+                'price' => $values['price'],
+                'count' => $values['count']
+            ]);
+    }
+
+    public function update($values, $id)
+    {
+        return Order::query()
+            ->where('id', '=', $id)
+            ->update([
+                'message' => $values['message']
+            ]);
+    }
+
+    public function updateStatus($status, $id)
+    {
+        return Order::query()
+            ->where('id', '=', $id)
+            ->update([
+                'status' => $status
+            ]);
+    }
+
+    public function paginatePendingBySearch()
+    {
+        return app(Pipeline::class)
+            ->send(Order::query())
+            ->through([
+                Search::class
+            ])
+            ->thenReturn()
             ->where('status', '=', Order::PENDING)
             ->latest()
             ->paginate(10);
@@ -53,9 +98,15 @@ class OrderRepository
                 Search::class
             ])
             ->thenReturn()
-            ->orderBy('status', 'desc')
-            ->orderBy('id', 'desc')
-            ->pluck('id')
-            ->toArray();
+            ->latest()
+            ->paginate(10);
+    }
+
+    public function getAllItemsByOrderId($order_id)
+    {
+        return OrderItem::query()
+            ->where('order_id', '=', $order_id)
+            ->latest()
+            ->paginate(10);
     }
 }

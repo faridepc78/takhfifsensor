@@ -39,7 +39,7 @@
 
                             <div class="card-tools">
                                 <form id="filterForm" method="get"
-                                      action="{{route('contacts.index')}}">
+                                      action="{{route('orders.index')}}">
                                     <div class="input-group input-group-sm" style="width: 300px;">
                                         <input readonly id="search" value="{{request()->input('search')}}" type="text"
                                                name="search"
@@ -54,11 +54,20 @@
                                 </form>
                             </div>
 
-                            <a href="{{route('contacts.index','type='.\App\Models\ContactUs::READ)}}"
-                               class="btn btn-success">خوانده شده</a>
+                            <a href="{{route('orders.index','status='.\App\Models\Order::ACCEPT)}}"
+                               class="btn btn-success">تایید شده</a>
 
-                            <a href="{{route('contacts.index','type='.\App\Models\ContactUs::UNREAD)}}"
-                               class="btn btn-danger">خوانده نشده</a>
+                            <a href="{{route('orders.index','status='.\App\Models\Order::UPDATED)}}"
+                               class="btn btn-primary">بروزرسانی شده</a>
+
+                            <a href="{{route('orders.index','status='.\App\Models\Order::PENDING)}}"
+                               class="btn btn-warning">برسی نشده</a>
+
+                            <a href="{{route('orders.index','type='.\App\Models\Order::PAID)}}"
+                               class="btn btn-info">پرداخت شده</a>
+
+                            <a href="{{route('orders.index','type='.\App\Models\Order::UNPAID)}}"
+                               class="btn btn-danger">پرداخت نشده</a>
 
                         </div>
 
@@ -69,10 +78,14 @@
                                     <th>ردیف</th>
                                     <th>نام و نام خانوادگی</th>
                                     <th>تلفن همراه</th>
-                                    <th>موضوع</th>
-                                    <th>وضعیت</th>
-                                    <th>تاریخ ارسال</th>
-                                    <th>مشاهده پیام</th>
+                                    <th>تلفن ثابت</th>
+                                    <th>استان</th>
+                                    <th>شهر</th>
+                                    <th>کد</th>
+                                    <th>تاریخ</th>
+                                    <th>آدرس</th>
+                                    <th>محصولات</th>
+                                    <th>تایید</th>
                                 </tr>
 
                                 @if(count($orders))
@@ -81,25 +94,46 @@
 
                                         <tr>
                                             <td>{{$key+1}}</td>
-                                            {{--<td>{{$value->fullName()}}</td>
-                                            <td>{{$value->mobile()}}</td>--}}
-                                            <td>
-                                                <a href="javascript:void(0)" data-toggle="modal"
-                                                   data-target="#contactSubject{{$value['id']}}">
-                                                    <i class="fa fa-eye text-success"></i>
-                                                </a>
-                                            </td>
-{{--                                            {!! $value->type() !!}--}}
+                                            <td>{{$value->user->fullName}}</td>
+                                            <td>{{$value->user->mobile}}</td>
+                                            <td>{{$value->phone}}</td>
+                                            <td>{{$value->province->name}}</td>
+                                            <td>{{$value->city->name}}</td>
+                                            <td>{{$value->code}}</td>
                                             <td>{{\Morilog\Jalali\CalendarUtils::strftime('Y/m/d', strtotime($value['created_at']))}}</td>
                                             <td>
-                                                <a target="_blank" href="{{route('contacts.single',$value->id)}}">
+                                                <a href="javascript:void(0)" data-toggle="modal"
+                                                   data-target="#orderAddress{{$value['id']}}">
                                                     <i class="fa fa-eye text-success"></i>
                                                 </a>
                                             </td>
+                                            <td>
+                                                <a target="_blank" href="{{route('orders.items',$value->id)}}">
+                                                    <i class="fa fa-database text-success"></i>
+                                                </a>
+                                            </td>
+
+                                            @if ($value['status']==\App\Models\Order::PENDING)
+                                                <td>
+                                                    <a href="{{ route('orders.confirm', $value->id) }}"
+                                                       onclick="confirmOrders(event, {{ $value->id }})"><i
+                                                            class="fa fa-check text-info"></i></a>
+                                                    <form action="{{ route('orders.confirm', $value->id) }}"
+                                                          method="post" id="confirm-Orders-{{ $value->id }}">
+                                                        @csrf
+                                                        @method('patch')
+                                                    </form>
+                                                </td>
+                                            @else
+                                                <td>
+                                                    <i class="fa fa-close text-danger"></i>
+                                                </td>
+                                            @endif
+
                                         </tr>
 
                                         <div class="modal fade mt-lg-5"
-                                             id="contactSubject{{$value['id']}}" tabindex="-1"
+                                             id="orderAddress{{$value['id']}}" tabindex="-1"
                                              role="dialog"
                                              aria-hidden="true">
 
@@ -110,8 +144,10 @@
                                                     <div class="modal-header">
 
                                                         <h6 class="modal-title">
-                                                            موضوع پیام
-{{--                                                            ({{$value->fullName()}})--}}
+                                                            آدرس سفارش
+                                                            ({{$value->user->fullName}})
+                                                            با کد
+                                                            {{$value['code']}}
                                                         </h6>
 
                                                         <a style="color: red;cursor: pointer"
@@ -123,7 +159,7 @@
 
                                                     <div class="modal-body">
 
-                                                        <input value="{{$value['subject']}}" type="text" class="form-control" readonly>
+                                                        <textarea readonly class="form-control" rows="5" style="resize: vertical">{{$value['address']}}</textarea>
 
                                                     </div>
 
@@ -192,5 +228,22 @@
         }
 
     })
+
+    function confirmOrders(event, id) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'آیا از تایید اطمینان دارید ؟',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: 'rgb(221, 51, 51)',
+            cancelButtonColor: 'rgb(48, 133, 214)',
+            confirmButtonText: 'بله',
+            cancelButtonText: 'خیر'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(`confirm-Orders-${id}`).submit()
+            }
+        })
+    }
 
 </script>

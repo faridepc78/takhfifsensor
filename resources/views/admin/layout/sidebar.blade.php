@@ -405,12 +405,14 @@
 
                     <li class="nav-item has-treeview {{ request()->routeIs(['orders.index',
 'orders.pending',
-'orders.items']) ? 'menu-open' : '' }}">
+'orders.items',
+'orders.update_items']) ? 'menu-open' : '' }}">
 
                         <a href="#"
                            class="nav-link {{ request()->routeIs(['orders.index',
 'orders.pending',
-'orders.items']) ? 'active' : '' }}">
+'orders.items',
+'orders.update_items']) ? 'active' : '' }}">
                             <i class="nav-icon fa fa-first-order"></i>
                             <p>
                                 سفارشات

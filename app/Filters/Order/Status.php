@@ -14,13 +14,13 @@ class Status extends Filter
         $search = request($this->filterName());
 
         if ($search == 'accept') {
-            return $builder->where('type', '=', Order::ACCEPT);
+            return $builder->where('status', '=', Order::ACCEPT);
         }
         elseif ($search == 'pending') {
-            return $builder->where('type', '=', Order::PENDING);
+            return $builder->where('status', '=', Order::PENDING);
         }
         elseif ($search == 'updated') {
-            return $builder->where('type', '=', Order::UPDATED);
+            return $builder->where('status', '=', Order::UPDATED);
         }
     }
 }

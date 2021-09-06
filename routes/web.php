@@ -54,6 +54,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'check_admin'
     Route::get('orders/pending','OrderController@pending')->name('orders.pending');
     Route::get('orders','OrderController@index')->name('orders.index');
     Route::get('orders/items/{id}','OrderController@items')->name('orders.items');
+    Route::get('orders/items/update/{id}','OrderController@update_items')->name('orders.update_items');
+    Route::patch('orders/items/update/{id}','OrderController@update_items_do')->name('orders.update_items');
+    Route::patch('orders/confirm/{id}','OrderController@confirm')->name('orders.confirm');
 
 });
 
