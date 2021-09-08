@@ -40,6 +40,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'check_admin'
 
     Route::resource('products', 'ProductController')->except('show');
 
+    Route::get('products/exel/import','ProductController@import_page')->name('products.import_page');
+    Route::get('products/exel/export','ProductController@export')->name('products.export');
+    Route::post('products/exel/import','ProductController@import')->name('products.import');
+
     Route::get('product/media/{id}', 'ProductController@media_index')->name('product_media_index');
     Route::post('product/media/{id}', 'ProductController@media_store')->name('product_media_store');
     Route::delete('product/media/{id}/{media_id}/destroy', 'ProductController@media_destroy')->name('product_media_destroy');
@@ -157,8 +161,8 @@ Route::group(['prefix' => 'panel', 'middleware' => ['web', 'auth', 'throttle:50,
     Route::get('orders','OrderController@index')->name('user.orders.index');
     Route::get('orders/items/{id}','OrderController@items')->name('user.orders.items');
 
-    Route::post('payment/result','PaymentController@result')->name('payment.result');
-    Route::post('payment/verify','PaymentController@verify')->name('payment.verify');
+    Route::post('payment/{order_id}/purchase','PaymentController@purchase')->name('payment.purchase');
+    Route::post('payment/{order_id}/result','PaymentController@result')->name('payment.result');
 
 });
 

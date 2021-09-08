@@ -285,12 +285,14 @@
 
                     <li class="nav-item has-treeview {{ request()->routeIs(['products.index',
 'products.create',
-'products.edit']) ? 'menu-open' : '' }}">
+'products.edit',
+'products.import_page']) ? 'menu-open' : '' }}">
 
                         <a href="#"
                            class="nav-link {{ request()->routeIs(['products.index',
 'products.create',
-'products.edit']) ? 'active' : '' }}">
+'products.edit',
+'products.import_page']) ? 'active' : '' }}">
                             <i class="nav-icon fa fa-product-hunt"></i>
                             <p>
                                 محصولات
@@ -313,6 +315,14 @@
                                    class="nav-link {{ request()->routeIs('products.create') ? 'active' : '' }}">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>ایجاد محصولات</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('products.import_page') }}"
+                                   class="nav-link {{ request()->routeIs('products.import_page') ? 'active' : '' }}">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>ایمپورت فایل محصولات</p>
                                 </a>
                             </li>
 

@@ -131,7 +131,7 @@
 
                                             @if ($value['status']==\App\Models\Order::ACCEPT ||$value['status']==\App\Models\Order::UPDATED && $value['type']==\App\Models\Order::UNPAID)
 <td>
-    <form method="post" action="{{route('payment.result')}}">
+    <form method="post" action="{{route('payment.purchase',\Vinkla\Hashids\Facades\Hashids::encode($value['id']))}}">
         @csrf
         <button class="btn btn-success" type="submit"><i class="fa fa-check text-warning"></i></button>
     </form>

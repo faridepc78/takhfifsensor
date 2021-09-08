@@ -12,9 +12,11 @@
         "laravel/framework": "^8.54",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
+        "maatwebsite/excel": "^3.1",
         "mohsenbostan/ghasedak-sms": "^1.2",
         "morilog/jalali": "3.*",
         "pishran/laravel-persian-slug": "^2.1",
+        "shetabit/payment": "^4.0",
         "theanik/laravel-more-command": "^1.2",
         "vinkla/hashids": "^9.1"
     },

@@ -60,4 +60,14 @@ class Order extends Model
     {
         return $this->belongsTo(City::class, 'city_id', 'id')->withDefault();
     }
+
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class, 'order_id', 'id');
+    }
+
+    public function scopeSumItemsPrice()
+    {
+        return $this->items()->sum('price');
+    }
 }
