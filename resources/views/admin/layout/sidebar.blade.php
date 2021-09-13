@@ -283,6 +283,42 @@
                         </ul>
                     </li>
 
+                    <li class="nav-item has-treeview {{ request()->routeIs(['excel_media.index',
+'excel_media.create',
+'excel_media.edit']) ? 'menu-open' : '' }}">
+
+                        <a href="#"
+                           class="nav-link {{ request()->routeIs(['excel_media.index',
+'excel_media.create',
+'excel_media.edit']) ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-file"></i>
+                            <p>
+                                اکسل مدیا
+                                <i class="fa fa-angle-left right"></i>
+                            </p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+
+                            <li class="nav-item">
+                                <a href="{{ route('excel_media.index') }}"
+                                   class="nav-link {{ request()->routeIs(['excel_media.index']) ? 'active' : '' }}">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p style="font-size: 14px">مدیریت اکسل مدیا</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('excel_media.create') }}"
+                                   class="nav-link {{ request()->routeIs('excel_media.create') ? 'active' : '' }}">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p style="font-size: 14px">ایجاد اکسل مدیا</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
                     <li class="nav-item has-treeview {{ request()->routeIs(['products.index',
 'products.create',
 'products.edit',
@@ -445,6 +481,30 @@
                                    class="nav-link {{ request()->routeIs(['orders.index','orders.items']) ? 'active' : '' }}">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>مدیریت سفارشات</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item has-treeview {{ request()->routeIs(['transactions.index']) ? 'menu-open' : '' }}">
+
+                        <a href="#"
+                           class="nav-link {{ request()->routeIs(['transactions.index']) ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-exchange"></i>
+                            <p>
+                                تراکنش ها
+                                <i class="fa fa-angle-left right"></i>
+                            </p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+
+                            <li class="nav-item">
+                                <a href="{{ route('transactions.index') }}"
+                                   class="nav-link {{ request()->routeIs(['transactions.index']) ? 'active' : '' }}">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>مدیریت تراکنش ها</p>
                                 </a>
                             </li>
 

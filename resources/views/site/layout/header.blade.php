@@ -54,6 +54,30 @@
                     <nav id="primary-navigation" class="primary-navigation" aria-label="Primary Navigation" data-nav="flex-menu">
                         <ul id="menu-primary-menu" class="nav yamm">
 
+                            @auth()
+
+                                @if (auth()->user()['role']==\App\Models\User::ADMIN)
+                                    <li class="menu-item animate-dropdown">
+                                        <a target="_blank" title="پنل مدیریت" href="{{route('dashboard')}}">پنل مدیریت</a>
+                                    </li>
+                                @endif
+
+                                <li class="menu-item animate-dropdown">
+                                    <a target="_blank" title="پنل کاربری" href="{{route('user.profile')}}">پنل کاربری</a>
+                                </li>
+
+                            @else
+
+                                <li class="menu-item animate-dropdown">
+                                    <a title="ثبت نام" href="{{route('register')}}">ثبت نام</a>
+                                </li>
+
+                                <li class="menu-item animate-dropdown">
+                                    <a title="ورود" href="{{route('login')}}">ورود</a>
+                                </li>
+
+                            @endauth
+
                             <li class="menu-item menu-item-has-children animate-dropdown dropdown">
                                 <a title="صفحات" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" href="#">صفحات <span class="caret"></span></a>
                                 <ul role="menu" class=" dropdown-menu">
@@ -340,8 +364,14 @@
 
                                     @auth()
 
+                                        @if (auth()->user()['role']==\App\Models\User::ADMIN)
+                                            <li class="highlight menu-item animate-dropdown">
+                                                <a target="_blank" title="پنل مدیریت" href="{{route('dashboard')}}">پنل مدیریت</a>
+                                            </li>
+                                        @endif
+
                                         <li class="highlight menu-item animate-dropdown">
-                                            <a title="پنل کاربری" href="javascript:void(0)">پنل کاربری</a>
+                                            <a target="_blank" title="پنل کاربری" href="{{route('user.profile')}}">پنل کاربری</a>
                                         </li>
 
                                     @else
@@ -355,6 +385,26 @@
                                         </li>
 
                                     @endauth
+
+                                        <li class="highlight menu-item animate-dropdown">
+                                            <a title="وبلاگ" href="{{route('blog')}}">وبلاگ</a>
+                                        </li>
+
+                                        <li class="highlight menu-item animate-dropdown">
+                                            <a title="درباره ما" href="{{route('about-us')}}">درباره ما</a>
+                                        </li>
+
+                                        <li class="highlight menu-item animate-dropdown">
+                                            <a title="تماس با ما" href="{{route('contact-us')}}">تماس با ما</a>
+                                        </li>
+
+                                        <li class="highlight menu-item animate-dropdown">
+                                            <a title="پرسش و پاسخ ها" href="{{route('faq')}}">پرسش و پاسخ ها</a>
+                                        </li>
+
+                                        <li class="highlight menu-item animate-dropdown">
+                                            <a title="شرایط و ضوابط" href="{{route('terms-and-conditions')}}">شرایط و ضوابط</a>
+                                        </li>
 
                                     @if (count($categories))
 

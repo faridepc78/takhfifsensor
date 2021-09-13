@@ -61,7 +61,7 @@
                     <div class="info-box mb-3">
                         <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-first-order"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">نوبت ها</span>
+                            <span class="info-box-text">سفارشات</span>
                             <span class="info-box-number">{{$orders}}</span>
                         </div>
                     </div>

@@ -71,6 +71,30 @@
                         </ul>
                     </li>
 
+                    <li class="nav-item has-treeview {{ request()->routeIs(['user.transactions.index']) ? 'menu-open' : '' }}">
+
+                        <a href="#"
+                           class="nav-link {{ request()->routeIs(['user.transactions.index']) ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-exchange"></i>
+                            <p>
+                                تراکنش ها
+                                <i class="fa fa-angle-left right"></i>
+                            </p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+
+                            <li class="nav-item">
+                                <a href="{{ route('user.transactions.index') }}"
+                                   class="nav-link {{ request()->routeIs(['user.transactions.index']) ? 'active' : '' }}">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>مدیریت تراکنش ها</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
                     <li class="nav-item">
 
                         <a href="{{route('logout')}}"

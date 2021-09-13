@@ -16,7 +16,6 @@
         "mohsenbostan/ghasedak-sms": "^1.2",
         "morilog/jalali": "3.*",
         "pishran/laravel-persian-slug": "^2.1",
-        "shetabit/payment": "^4.0",
         "theanik/laravel-more-command": "^1.2",
         "vinkla/hashids": "^9.1"
     },
@@ -35,7 +34,8 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Helpers/helpers.php"
+            "app/Helpers/helpers.php",
+            "app/Helpers/EncryptDecrypt.php"
         ]
     },
     "autoload-dev": {

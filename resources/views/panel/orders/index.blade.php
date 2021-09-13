@@ -130,12 +130,17 @@
                                             @endif
 
                                             @if ($value['status']==\App\Models\Order::ACCEPT ||$value['status']==\App\Models\Order::UPDATED && $value['type']==\App\Models\Order::UNPAID)
-<td>
-    <form method="post" action="{{route('payment.purchase',\Vinkla\Hashids\Facades\Hashids::encode($value['id']))}}">
-        @csrf
-        <button class="btn btn-success" type="submit"><i class="fa fa-check text-warning"></i></button>
-    </form>
-</td>
+                                                <td>
+                                                    <form method="post" action="https://api.takhfifsensor.com">
+                                                        @csrf
+                                                        <input type="hidden" name="order_id"
+                                                               value="{{\App\Helpers\EncryptDecrypt::my_encrypt($value['id'],'password')}}">
+                                                        <input type="hidden" name="user_id"
+                                                               value="{{\App\Helpers\EncryptDecrypt::my_encrypt(auth()->id(),'password')}}">
+                                                        <button class="btn btn-success" type="submit"><i
+                                                                class="fa fa-check text-warning"></i></button>
+                                                    </form>
+                                                </td>
                                             @else
                                                 <td><i class="fa fa-close"></i></td>
                                             @endif

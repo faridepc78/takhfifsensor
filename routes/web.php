@@ -38,11 +38,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'check_admin'
     Route::post('post/media/{id}', 'PostController@media_store')->name('post_media_store');
     Route::delete('post/media/{id}/{media_id}/destroy', 'PostController@media_destroy')->name('post_media_destroy');
 
+    Route::resource('excel_media', 'ExcelMediaController')->except('show');
+
     Route::resource('products', 'ProductController')->except('show');
 
-    Route::get('products/exel/import','ProductController@import_page')->name('products.import_page');
-    Route::get('products/exel/export','ProductController@export')->name('products.export');
-    Route::post('products/exel/import','ProductController@import')->name('products.import');
+    Route::get('products/exel/import', 'ProductController@import_page')->name('products.import_page');
+    Route::get('products/exel/export', 'ProductController@export')->name('products.export');
+    Route::post('products/exel/import', 'ProductController@import')->name('products.import');
 
     Route::get('product/media/{id}', 'ProductController@media_index')->name('product_media_index');
     Route::post('product/media/{id}', 'ProductController@media_store')->name('product_media_store');
@@ -52,15 +54,17 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'check_admin'
     Route::post('product/gallery/{id}', 'ProductController@gallery_store')->name('product_gallery_store');
     Route::delete('product/media/{id}/{gallery_id}/destroy', 'ProductController@gallery_destroy')->name('product_gallery_destroy');
 
-    Route::get('contacts','ContactController@index')->name('contacts.index');
-    Route::get('contacts/single/{id}','ContactController@single')->name('contacts.single');
+    Route::get('contacts', 'ContactController@index')->name('contacts.index');
+    Route::get('contacts/single/{id}', 'ContactController@single')->name('contacts.single');
 
-    Route::get('orders/pending','OrderController@pending')->name('orders.pending');
-    Route::get('orders','OrderController@index')->name('orders.index');
-    Route::get('orders/items/{id}','OrderController@items')->name('orders.items');
-    Route::get('orders/items/update/{id}','OrderController@update_items')->name('orders.update_items');
-    Route::patch('orders/items/update/{id}','OrderController@update_items_do')->name('orders.update_items');
-    Route::patch('orders/confirm/{id}','OrderController@confirm')->name('orders.confirm');
+    Route::get('orders/pending', 'OrderController@pending')->name('orders.pending');
+    Route::get('orders', 'OrderController@index')->name('orders.index');
+    Route::get('orders/items/{id}', 'OrderController@items')->name('orders.items');
+    Route::get('orders/items/update/{id}', 'OrderController@update_items')->name('orders.update_items');
+    Route::patch('orders/items/update/{id}', 'OrderController@update_items_do')->name('orders.update_items');
+    Route::patch('orders/confirm/{id}', 'OrderController@confirm')->name('orders.confirm');
+
+    Route::get('transactions', 'TransactionController@index')->name('transactions.index');
 
 });
 
@@ -158,11 +162,12 @@ Route::group(['prefix' => 'panel', 'middleware' => ['web', 'auth', 'throttle:50,
     Route::get('profile', 'ProfileController@index')->name('user.profile');
     Route::patch('profile', 'ProfileController@update')->name('user.update_profile');
 
-    Route::get('orders','OrderController@index')->name('user.orders.index');
-    Route::get('orders/items/{id}','OrderController@items')->name('user.orders.items');
+    Route::get('orders', 'OrderController@index')->name('user.orders.index');
+    Route::get('orders/items/{id}', 'OrderController@items')->name('user.orders.items');
 
-    Route::post('payment/{order_id}/purchase','PaymentController@purchase')->name('payment.purchase');
-    Route::post('payment/{order_id}/result','PaymentController@result')->name('payment.result');
+    Route::get('transactions', 'TransactionController@index')->name('user.transactions.index');
+
+    Route::get('transaction/feedback','TransactionController@feedback')->name('user.transactions.feedback');
 
 });
 

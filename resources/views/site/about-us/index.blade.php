@@ -25,7 +25,7 @@
                         <header class="entry-header">
                             <div class="page-featured-image">
                                 <img width="1920" height="1391" alt="about-us" class="attachment-full size-full wp-post-image"
-                                     src="{{asset('assets/frontend/images/products/about-header.jpg')}}">
+                                     src="{{asset('assets/frontend/images/about-header.jpg')}}">
                             </div>
                             <div class="page-header-caption">
                                 <h1 class="entry-title">درباره ما</h1>
