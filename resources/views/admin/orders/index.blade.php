@@ -87,6 +87,7 @@
                                     <th>محصولات</th>
                                     <th>وضعیت</th>
                                     <th>نوع</th>
+                                    <th>قیمت(تومان)</th>
                                     <th>تایید</th>
                                 </tr>
 
@@ -116,6 +117,7 @@
                                             </td>
                                             <td>@lang($value['status'])</td>
                                             <td>@lang($value['type'])</td>
+                                            <td>{{number_format($value->Price())}}</td>
 
                                             @if ($value['status']==\App\Models\Order::PENDING)
                                                 <td>

@@ -88,6 +88,7 @@
                                     <th>وضعیت</th>
                                     <th>نوع</th>
                                     <th>پیام مدیریت</th>
+                                    <th>قیمت(تومان)</th>
                                     <th>پرداخت</th>
                                 </tr>
 
@@ -128,6 +129,8 @@
                                             @else
                                                 <td><i class="fa fa-close"></i></td>
                                             @endif
+
+                                            <td>{{number_format($value->Price())}}</td>
 
                                             @if ($value['status']==\App\Models\Order::ACCEPT ||$value['status']==\App\Models\Order::UPDATED && $value['type']==\App\Models\Order::UNPAID)
                                                 <td>
