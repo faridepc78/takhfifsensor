@@ -28,10 +28,13 @@ class TransactionController extends Controller
             $status = $request->input('status');
             if ($status == 'success') {
                 newFeedback('پیام', 'پرداخت با موفقیت انجام شد', 'success');
+                return redirect()->route('user.orders.index');
             } elseif ($status == 'fail') {
                 newFeedback('پیام', 'پرداخت با شکست مواجه شد', 'error');
+                return redirect()->route('user.orders.index');
             } elseif ($status == 'cancel') {
                 newFeedback('پیام', 'پرداخت توسط شما لغو شد', 'warning');
+                return redirect()->route('user.orders.index');
             } else {
                 abort(404);
             }
