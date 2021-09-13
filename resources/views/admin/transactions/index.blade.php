@@ -104,12 +104,11 @@
 
                                         <tr>
                                             <td>{{$key+1}}</td>
-                                            <td>{{$value->	payment_id}}</td>
+                                            <td>{{$value->payment_id}}</td>
                                             <td>{{$value->user->fullName}}</td>
                                             <td>{{$value->order->code}}</td>
                                             <td>{{number_format($value->paid)}}</td>
                                             <td>{{$value->transaction()}}</td>
-                                            <td>{{$value->code}}</td>
                                             <td>{{\Morilog\Jalali\CalendarUtils::strftime('Y/m/d', strtotime($value['created_at']))}}</td>
                                             <td>@lang($value['status'])</td>
                                         </tr>
