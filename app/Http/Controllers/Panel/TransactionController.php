@@ -35,6 +35,9 @@ class TransactionController extends Controller
             } elseif ($status == 'cancel') {
                 newFeedback('پیام', 'پرداخت توسط شما لغو شد', 'warning');
                 return redirect()->route('user.orders.index');
+            } elseif ($status == 'many_count') {
+                newFeedback('پیام', 'تعداد سفارشات شما بیشتر از موجودی ما در انبار است', 'error');
+                return redirect()->route('user.orders.index');
             } else {
                 abort(404);
             }

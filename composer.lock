@@ -4,8 +4,72 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a2148d6f41879e2d9214200e7aed9318",
+    "content-hash": "640db3b5794e2fa7e0411a638c2a5214",
     "packages": [
+        {
+            "name": "amirbagh75/smsir-php",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ohmydevops/smsir-php.git",
+                "reference": "c6e0bf283d93548dc2eb3e125e5ca9879bbb72c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ohmydevops/smsir-php/zipball/c6e0bf283d93548dc2eb3e125e5ca9879bbb72c0",
+                "reference": "c6e0bf283d93548dc2eb3e125e5ca9879bbb72c0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^7.0.1",
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "php": "~7.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Amirbagh75\\SMSIR\\SmsIrPhpServiceProvider"
+                    ],
+                    "aliases": {
+                        "SMSIR": "Amirbagh75\\SMSIR\\Facades\\SMSIR"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Amirbagh75\\SMSIR\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Amirhossein Baghaie",
+                    "email": "amirbagh75@gmail.com",
+                    "homepage": "https://amirbagh75.ir",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Unofficial sms.ir PHP Package",
+            "keywords": [
+                "notifacation",
+                "php",
+                "sendsms",
+                "sms",
+                "sms.ir",
+                "اس ام اس",
+                "پیامک"
+            ],
+            "support": {
+                "issues": "https://github.com/ohmydevops/smsir-php/issues",
+                "source": "https://github.com/ohmydevops/smsir-php/tree/1.1.1"
+            },
+            "time": "2021-02-26T14:21:45+00:00"
+        },
         {
             "name": "anhskohbo/no-captcha",
             "version": "3.3.0",
