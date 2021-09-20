@@ -2,8 +2,8 @@
 
 namespace App\Channels;
 
+use Amirbagh75\SMSIR\Facades\SMSIR;
 use Illuminate\Notifications\Notification;
-use MohsenBostan\GhasedakSms;
 
 class SmsChannel
 {
@@ -11,6 +11,6 @@ class SmsChannel
     {
         $message = $notification->toSms($notifiable);
         $user_mobile = $notifiable->mobile;
-        return GhasedakSms::sendSingleSMS($message, '09162154221');
+        SMSIR::send([$message], [$user_mobile]);
     }
 }
