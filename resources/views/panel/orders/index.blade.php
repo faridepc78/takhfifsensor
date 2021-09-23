@@ -57,9 +57,6 @@
                             <a href="{{route('user.orders.index','status='.\App\Models\Order::ACCEPT)}}"
                                class="btn btn-success">تایید شده</a>
 
-                            <a href="{{route('user.orders.index','status='.\App\Models\Order::UPDATED)}}"
-                               class="btn btn-primary">بروزرسانی شده</a>
-
                             <a href="{{route('user.orders.index','status='.\App\Models\Order::PENDING)}}"
                                class="btn btn-warning">برسی نشده</a>
 
@@ -119,7 +116,7 @@
                                             <td>@lang($value['status'])</td>
                                             <td>@lang($value['type'])</td>
 
-                                            @if ($value['status']==\App\Models\Order::UPDATED)
+                                            @if ($value['message']!=null)
                                                 <td>
                                                     <a href="javascript:void(0)" data-toggle="modal"
                                                        data-target="#orderMessage{{$value['id']}}">
@@ -132,7 +129,7 @@
 
                                             <td>{{number_format($value->Price())}}</td>
 
-                                            @if ($value['status']==\App\Models\Order::ACCEPT ||$value['status']==\App\Models\Order::UPDATED && $value['type']==\App\Models\Order::UNPAID)
+                                            @if ($value['status']==\App\Models\Order::ACCEPT && $value['type']==\App\Models\Order::UNPAID)
                                                 <td>
                                                     <form method="post" action="https://api.takhfifsensor.com">
                                                         @csrf

@@ -19,8 +19,5 @@ class Status extends Filter
         elseif ($search == 'pending') {
             return $builder->where('status', '=', Order::PENDING);
         }
-        elseif ($search == 'updated') {
-            return $builder->where('status', '=', Order::UPDATED);
-        }
     }
 }

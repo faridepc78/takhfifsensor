@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Order\UpdateOrderItemRequest;
 use App\Models\Order;
+use App\Notifications\ConfirmOrder;
 use App\Repositories\OrderRepository;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +53,7 @@ class OrderController extends Controller
                 $this->orderRepository->update($request, $orderItem->order->id);
 
                 if ($orderItem->order['status'] == Order::PENDING) {
-                    $this->orderRepository->updateStatus(Order::UPDATED, $id);
+                    $this->orderRepository->updateStatus(Order::UPDATED, $orderItem->order['id']);
                 }
 
             });
@@ -70,6 +71,10 @@ class OrderController extends Controller
         try {
             $order = $this->orderRepository->findById($id);
             if ($order['status'] == Order::PENDING) {
+                $this->orderRepository->updateStatus(Order::ACCEPT, $id);
+                $order->user->notify(new ConfirmOrder($order->user->fullName, Order::ACCEPT, $order['code']));
+            } elseif ($order['status'] == Order::UPDATED) {
+                $order->user->notify(new ConfirmOrder($order->user->fullName, Order::UPDATED, $order['code']));
                 $this->orderRepository->updateStatus(Order::ACCEPT, $id);
             } else {
                 abort(403);

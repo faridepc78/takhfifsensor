@@ -83,7 +83,7 @@ class OrderRepository
                 Search::class
             ])
             ->thenReturn()
-            ->where('status', '=', Order::PENDING)
+            ->whereIn('status', [Order::PENDING, Order::UPDATED])
             ->latest()
             ->paginate(10);
     }
@@ -113,6 +113,7 @@ class OrderRepository
             ])
             ->thenReturn()
             ->where('user_id', '=', $user_id)
+            ->where('status', '!=', Order::UPDATED)
             ->latest()
             ->paginate(10);
     }

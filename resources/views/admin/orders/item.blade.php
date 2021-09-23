@@ -81,7 +81,7 @@
                                     <input onkeyup="this.value=removeSpaces(this.value);separateNum(this.value,this)"
                                            type="text"
                                            class="form-control @error('count') is-invalid @enderror"
-                                           value="{{ old('count',number_format($item->product->count)) }}" id="count" name="count"
+                                           value="{{ old('count',number_format($item->count)) }}" id="count" name="count"
                                            placeholder="لطفا تعداد محصول را وارد کنید"
                                            autocomplete="count" autofocus>
 

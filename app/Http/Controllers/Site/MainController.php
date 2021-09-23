@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Site\ContactUs\ContactUsRequest;
 use App\Http\Requests\Site\Order\OrderRequest;
+use App\Notifications\RegisterOrder;
 use App\Repositories\BannerRepository;
 use App\Repositories\BrandRepository;
 use App\Repositories\CategoryRepository;
@@ -18,6 +19,7 @@ use App\Services\BasketBuy\BasketBuyService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class MainController extends Controller
@@ -142,10 +144,12 @@ class MainController extends Controller
                     }
                 }
 
+                Auth::user()->notify(new RegisterOrder(Auth::user()->fullName, $order['code']));
+
                 $this->basketBuyService::deleteData();
             });
             DB::commit();
-            newFeedback('پیام', 'سفارشات شما ثبت شد لطفا برای پرداخت نهایی منتظر تایید مدیریت باشید', 'success');
+            newFeedback('پیام', 'سفارش شما ثبت شد لطفا برای پرداخت نهایی منتظر تایید مدیریت باشید', 'success');
         } catch (Exception $exception) {
             DB::rollBack();
             newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
