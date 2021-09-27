@@ -11,6 +11,11 @@ class Search extends Filter
     protected function applyFilter($builder)
     {
         $keyword = request($this->filterName());
-        return $builder->where('name', 'like', '%' . $keyword . '%');
+
+        if ($keyword != null) {
+            return $builder->where('name', 'like', '%' . $keyword . '%');
+        } else {
+            return $builder;
+        }
     }
 }

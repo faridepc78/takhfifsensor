@@ -10,7 +10,9 @@ class Token extends Filter
 {
     protected function applyFilter($builder)
     {
-        if (request($this->filterName()) != null) {
+        $keyword = request($this->filterName());
+
+        if ($keyword != null) {
             return $builder->where('payment_id', request($this->filterName()));
         } else {
             return $builder;

@@ -11,11 +11,11 @@ class Type extends Filter
 {
     protected function applyFilter($builder)
     {
-        $search = request($this->filterName());
+        $keyword = request($this->filterName());
 
-        if ($search == 'paid') {
+        if ($keyword == 'paid') {
             return $builder->where('type', '=', Order::PAID);
-        } elseif ($search == 'unpaid') {
+        } elseif ($keyword == 'unpaid') {
             return $builder->where('type', '=', Order::UNPAID);
         }
     }

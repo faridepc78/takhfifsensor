@@ -12,9 +12,13 @@ class Search extends Filter
     {
         $keyword = request($this->filterName());
 
-        return $builder->where('f_name', 'like', '%' . $keyword . '%')
-            ->orWhere('l_name', 'like', '%' . $keyword . '%')
-            ->orWhereRaw("concat(f_name, ' ', l_name) like '%$keyword%' ")
-            ->orWhere('mobile', $keyword);
+        if ($keyword != null) {
+            return $builder->where('f_name', 'like', '%' . $keyword . '%')
+                ->orWhere('l_name', 'like', '%' . $keyword . '%')
+                ->orWhereRaw("concat(f_name, ' ', l_name) like '%$keyword%' ")
+                ->orWhere('mobile', $keyword);
+        } else {
+            return $keyword;
+        }
     }
 }

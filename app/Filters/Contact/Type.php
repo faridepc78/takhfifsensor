@@ -11,11 +11,11 @@ class Type extends Filter
 {
     protected function applyFilter($builder)
     {
-        $search = request($this->filterName());
+        $keyword = request($this->filterName());
 
-        if ($search == 'read') {
+        if ($keyword == 'read') {
             return $builder->where('type', '=', ContactUs::READ);
-        } elseif ($search == 'unread') {
+        } elseif ($keyword == 'unread') {
             return $builder->where('type', '=', ContactUs::UNREAD);
         }
     }

@@ -11,12 +11,12 @@ class Status extends Filter
 {
     protected function applyFilter($builder)
     {
-        $search = request($this->filterName());
+        $keyword = request($this->filterName());
 
-        if ($search == 'accept') {
+        if ($keyword == 'accept') {
             return $builder->where('status', '=', Order::ACCEPT);
         }
-        elseif ($search == 'pending') {
+        elseif ($keyword == 'pending') {
             return $builder->where('status', '=', Order::PENDING);
         }
     }
