@@ -14,7 +14,7 @@
 
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a class="my-active" href="{{route('categories.index')}}">مدیریت
+                        <li class="breadcrumb-item"><a class="my-active" href="{{route('postsCategories.index')}}">مدیریت
                                 دسته بندی ها</a></li>
                     </ol>
                 </div>

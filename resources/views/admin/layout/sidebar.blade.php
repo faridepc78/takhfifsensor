@@ -370,7 +370,8 @@
 'posts.edit',
 'postsCategories.index',
 'postsCategories.create',
-'postsCategories.edit']) ? 'menu-open' : '' }}">
+'postsCategories.edit',
+'post_media_index']) ? 'menu-open' : '' }}">
 
                         <a href="#"
                            class="nav-link {{ request()->routeIs(['posts.index',
@@ -378,7 +379,8 @@
 'posts.edit',
 'postsCategories.index',
 'postsCategories.create',
-'postsCategories.edit']) ? 'active' : '' }}">
+'postsCategories.edit',
+'post_media_index']) ? 'active' : '' }}">
                             <i class="nav-icon fa fa-paper-plane"></i>
                             <p>
                                 پست ها
