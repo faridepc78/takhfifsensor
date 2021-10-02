@@ -85,7 +85,7 @@
                                             <td>{{$value->mobile()}}</td>
                                             <td>
                                                 <a href="javascript:void(0)" data-toggle="modal"
-                                                   data-target="#contactSubject{{$value['id']}}">
+                                                   data-target="#contactText{{$value['id']}}">
                                                     <i class="fa fa-eye text-success"></i>
                                                 </a>
                                             </td>
@@ -99,7 +99,7 @@
                                         </tr>
 
                                         <div class="modal fade mt-lg-5"
-                                             id="contactSubject{{$value['id']}}" tabindex="-1"
+                                             id="contactText{{$value['id']}}" tabindex="-1"
                                              role="dialog"
                                              aria-hidden="true">
 
@@ -123,7 +123,7 @@
 
                                                     <div class="modal-body">
 
-                                                        <input value="{{$value['subject']}}" type="text" class="form-control" readonly>
+                                                        <input value="{{$value['text']}}" type="text" class="form-control" readonly>
 
                                                     </div>
 

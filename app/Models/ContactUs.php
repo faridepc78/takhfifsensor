@@ -23,7 +23,8 @@ class ContactUs extends Model
             'mobile',
             'user_id',
             'subject',
-            'text'
+            'text',
+            'type'
         ];
 
     const READ = 'read';
