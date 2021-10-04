@@ -3,7 +3,7 @@
 @endsection
 
 @section('site_body')
-    <body class="organic-market page-template-template-homepage-v1 woocommerce-active">
+    <body class="page home page-template-default">
     @endsection
 
     @include('site.layout.header')
