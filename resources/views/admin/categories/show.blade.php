@@ -47,6 +47,7 @@
 
                                 <tr>
                                     <th>ردیف</th>
+                                    <th>آیدی</th>
                                     <th>نام</th>
                                     <th>اسلاگ</th>
                                     @if ($category['level']==1)
@@ -62,6 +63,7 @@
 
                                         <tr>
                                             <td>{{$key+1}}</td>
+                                            <td>{{$value->id}}</td>
                                             <td>{{$value->name}}</td>
                                             <td>{{$value->slug}}</td>
 

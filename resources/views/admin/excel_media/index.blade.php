@@ -54,6 +54,7 @@
 
                                 <tr>
                                     <th>ردیف</th>
+                                    <th>آیدی</th>
                                     <th>نام</th>
                                     <th>تصویر</th>
                                     <th>ویرایش</th>
@@ -66,6 +67,7 @@
 
                                         <tr>
                                             <td>{{$key+1}}</td>
+                                            <td>{{$value->id}}</td>
                                             <td>{{$value->Name()}}</td>
                                             <td>
                                                 <img width="50" height="50" src="{{$value->media->original}}" alt="{{$value->media->original}}">

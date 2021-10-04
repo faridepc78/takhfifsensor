@@ -38,6 +38,7 @@
 
                                 <tr>
                                     <th>ردیف</th>
+                                    <th>آیدی</th>
                                     <th>نام</th>
                                     <th>اسلاگ</th>
                                     <th>زیر دسته ها</th>
@@ -51,6 +52,7 @@
 
                                         <tr>
                                             <td>{{$key+1}}</td>
+                                            <td>{{$value->id}}</td>
                                             <td>{{$value->name}}</td>
                                             <td>{{$value->slug}}</td>
 

@@ -40,6 +40,9 @@
 
                             <br>
 
+                            <a target="_blank" href="{{asset('assets/common/images/excel.png')}}"
+                               class="btn btn-info">تصویر راهنما</a>
+
                             <a href="{{route('products.export')}}"
                                class="btn btn-success">اکسپورت محصولات</a>
 
