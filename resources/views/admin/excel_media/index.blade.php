@@ -67,7 +67,7 @@
 
                                         <tr>
                                             <td>{{$key+1}}</td>
-                                            <td>{{$value->id}}</td>
+                                            <td>{{$value->media->id}}</td>
                                             <td>{{$value->Name()}}</td>
                                             <td>
                                                 <img width="50" height="50" src="{{$value->media->original}}" alt="{{$value->media->original}}">
