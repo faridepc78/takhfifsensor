@@ -53,4 +53,11 @@ class ExcelMediaRepository
                 'media_id' => $media_id
             ]);
     }
+
+    public function checkMediaId($id)
+    {
+        return ExcelMedia::query()
+            ->where('media_id', '=', $id)
+            ->exists();
+    }
 }

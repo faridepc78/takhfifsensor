@@ -11,6 +11,7 @@ use App\Http\Requests\Admin\Product\UpdateProductRequest;
 use App\Imports\ProductsImport;
 use App\Repositories\BrandRepository;
 use App\Repositories\CategoryRepository;
+use App\Repositories\ExcelMediaRepository;
 use App\Repositories\ProductRepository;
 use App\Services\Media\MediaFileService;
 use Exception;
@@ -23,14 +24,17 @@ class ProductController extends Controller
     private $productRepository;
     private $categoryRepository;
     private $brandRepository;
+    private $excelMediaRepository;
 
-    public function __construct(ProductRepository $productRepository,
-                                CategoryRepository $categoryRepository,
-                                BrandRepository $brandRepository)
+    public function __construct(ProductRepository    $productRepository,
+                                CategoryRepository   $categoryRepository,
+                                BrandRepository      $brandRepository,
+                                ExcelMediaRepository $excelMediaRepository)
     {
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
         $this->brandRepository = $brandRepository;
+        $this->excelMediaRepository = $excelMediaRepository;
     }
 
     public function index()
@@ -84,7 +88,9 @@ class ProductController extends Controller
                         'products', null)->id;
                     $this->productRepository->addImage($image_id, $product->id);
                     if ($product->image) {
-                        $product->image->delete();
+                        if (!$this->excelMediaRepository->checkMediaId($product->image->id)) {
+                            $product->image->delete();
+                        }
                     }
                 } else {
                     $this->productRepository->update($request, $product->image_id, $id);
@@ -134,9 +140,9 @@ class ProductController extends Controller
     public function import(Request $request)
     {
         try {
-            Excel::import(new ProductsImport(),request()->file('file'));
+            Excel::import(new ProductsImport(), request()->file('file'));
             newFeedback();
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
         }
         return redirect()->route('products.import_page');
@@ -146,7 +152,7 @@ class ProductController extends Controller
     {
         try {
             return Excel::download(new ProductsExport(), 'products.xlsx');
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
         }
         return redirect()->route('products.import_page');
