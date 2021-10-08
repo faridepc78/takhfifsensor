@@ -149,6 +149,60 @@ class ProductRepository
             ->paginate(21);
     }
 
+    public function checkForTransaction($values)
+    {
+        foreach ($values as $value) {
+            $result = $this->getCounts($value['product_id']);
+
+            if ($result['main_count'] >= $value['count']) {
+                $status[] = 'yes';
+            } else {
+                $status[] = 'no';
+            }
+        }
+        return $status;
+    }
+
+    public function getCounts($id)
+    {
+        return Product::query()
+            ->select('count as main_count')
+            ->where('id', '=', $id)
+            ->firstOrFail();
+    }
+
+    public function getSails($id)
+    {
+        return Product::query()
+            ->select('sale as main_sale')
+            ->where('id', '=', $id)
+            ->firstOrFail();
+    }
+
+    public function updateCount($values)
+    {
+        foreach ($values as $value) {
+            $result = $this->getCounts($value['product_id']);
+            Product::query()
+                ->where('id', '=', $value['product_id'])
+                ->update([
+                    'count' => $result['main_count'] - $value['count']
+                ]);
+        }
+    }
+
+    public function updateSale($values)
+    {
+        foreach ($values as $value) {
+            $result = $this->getSails($value['product_id']);
+            Product::query()
+                ->where('id', '=', $value['product_id'])
+                ->update([
+                    'sale' => $result['main_sale'] + 1
+                ]);
+        }
+    }
+
     /*START MEDIA*/
 
     public function findMediaByProductId($product_id)

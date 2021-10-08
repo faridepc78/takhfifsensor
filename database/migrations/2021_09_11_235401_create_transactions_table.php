@@ -18,10 +18,14 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->string('payment_id', 10)->index()->unique();
             $table->unsignedBigInteger('user_id');
+            $table->string('user_ip');
             $table->unsignedBigInteger('order_id');
             $table->unsignedInteger('paid');
             $table->string('transaction_id')->nullable();
             $table->enum('status', Transaction::$statuses);
+            $table->enum('type', Transaction::$types);
+            $table->text('invoice_details')->nullable();
+            $table->text('transaction_result')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')

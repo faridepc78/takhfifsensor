@@ -38,4 +38,26 @@ class TransactionRepository
             ->latest()
             ->paginate(10);
     }
+
+    public function create($values)
+    {
+        return Transaction::query()
+            ->create([
+                'payment_id' => $values['payment_id'],
+                'user_id' => $values['user_id'],
+                'user_ip' => $values['user_ip'],
+                'order_id' => $values['order_id'],
+                'paid' => $values['paid'],
+                'status' => $values['status'],
+                'type' => $values['type'],
+                'invoice_details' => $values['invoice_details']
+            ]);
+    }
+
+    public function findByPaymentId($payment_id)
+    {
+        return Transaction::query()
+            ->where('payment_id', '=', $payment_id)
+            ->first();
+    }
 }

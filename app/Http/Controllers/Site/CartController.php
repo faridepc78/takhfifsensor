@@ -15,9 +15,9 @@ class CartController extends Controller
     private $productRepository;
     private $hashids;
 
-    public function __construct(BasketBuyService $basketBuyService,
+    public function __construct(BasketBuyService  $basketBuyService,
                                 ProductRepository $productRepository,
-                                Hashids $hashids)
+                                Hashids           $hashids)
     {
         $this->basketBuyService = $basketBuyService;
         $this->productRepository = $productRepository;
@@ -132,12 +132,10 @@ class CartController extends Controller
 
                 if ($result['status'] == 'success') {
                     newFeedback('پیام', 'تعداد محصول در سبد خرید با موفقیت بروزرسانی شد', 'success');
-                } elseif ($result['status']=='duplicate') {
+                } elseif ($result['status'] == 'duplicate') {
                     newFeedback('پیام', 'تعداد محصول در سبد خرید تغییری نکرد', 'warning');
-                }elseif($result['status']=='noSetItem'){
-                    $this->add($this->hashids->encode($product_id),$this->hashids->encode($request->get('count')));
-                }else{
-                    newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
+                } elseif ($result['status'] == 'noSetItem' || $result['status'] == 'fail') {
+                    $this->add($this->hashids->encode($product_id), $this->hashids->encode($request->get('count')));
                 }
 
             } else {

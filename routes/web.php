@@ -148,6 +148,10 @@ Route::group(['prefix' => '/', 'middleware' => ['web', 'throttle:50,1', 'block_u
     Route::get('blog/post/{slug}', 'BlogController@post')->name('blog.post');
     Route::get('blog/search', 'BlogController@search')->name('blog.search');
 
+    Route::get('payment/choice/{order_id}', 'PaymentController@choice')->name('payment.choice');
+    Route::post('payment/request', 'PaymentController@request')->name('payment.request');
+    Route::post('payment/verify', 'PaymentController@verify')->name('payment.verify');
+
 });
 
 /*END SITE*/
@@ -168,8 +172,7 @@ Route::group(['prefix' => 'panel', 'middleware' => ['web', 'auth', 'throttle:50,
     Route::get('orders/items/{id}', 'OrderController@items')->name('user.orders.items');
 
     Route::get('transactions', 'TransactionController@index')->name('user.transactions.index');
-
-    Route::get('transaction/feedback','TransactionController@feedback')->name('user.transactions.feedback');
+    Route::get('transaction/feedback', 'TransactionController@feedback')->name('user.transactions.feedback');
 
 });
 

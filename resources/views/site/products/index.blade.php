@@ -130,12 +130,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="rating-and-sharing-wrapper">
+                                    {{--<div class="rating-and-sharing-wrapper">
                                         <div class="woocommerce-product-rating">
                                             <a rel="nofollow" class="woocommerce-review-link" href="#reviews">(<span
                                                     class="count">1</span> دیدگاه مشتریان)</a>
                                         </div>
-                                    </div>
+                                    </div>--}}
 
                                     <div class="woocommerce-product-details__short-description">
                                         {!! $product->feature !!}

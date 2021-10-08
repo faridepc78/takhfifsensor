@@ -118,11 +118,18 @@ class OrderRepository
             ->paginate(10);
     }
 
-    public function getAllItemsByOrderId($order_id)
+    public function getAllItemsByOrderId($order_id, $no_paginate = null)
     {
-        return OrderItem::query()
-            ->where('order_id', '=', $order_id)
-            ->latest()
-            ->paginate(10);
+        if ($no_paginate == true) {
+            return OrderItem::query()
+                ->where('order_id', '=', $order_id)
+                ->latest()
+                ->get();
+        } else {
+            return OrderItem::query()
+                ->where('order_id', '=', $order_id)
+                ->latest()
+                ->paginate(10);
+        }
     }
 }

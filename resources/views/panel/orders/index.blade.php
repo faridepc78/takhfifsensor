@@ -131,12 +131,7 @@
 
                                             @if ($value['status']==\App\Models\Order::ACCEPT && $value['type']==\App\Models\Order::UNPAID)
                                                 <td>
-                                                    <form method="post" action="https://api.takhfifsensor.com">
-                                                        @csrf
-                                                        <input type="hidden" name="order_id"
-                                                               value="{{\App\Helpers\EncryptDecrypt::my_encrypt($value['id'],'password')}}">
-                                                        <input type="hidden" name="user_id"
-                                                               value="{{\App\Helpers\EncryptDecrypt::my_encrypt(auth()->id(),'password')}}">
+                                                    <form method="get" action="{{route('payment.choice',\App\Helpers\EncryptDecrypt::my_encrypt($value['id'],env('PAYMENT_TOKEN')))}}">
                                                         <button class="btn btn-success" type="submit"><i
                                                                 class="fa fa-check text-warning"></i></button>
                                                     </form>

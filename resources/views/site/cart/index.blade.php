@@ -92,7 +92,7 @@
                                                                             type="number"
                                                                             name="{{\Vinkla\Hashids\Facades\Hashids::encode($value['id'])}}"
                                                                             max="50" value="{{$value['count']}}"
-                                                                            title="تعداد" class="input-text qty text"
+                                                                            title="تعداد" class="input-text qty text" min="1"
                                                                             size="4">
                                                                     </div>
                                                                 </td>
