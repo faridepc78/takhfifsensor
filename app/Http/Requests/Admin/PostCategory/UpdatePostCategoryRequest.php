@@ -21,11 +21,9 @@ class UpdatePostCategoryRequest extends FormRequest
 
     public function rules()
     {
-        $id = request()->route('postsCategory');
-
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:posts_categories,name,' . $id],
-            'slug' => ['required', 'string', 'max:255', 'unique:posts_categories,slug,' . $id]
+            'name' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255']
         ];
     }
 

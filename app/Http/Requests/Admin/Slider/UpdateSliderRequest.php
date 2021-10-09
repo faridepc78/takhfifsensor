@@ -14,12 +14,10 @@ class UpdateSliderRequest extends FormRequest
 
     public function rules()
     {
-        $id = request()->route('slider');
-
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:sliders,name,' . $id],
-            'url' => ['required', 'url', 'unique:sliders,url,' . $id],
-            'image' => ['nullable', 'mimes:jpg,png,jpeg', 'max:1024']
+            'name' => ['nullable', 'string', 'max:255'],
+            'url' => ['nullable', 'url'],
+            'image' => ['nullable', 'mimes:jpg,png,jpeg', 'max:5120']
         ];
     }
 

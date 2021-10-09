@@ -36,7 +36,7 @@
                         </div>
 
                         <form id="store_category_form" action="{{route('categories.store')}}"
-                              method="post">
+                              method="post" enctype="multipart/form-data">
 
                             @csrf
 
@@ -112,6 +112,19 @@
                                     </select>
 
                                     @error('parent_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="image">تصویر دسته بندی</label>
+                                    <input accept=".jpg,.jpeg,.png" type="file"
+                                           class="form-control @error('image') is-invalid @enderror"
+                                           autofocus id="image" name="image">
+
+                                    @error('image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

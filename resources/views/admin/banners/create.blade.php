@@ -43,7 +43,7 @@
                             <div class="card-body">
 
                                 <div class="form-group">
-                                    <label for="name">نام بنر *</label>
+                                    <label for="name">نام بنر</label>
                                     <input onkeyup="this.value=removeSpaces(this.value)" type="text"
                                            class="form-control @error('name') is-invalid @enderror"
                                            value="{{ old('name') }}" id="name" name="name"
@@ -58,7 +58,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="url">لینک بنر *</label>
+                                    <label for="url">لینک بنر</label>
                                     <input onkeyup="this.value=removeSpaces(this.value)" type="text"
                                            class="form-control @error('url') is-invalid @enderror"
                                            value="{{ old('url') }}" id="url" name="url"
@@ -133,15 +133,6 @@
         $('#store_banner_form').validate({
 
             rules: {
-                name: {
-                    required: true
-                },
-
-                url: {
-                    required: true,
-                    checkUrl: true
-                },
-
                 image: {
                     required: true
                 },
@@ -152,15 +143,6 @@
             },
 
             messages: {
-                name: {
-                    required: "لطفا نام بنر را وارد کنید"
-                },
-
-                url: {
-                    required: "لطفا لینک بنر را وارد کنید",
-                    checkUrl: "لطفا لینک بنر را صحیح وارد کنید"
-                },
-
                 image: {
                     required: "لطفا تصویر بنر را انتخاب کنید"
                 },

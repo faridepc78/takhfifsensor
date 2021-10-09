@@ -1,6 +1,7 @@
 <?php
 
 use App\Services\Media\ImageFileService;
+use App\Services\Media\PdfFileService;
 
 return [
     "MediaTypeServices" => [
@@ -9,6 +10,12 @@ return [
                 "png", "jpg", "jpeg"
             ],
             "handler" => ImageFileService::class
+        ],
+        "pdf" => [
+            "extensions" => [
+                "pdf"
+            ],
+            "handler" => PdfFileService::class
         ]
     ]
 ];

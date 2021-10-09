@@ -21,12 +21,10 @@ class UpdateBrandRequest extends FormRequest
 
     public function rules()
     {
-        $id = request()->route('brand');
-
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:brands,name,' . $id],
-            'slug' => ['required', 'string', 'max:255', 'unique:brands,slug,' . $id],
-            'image' => ['nullable', 'mimes:jpg,png,jpeg', 'max:1024']
+            'name' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255'],
+            'image' => ['nullable', 'mimes:jpg,png,jpeg', 'max:5120']
         ];
     }
 

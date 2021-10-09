@@ -56,7 +56,8 @@
                                     <th>ردیف</th>
                                     <th>آیدی</th>
                                     <th>نام</th>
-                                    <th>تصویر</th>
+                                    <th>مدیا</th>
+                                    <th>نوع</th>
                                     <th>ویرایش</th>
                                     <th>حذف</th>
                                 </tr>
@@ -69,9 +70,19 @@
                                             <td>{{$key+1}}</td>
                                             <td>{{$value->media->id}}</td>
                                             <td>{{$value->Name()}}</td>
-                                            <td>
-                                                <img width="50" height="50" src="{{$value->media->original}}" alt="{{$value->media->original}}">
-                                            </td>
+
+                                            @if ($value->media->type=='image')
+                                                <td>
+                                                    <img width="50" height="50" src="{{$value->media->original}}" alt="{{$value->media->original}}">
+                                                </td>
+                                                @elseif ($value->media->type=='pdf')
+                                                <td>
+                                                    <a href="{{$value->media->original}}"><i class="fa fa-download text-success"></i></a>
+                                                </td>
+                                            @endif
+
+                                            <td>@lang($value->media->type)</td>
+
                                             <td>
                                                 <a target="_blank" href="{{route('excel_media.edit',$value->id)}}">
                                                     <i class="fa fa-edit text-primary"></i>

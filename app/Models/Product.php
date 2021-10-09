@@ -26,7 +26,6 @@ class Product extends Model
             'image_id',
             'price',
             'discount',
-            'feature',
             'text',
             'count',
             'status',

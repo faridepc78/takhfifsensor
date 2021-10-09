@@ -52,7 +52,13 @@
 
                                         <tr>
                                             <td>{{$key+1}}</td>
-                                            <td>{{$value->name}}</td>
+                                            <td>
+                                                @if (!empty($value->name))
+                                                    {{$value->name}}
+                                                @else
+                                                    ندارد
+                                                @endif
+                                            </td>
                                             <td>
                                                 <a href="javascript:void(0)" data-toggle="modal"
                                                    data-target="#bannerUrl{{$value['id']}}">

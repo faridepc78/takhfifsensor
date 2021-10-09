@@ -15,10 +15,11 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('slug')->unique();
+            $table->string('name');
+            $table->string('slug');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->enum('level', ['1', '2', '3']);
+            $table->unsignedBigInteger('image_id')->nullable();
             $table->timestamps();
 
             $table->foreign('parent_id')
@@ -26,6 +27,12 @@ class CreateCategoriesTable extends Migration
                 ->on('categories')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
+
+            $table->foreign('image_id')
+                ->references('id')
+                ->on('media')
+                ->onUpdate('CASCADE')
+                ->onDelete('SET NULL');
         });
     }
 

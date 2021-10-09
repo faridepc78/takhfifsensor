@@ -15,8 +15,8 @@ class StoreExcelMediaRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:excel_media,name'],
-            'media' => ['required', 'mimes:jpg,png,jpeg', 'max:1024']
+            'name' => ['required', 'string', 'max:255'],
+            'media' => ['required', 'mimes:jpg,png,jpeg,pdf', 'max:5120']
         ];
     }
 

@@ -26,14 +26,13 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:products,name'],
-            'slug' => ['required', 'string', 'max:255', 'unique:products,slug'],
+            'name' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255'],
             'category_id' => ['required', 'exists:categories,id'],
             'brand_id' => ['required', 'exists:brands,id'],
-            'image' => ['required', 'mimes:jpg,png,jpeg', 'max:1024'],
+            'image' => ['required', 'mimes:jpg,png,jpeg', 'max:5120'],
             'price' => ['required', 'numeric', 'min:1000'],
             'discount' => ['nullable', 'numeric', 'between:1,100'],
-            'feature' => ['required', 'string'],
             'text' => ['required', 'string'],
             'count' => ['required', 'numeric', 'min:1'],
             'status' => ['required', Rule::in(Product::$statuses)]
@@ -50,7 +49,6 @@ class StoreProductRequest extends FormRequest
             'image' => 'تصویر محصول',
             'price' => 'قیمت محصول',
             'discount' => 'درصد تخفیف محصول',
-            'feature' => 'ویژگی های محصول',
             'text' => 'توضیحات محصول',
             'count'=>'تعداد موجودی محصول',
             'status' => 'وضعیت محصول'

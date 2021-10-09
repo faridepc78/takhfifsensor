@@ -14,16 +14,26 @@ class CategoryRepository
                 'name' => $values['name'],
                 'slug' => $values['slug'],
                 'parent_id' => $values['parent_id'],
+                'image_id' => null,
                 'level' => $values['level']
             ]);
     }
 
-    public function paginate()
+    public function addImage($image_id, $id)
+    {
+        return Category::query()
+            ->where('id', '=', $id)
+            ->update([
+                'image_id' => $image_id
+            ]);
+    }
+
+    public function paginate($count = 10)
     {
         return Category::query()
             ->where('parent_id', '=', null)
             ->latest()
-            ->paginate(10);
+            ->paginate($count);
     }
 
     public function findById($id)
@@ -38,7 +48,7 @@ class CategoryRepository
             ->findOrFail($parent_id);
     }
 
-    public function update($values, $id)
+    public function update($values, $image_id, $id)
     {
         return Category::query()
             ->where('id', '=', $id)
@@ -46,7 +56,8 @@ class CategoryRepository
                 'name' => $values['name'],
                 'slug' => $values['slug'],
                 'parent_id' => $values['parent_id'],
-                'level' => $values['level']
+                'level' => $values['level'],
+                'image_id' => $image_id
             ]);
     }
 

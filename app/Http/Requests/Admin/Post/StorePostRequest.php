@@ -24,10 +24,10 @@ class StorePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:posts,name'],
-            'slug' => ['required', 'string', 'max:255', 'unique:posts,slug'],
+            'name' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255'],
             'category_id' => ['required', 'exists:posts_categories,id'],
-            'image' => ['required', 'mimes:jpg,png,jpeg', 'max:1024'],
+            'image' => ['required', 'mimes:jpg,png,jpeg', 'max:5120'],
             'text' => ['required', 'string'],
             'status' => ['required', Rule::in(Post::$statuses)]
         ];

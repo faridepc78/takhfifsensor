@@ -59,7 +59,7 @@
 
                                 <div class="form-group">
                                     <label for="media">مدیا اکسل *</label>
-                                    <input accept=".jpg,.jpeg,.png" type="file"
+                                    <input accept=".jpg,.jpeg,.png,.pdf" type="file"
                                            class="form-control @error('media') is-invalid @enderror"
                                            autofocus id="media" name="media">
 

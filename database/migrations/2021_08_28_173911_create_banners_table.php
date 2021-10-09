@@ -15,9 +15,9 @@ class CreateBannersTable extends Migration
     {
         Schema::create('banners', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name')->nullable();
             $table->unsignedBigInteger('image_id')->nullable();
-            $table->string('url')->unique();
+            $table->string('url')->nullable();
             $table->enum('type', \App\Models\Banner::$types);
             $table->timestamps();
 

@@ -51,7 +51,11 @@
 
                                         <tr>
                                             <td>{{$key+1}}</td>
-                                            <td>{{$value->name}}</td>
+                                            @if (!empty($value->name))
+                                                <td>{{$value->name}}</td>
+                                            @else
+                                                <td>ندارد</td>
+                                            @endif
                                             <td>
                                                 <a href="javascript:void(0)" data-toggle="modal"
                                                    data-target="#sliderUrl{{$value['id']}}">

@@ -21,12 +21,18 @@ class Category extends Model
             'name',
             'slug',
             'parent_id',
-            'level'
+            'level',
+            'image_id'
         ];
 
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id', 'id')->withDefault();
+    }
+
+    public function image()
+    {
+        return $this->belongsTo(Media::class, 'image_id', 'id')->withDefault();
     }
 
     public function sub()

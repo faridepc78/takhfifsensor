@@ -62,10 +62,14 @@
                                 <div class="form-group">
                                     <label for="media">مدیا اکسل</label>
 
-                                    <img class="img-bordered" style="width: 150px;height: 150px" src="{{$excel_media->media->original}}"
-                                         alt="{{$excel_media->media->original}}">
+                                    @if ($excel_media->media->type=='image')
+                                        <img class="img-bordered" style="width: 150px;height: 150px" src="{{$excel_media->media->original}}"
+                                             alt="{{$excel_media->media->original}}">
+                                    @elseif ($excel_media->media->type=='pdf')
+                                        <a style="margin-right: 20px" href="{{$excel_media->media->original}}"><i class="fa fa-download text-success"></i></a>
+                                    @endif
 
-                                    <input accept=".jpg,.jpeg,.png" type="file"
+                                    <input accept=".jpg,.jpeg,.png,.pdf" type="file"
                                            class="form-control @error('media') is-invalid @enderror"
                                            autofocus id="media" name="media">
 

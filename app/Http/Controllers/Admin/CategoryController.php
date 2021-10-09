@@ -7,7 +7,9 @@ use App\Http\Requests\Admin\Category\Show\ShowCategoryRequest;
 use App\Http\Requests\Admin\Category\StoreCategoryRequest;
 use App\Http\Requests\Admin\Category\UpdateCategoryRequest;
 use App\Repositories\CategoryRepository;
+use App\Services\Media\MediaFileService;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -20,7 +22,14 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = $this->categoryRepository->paginate();
+        $paginate = request()->input('paginate');
+
+        if (isset($paginate) && $paginate >= 10 && $paginate <= 100) {
+            $categories = $this->categoryRepository->paginate(request()->input('paginate'));
+        } else {
+            $categories = $this->categoryRepository->paginate();
+        }
+
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -33,9 +42,18 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         try {
-            $this->categoryRepository->store($request);
+            DB::transaction(function () use ($request) {
+                $category = $this->categoryRepository->store($request);
+                if ($request->exists('image')) {
+                    $image_id = MediaFileService::publicUpload($request->file('image'),
+                        'categories', null)->id;
+                    $this->categoryRepository->addImage($image_id, $category->id);
+                }
+            });
+            DB::commit();
             newFeedback();
         } catch (Exception $exception) {
+            DB::rollBack();
             newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
         }
         return redirect()->route('categories.create');
@@ -63,9 +81,26 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, $id)
     {
         try {
-            $this->categoryRepository->update($request, $id);
+            DB::transaction(function () use ($request, $id) {
+                $category = $this->categoryRepository->findById($id);
+
+                if ($request->hasFile('image')) {
+                    $this->categoryRepository->update($request, null, $id);
+                    $image_id = MediaFileService::publicUpload($request->file('image'),
+                        'categories', null)->id;
+                    $this->categoryRepository->addImage($image_id, $category->id);
+                    if ($category->image) {
+                        $category->image->delete();
+                    }
+                } else {
+                    $this->categoryRepository->update($request, $category->image_id, $id);
+                }
+
+            });
+            DB::commit();
             newFeedback();
         } catch (Exception $exception) {
+            DB::rollBack();
             newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
         }
         return redirect()->route('categories.edit', $id);
@@ -74,36 +109,42 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         try {
-            $category = $this->categoryRepository->findById($id);
+            DB::transaction(function () use ($id) {
+                $category = $this->categoryRepository->findById($id);
 
-            if ($category['level'] == 1) {
-                if (count($category->sub)) {
-                    newFeedback('پیام', 'این دسته بندی دارای زیر دسته است لطفا ابتدا زیر دسته ها را حذف کنید', 'warning');
-                    return redirect()->route('categories.index');
-                } else {
-                    $category->delete();
-                    newFeedback();
-                    return redirect()->route('categories.index');
+                if ($category['level'] == 1) {
+                    if (count($category->sub)) {
+                        newFeedback('پیام', 'این دسته بندی دارای زیر دسته است لطفا ابتدا زیر دسته ها را حذف کنید', 'warning');
+                        return redirect()->route('categories.index');
+                    } else {
+                        $category->delete();
+                        DB::commit();
+                        newFeedback();
+                        return redirect()->route('categories.index');
+                    }
                 }
-            }
 
-            if ($category['level'] == 2) {
-                if (count($category->sub)) {
-                    newFeedback('پیام', 'این دسته بندی دارای زیر دسته است لطفا ابتدا زیر دسته ها را حذف کنید', 'warning');
-                    return redirect()->route('categories.index');
-                } else {
+                if ($category['level'] == 2) {
+                    if (count($category->sub)) {
+                        newFeedback('پیام', 'این دسته بندی دارای زیر دسته است لطفا ابتدا زیر دسته ها را حذف کنید', 'warning');
+                        return redirect()->route('categories.index');
+                    } else {
+                        $category->delete();
+                        DB::commit();
+                        newFeedback();
+                        return redirect()->route('categories.show', $category->parent->id);
+                    }
+                }
+
+                if ($category['level'] == 3) {
                     $category->delete();
+                    DB::commit();
                     newFeedback();
                     return redirect()->route('categories.show', $category->parent->id);
                 }
-            }
-
-            if ($category['level'] == 3) {
-                $category->delete();
-                newFeedback();
-                return redirect()->route('categories.show', $category->parent->id);
-            }
+            });
         } catch (Exception $exception) {
+            DB::rollBack();
             newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
         }
         return redirect()->route('categories.index');

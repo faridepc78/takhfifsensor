@@ -22,8 +22,8 @@ class StorePostCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:posts_categories,name'],
-            'slug' => ['required', 'string', 'max:255', 'unique:posts_categories,slug']
+            'name' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255']
         ];
     }
 

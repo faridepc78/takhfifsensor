@@ -22,8 +22,6 @@ class UpdateOrderItemRequest extends FormRequest
 
     public function rules()
     {
-        $id = request()->route('product');
-
         return [
             'price' => ['required', 'numeric', 'min:1000'],
             'count' => ['required', 'numeric', 'min:1'],

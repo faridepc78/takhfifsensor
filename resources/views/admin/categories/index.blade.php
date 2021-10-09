@@ -31,6 +31,51 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title mb-3">مدیریت دسته بندی ها</h3>
+
+                            <div class="card-tools">
+                                <form id="paginateForm" method="get" action="{{route('categories.index')}}">
+                                    <div class="input-group input-group-sm" style="width: 300px;">
+
+                                        <select onchange="this.form.submit();" class="form-control" name="paginate" id="paginate">
+                                            <option disabled selected value="">تعداد صفحه بندی را مشخص کنید
+                                            </option>
+
+                                            <option @if (request()->input('paginate')==10)
+                                                selected
+                                            @endif value="10">10</option>
+
+                                            <option @if (request()->input('paginate')==15)
+                                                    selected
+                                                    @endif value="15">15</option>
+
+                                            <option @if (request()->input('paginate')==20)
+                                                    selected
+                                                    @endif value="20">20</option>
+
+                                            <option @if (request()->input('paginate')==25)
+                                                    selected
+                                                    @endif value="25">25</option>
+
+                                            <option @if (request()->input('paginate')==30)
+                                                    selected
+                                                    @endif value="30">30</option>
+
+                                            <option @if (request()->input('paginate')==40)
+                                                    selected
+                                                    @endif value="40">40</option>
+
+                                            <option @if (request()->input('paginate')==50)
+                                                    selected
+                                                    @endif value="50">50</option>
+
+                                            <option @if (request()->input('paginate')==100)
+                                                    selected
+                                                    @endif value="100">100</option>
+                                        </select>
+
+                                    </div>
+                                </form>
+                            </div>
                         </div>
 
                         <div class="card-body table-responsive p-0">
@@ -42,6 +87,7 @@
                                     <th>نام</th>
                                     <th>اسلاگ</th>
                                     <th>زیر دسته ها</th>
+                                    <th>تصویر</th>
                                     <th>ویرایش</th>
                                     <th>حذف</th>
                                 </tr>
@@ -67,13 +113,22 @@
                                             @endif
 
                                             <td>
+                                                @if (!empty($value->image->files))
+                                                    <img class="img-size-64" src="{{$value->image->original}}"
+                                                         alt="{{$value->image->original}}">
+                                                @else
+                                                    <p class="text text-danger">ندارد</p>
+                                                @endif
+                                            </td>
+
+                                            <td>
                                                 <a target="_blank" href="{{route('categories.edit',$value->id)}}">
                                                     <i class="fa fa-edit text-primary"></i>
                                                 </a>
                                             </td>
                                             <td><a href="{{ route('categories.destroy', $value->id) }}"
                                                    onclick="destroyCategory(event, {{ $value->id }})"><i
-                                                            class="fa fa-remove text-danger"></i></a>
+                                                        class="fa fa-remove text-danger"></i></a>
                                                 <form action="{{ route('categories.destroy', $value->id) }}"
                                                       method="post" id="destroy-Category-{{ $value->id }}">
                                                     @csrf
@@ -97,7 +152,7 @@
                         </div>
 
                         <div class="pagination mt-3">
-                            {!! $categories->links() !!}
+                            {!! $categories->withQueryString()->links() !!}
                         </div>
 
                     </div>
@@ -112,6 +167,7 @@
 @include('admin.layout.footer')
 
 <script type="text/javascript">
+
     function destroyCategory(event, id) {
         event.preventDefault();
         Swal.fire({

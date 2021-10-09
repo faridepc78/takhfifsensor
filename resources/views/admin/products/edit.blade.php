@@ -259,20 +259,6 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="feature">ویژگی های محصول *</label>
-                                    <textarea class="form-control ckeditor @error('feature') is-invalid @enderror"
-                                              id="feature"
-                                              name="feature" autocomplete="feature"
-                                              autofocus>{{ old('feature',$product['feature']) }}</textarea>
-
-                                    @error('feature')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group">
                                     <label for="text">توضیحات محصول *</label>
                                     <textarea class="form-control ckeditor @error('text') is-invalid @enderror"
                                               id="text"
@@ -313,9 +299,6 @@
 
         var feature_field = 'feature';
         var feature_error = 'لطفا ویژگی های محصول را وارد کنید';
-
-        var text_field = 'text';
-        var text_error = 'لطفا توضیحات محصول را وارد کنید';
 
         $('#update_product_form').validate({
 
@@ -379,7 +362,7 @@
                 }
             },
             submitHandler: function (form) {
-                if (validateCkeditor(feature_field, feature_error) === true && validateCkeditor(text_field, text_error) === true) {
+                if (validateCkeditor(feature_field, feature_error) === true) {
                     form.submit();
                 }
             }

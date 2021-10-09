@@ -45,7 +45,7 @@
                             <div class="card-body">
 
                                 <div class="form-group">
-                                    <label for="name">نام اسلایدر *</label>
+                                    <label for="name">نام اسلایدر</label>
                                     <input onkeyup="this.value=removeSpaces(this.value)" type="text"
                                            class="form-control @error('name') is-invalid @enderror"
                                            value="{{ old('name',$slider->name) }}" id="name" name="name"
@@ -60,7 +60,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="url">لینک اسلایدر *</label>
+                                    <label for="url">لینک اسلایدر</label>
                                     <input onkeyup="this.value=removeSpaces(this.value)" type="text"
                                            class="form-control @error('url') is-invalid @enderror"
                                            value="{{ old('url',$slider->url) }}" id="url" name="url"
@@ -107,37 +107,3 @@
 </div>
 
 @include('admin.layout.footer')
-
-<script type="text/javascript">
-
-    $(document).ready(function () {
-
-        $('#update_slider_form').validate({
-
-            rules: {
-                name: {
-                    required: true
-                },
-
-                url: {
-                    required: true,
-                    checkUrl: true
-                }
-            },
-
-            messages: {
-                name: {
-                    required: "لطفا نام اسلایدر را وارد کنید"
-                },
-
-                url: {
-                    required: "لطفا لینک اسلایدر را وارد کنید",
-                    checkUrl: "لطفا لینک اسلایدر را صحیح وارد کنید"
-                }
-            }
-
-        });
-
-    });
-
-</script>

@@ -15,7 +15,7 @@ class CreateExcelMediaTable extends Migration
     {
         Schema::create('excel_media', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->unsignedBigInteger('media_id')->nullable();
             $table->timestamps();
 

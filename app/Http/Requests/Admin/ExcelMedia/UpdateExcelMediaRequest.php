@@ -14,10 +14,9 @@ class UpdateExcelMediaRequest extends FormRequest
 
     public function rules()
     {
-        $id = request()->route('excel_media');
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:excel_media,name,' . $id],
-            'media' => ['nullable', 'mimes:jpg,png,jpeg', 'max:1024']
+            'name' => ['required', 'string', 'max:255'],
+            'media' => ['nullable', 'mimes:jpg,png,jpeg,pdf', 'max:5120']
         ];
     }
 

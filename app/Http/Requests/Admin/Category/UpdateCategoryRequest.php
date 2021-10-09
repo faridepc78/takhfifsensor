@@ -31,9 +31,10 @@ class UpdateCategoryRequest extends FormRequest
         $id = request()->route('category');
 
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:categories,name,' . $id],
-            'slug' => ['required', 'string', 'max:255', 'unique:categories,slug,' . $id],
-            'parent_id' => ['nullable', 'exists:categories,id', 'not_in:' . $id]
+            'name' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255'],
+            'parent_id' => ['nullable', 'exists:categories,id', 'not_in:' . $id],
+            'image' => ['nullable', 'mimes:jpg,png,jpeg', 'max:5120']
         ];
     }
 
@@ -42,7 +43,8 @@ class UpdateCategoryRequest extends FormRequest
         return [
             'name' => 'نام دسته بندی',
             'slug' => 'اسلاگ دسته بندی',
-            'parent_id' => 'والد دسته بندی'
+            'parent_id' => 'والد دسته بندی',
+            'image' => 'تصویر دسته بندی'
         ];
     }
 }

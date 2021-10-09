@@ -16,12 +16,10 @@ class UpdateBannerRequest extends FormRequest
 
     public function rules()
     {
-        $id = request()->route('banner');
-
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:banners,name,' . $id],
-            'url' => ['required', 'url', 'unique:banners,url,' . $id],
-            'image' => ['nullable', 'mimes:jpg,png,jpeg', 'max:1024'],
+            'name' => ['nullable', 'string', 'max:255'],
+            'url' => ['nullable', 'url'],
+            'image' => ['nullable', 'mimes:jpg,png,jpeg', 'max:5120'],
             'type' => ['required', Rule::in(Banner::$types)]
         ];
     }

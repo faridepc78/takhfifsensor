@@ -17,9 +17,9 @@ class StoreBannerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:banners,name'],
-            'url' => ['required', 'url', 'unique:banners,url'],
-            'image' => ['required', 'mimes:jpg,png,jpeg', 'max:1024'],
+            'name' => ['nullable', 'string', 'max:255'],
+            'url' => ['nullable', 'url'],
+            'image' => ['required', 'mimes:jpg,png,jpeg', 'max:5120'],
             'type' => ['required', Rule::in(Banner::$types)]
         ];
     }

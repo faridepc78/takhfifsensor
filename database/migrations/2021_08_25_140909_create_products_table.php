@@ -15,14 +15,13 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('slug')->unique();
+            $table->string('name');
+            $table->string('slug');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('brand_id');
             $table->unsignedBigInteger('image_id')->nullable();
             $table->unsignedBigInteger('price');
             $table->unsignedInteger('discount')->nullable();
-            $table->longText('feature');
             $table->longText('text');
             $table->unsignedBigInteger('count');
             $table->enum('status', \App\Models\Product::$statuses);
