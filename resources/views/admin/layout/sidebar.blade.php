@@ -322,13 +322,19 @@
                     <li class="nav-item has-treeview {{ request()->routeIs(['products.index',
 'products.create',
 'products.edit',
-'products.import_page']) ? 'menu-open' : '' }}">
+'products.import_page',
+'groups.index',
+'groups.create',
+'groups.products']) ? 'menu-open' : '' }}">
 
                         <a href="#"
                            class="nav-link {{ request()->routeIs(['products.index',
 'products.create',
 'products.edit',
-'products.import_page']) ? 'active' : '' }}">
+'products.import_page',
+'groups.index',
+'groups.create',
+'groups.products']) ? 'active' : '' }}">
                             <i class="nav-icon fa fa-product-hunt"></i>
                             <p>
                                 محصولات
@@ -351,6 +357,22 @@
                                    class="nav-link {{ request()->routeIs('products.create') ? 'active' : '' }}">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>ایجاد محصولات</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('groups.index') }}"
+                                   class="nav-link {{ request()->routeIs(['groups.index']) ? 'active' : '' }}">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>مدیریت گروه ها</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('groups.create') }}"
+                                   class="nav-link {{ request()->routeIs('groups.create') ? 'active' : '' }}">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>ایجاد گروه ها</p>
                                 </a>
                             </li>
 

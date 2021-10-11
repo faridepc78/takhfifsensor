@@ -25,7 +25,7 @@ class CategoryController extends Controller
         $paginate = request()->input('paginate');
 
         if (isset($paginate) && $paginate >= 10 && $paginate <= 100) {
-            $categories = $this->categoryRepository->paginate(request()->input('paginate'));
+            $categories = $this->categoryRepository->paginate($paginate);
         } else {
             $categories = $this->categoryRepository->paginate();
         }

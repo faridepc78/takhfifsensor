@@ -20,9 +20,9 @@ class ProductRepository
                 'category_id' => $values['category_id'],
                 'brand_id' => $values['brand_id'],
                 'image_id' => null,
+                'pdf_id' => null,
                 'price' => $values['price'],
                 'discount' => $values['discount'],
-                'feature' => $values['feature'],
                 'text' => $values['text'],
                 'count' => $values['count'],
                 'status' => $values['status']
@@ -38,7 +38,16 @@ class ProductRepository
             ]);
     }
 
-    public function paginateByFilters()
+    public function addPdf($pdf_id, $id)
+    {
+        return Product::query()
+            ->where('id', '=', $id)
+            ->update([
+                'pdf_id' => $pdf_id
+            ]);
+    }
+
+    public function paginateByFilters($count = 10)
     {
         return app(Pipeline::class)
             ->send(Product::query())
@@ -48,7 +57,20 @@ class ProductRepository
             ])
             ->thenReturn()
             ->latest()
-            ->paginate(10);
+            ->paginate($count);
+    }
+
+    public function paginateByFiltersByGroupId($count = 10)
+    {
+        return app(Pipeline::class)
+            ->send(Product::query())
+            ->through([
+                Status::class,
+                Search::class
+            ])
+            ->thenReturn()
+            ->latest()
+            ->paginate($count);
     }
 
     public function findById($id)
@@ -57,7 +79,56 @@ class ProductRepository
             ->findOrFail($id);
     }
 
-    public function update($values, $image_id, $id)
+    public function checkByGroupId($group_id)
+    {
+        return Product::query()
+            ->where('group_id', '=', $group_id)
+            ->count();
+    }
+
+    public function updateOrCreateByCode($code, $key, $values)
+    {
+        $product = Product::query()->where('code', '=', $code)->first();
+
+        if ($product !== null) {
+            Product::query()
+                ->where('code', '=', $code)
+                ->update(
+                    [
+                        'name' => $values[$key]['name'],
+                        'slug' => $values[$key]['slug'],
+                        'category_id' => $values[$key]['category_id'],
+                        'brand_id' => $values[$key]['brand_id'],
+                        'image_id' => $values[$key]['image_id'],
+                        'pdf_id' => $values[$key]['pdf_id'],
+                        'price' => $values[$key]['price'],
+                        'discount' => $values[$key]['discount'],
+                        'text' => $values[$key]['text'],
+                        'count' => $values[$key]['count'],
+                        'status' => $values[$key]['status']
+                    ]);
+        } else {
+            Product::query()
+                ->create(
+                    [
+                        'name' => $values[$key]['name'],
+                        'slug' => $values[$key]['slug'],
+                        'category_id' => $values[$key]['category_id'],
+                        'brand_id' => $values[$key]['brand_id'],
+                        'image_id' => $values[$key]['image_id'],
+                        'pdf_id' => $values[$key]['pdf_id'],
+                        'price' => $values[$key]['price'],
+                        'discount' => $values[$key]['discount'],
+                        'text' => $values[$key]['text'],
+                        'count' => $values[$key]['count'],
+                        'status' => $values[$key]['status'],
+                        'group_id' => $values[$key]['group_id'],
+                        'code' => $values[$key]['code']
+                    ]);
+        }
+    }
+
+    public function update($values, $image_id, $pdf_id, $id)
     {
         return Product::query()
             ->where('id', '=', $id)
@@ -67,13 +138,29 @@ class ProductRepository
                 'category_id' => $values['category_id'],
                 'brand_id' => $values['brand_id'],
                 'image_id' => $image_id,
+                'pdf_id' => $pdf_id,
                 'price' => $values['price'],
                 'discount' => $values['discount'],
-                'feature' => $values['feature'],
                 'text' => $values['text'],
                 'count' => $values['count'],
                 'status' => $values['status']
             ]);
+    }
+
+    public function updateStatus($id, $status)
+    {
+        return Product::query()
+            ->where('id', '=', $id)
+            ->update([
+                'status' => $status
+            ]);
+    }
+
+    public function checkImageIdForOthers($image_id)
+    {
+        return Product::query()
+            ->where('image_id', '=', $image_id)
+            ->count();
     }
 
     public function new($count)

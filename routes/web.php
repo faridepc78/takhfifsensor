@@ -43,6 +43,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'check_admin'
     Route::resource('excel_media', 'ExcelMediaController')->except('show');
 
     Route::resource('products', 'ProductController')->except('show');
+    Route::delete('products/destroy_all/items', 'ProductController@destroy_all')->name('products.destroy_all');
+    Route::delete('products/active_all/items', 'ProductController@active_all')->name('products.active_all');
+    Route::delete('products/inactive_all/items', 'ProductController@inactive_all')->name('products.inactive_all');
+
+    Route::get('groups', 'GroupController@index')->name('groups.index');
+    Route::get('groups/{id}/products', 'GroupController@products')->name('groups.products');
+    Route::get('groups/create', 'GroupController@create')->name('groups.create');
+    Route::post('groups/store', 'GroupController@store')->name('groups.store');
+    Route::delete('groups/destroy/{id}', 'GroupController@destroy')->name('groups.destroy');
 
     Route::get('products/exel/import', 'ProductController@import_page')->name('products.import_page');
     Route::get('products/exel/export', 'ProductController@export')->name('products.export');

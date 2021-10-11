@@ -27,10 +27,12 @@ class Media extends Model
 
     const IMAGE = 'image';
     const PDF = 'pdf';
+    const EXCEL = 'excel';
     static $types =
         [
             self::IMAGE,
-            self::PDF
+            self::PDF,
+            self::EXCEL,
         ];
 
     protected $casts = [

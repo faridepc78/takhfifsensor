@@ -35,7 +35,8 @@
                             <div class="card-tools">
                                 <form id="filterForm" method="get" action="{{route('products.index')}}">
                                     <div class="input-group input-group-sm" style="width: 300px;">
-                                        <input onkeyup="this.value=removeSpaces(this.value)" id="search" value="{{request()->input('search')}}" type="text"
+                                        <input onkeyup="this.value=removeSpaces(this.value)" id="search"
+                                               value="{{request()->input('search')}}" type="text"
                                                name="search"
                                                class="form-control float-right"
                                                placeholder="جستجو بر اساس نام و دسته بندی و برند">
@@ -44,6 +45,59 @@
                                             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i>
                                             </button>
                                         </div>
+                                    </div>
+                                </form>
+
+                                <br>
+
+                                <form id="paginateForm" method="get" action="{{route('products.index')}}">
+                                    <div class="input-group input-group-sm" style="width: 300px;">
+
+                                        <select class="form-control" name="paginate" id="paginate">
+                                            <option disabled selected value="">تعداد صفحه بندی را مشخص کنید
+                                            </option>
+
+                                            <option @if (request()->input('paginate')==10)
+                                                    selected
+                                                    @endif value="10">10
+                                            </option>
+
+                                            <option @if (request()->input('paginate')==15)
+                                                    selected
+                                                    @endif value="15">15
+                                            </option>
+
+                                            <option @if (request()->input('paginate')==20)
+                                                    selected
+                                                    @endif value="20">20
+                                            </option>
+
+                                            <option @if (request()->input('paginate')==25)
+                                                    selected
+                                                    @endif value="25">25
+                                            </option>
+
+                                            <option @if (request()->input('paginate')==30)
+                                                    selected
+                                                    @endif value="30">30
+                                            </option>
+
+                                            <option @if (request()->input('paginate')==40)
+                                                    selected
+                                                    @endif value="40">40
+                                            </option>
+
+                                            <option @if (request()->input('paginate')==50)
+                                                    selected
+                                                    @endif value="50">50
+                                            </option>
+
+                                            <option @if (request()->input('paginate')==100)
+                                                    selected
+                                                    @endif value="100">100
+                                            </option>
+                                        </select>
+
                                     </div>
                                 </form>
                             </div>
@@ -55,87 +109,118 @@
                                class="btn btn-danger">@lang(\App\Models\Product::INACTIVE)</a>
                         </div>
 
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-hover table-bordered text-center">
+                        <form id="checkGroups" method="post">
 
-                                <tr>
-                                    <th>ردیف</th>
-                                    <th>نام</th>
-                                    <th>اسلاگ</th>
-                                    <th>دسته بندی</th>
-                                    <th>برند</th>
-                                    <th>قیمت</th>
-                                    <th>تخفیف</th>
-                                    <th>تعداد</th>
-                                    <th>تصویر</th>
-                                    <th>وضعیت</th>
-                                    <th>مدیا</th>
-                                    <th>گالری</th>
-                                    <th>ویرایش</th>
-                                    <th>حذف</th>
-                                </tr>
+                            @csrf
+                            @method('delete')
 
-                                @if(count($products))
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-hover table-bordered text-center">
 
-                                    @foreach($products as $key=>$value)
+                                    <tr>
+                                        <th>ردیف</th>
+                                        <th><input type="checkbox" id="selectall"/></th>
+                                        <th>نام</th>
+                                        <th>اسلاگ</th>
+                                        <th>دسته بندی</th>
+                                        <th>برند</th>
+                                        <th>قیمت</th>
+                                        <th>تخفیف</th>
+                                        <th>تعداد</th>
+                                        <th>تصویر</th>
+                                        <th>وضعیت</th>
+                                        <th>مدیا</th>
+                                        <th>گالری</th>
+                                        <th>ویرایش</th>
+                                        <th>حذف</th>
+                                    </tr>
 
-                                        <tr>
-                                            <td>{{$key+1}}</td>
-                                            <td>{{$value->name}}</td>
-                                            <td>{{$value->slug}}</td>
-                                            <td>{{$value->category->name}}</td>
-                                            <td>{{$value->brand->name}}</td>
-                                            <td>{{number_format($value->price)}}</td>
-                                            <td>{{$value->discount}}</td>
-                                            <td>{{number_format($value->count)}}</td>
-                                            <td>
-                                                <img width="50" height="50" src="{{$value->image->original}}" alt="{{$value->image->original}}">
-                                            </td>
-                                            {!! $value->status() !!}
-                                            <td>
-                                                <a target="_blank" href="{{route('product_media_index',$value->id)}}">
-                                                    <i class="fa fa-image text-success"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a target="_blank" href="{{route('product_gallery_index',$value->id)}}">
-                                                    <i class="fa fa-image text-success"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a target="_blank" href="{{route('products.edit',$value->id)}}">
-                                                    <i class="fa fa-edit text-primary"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('products.destroy', $value->id) }}"
-                                                   onclick="destroyProduct(event, {{ $value->id }})"><i
+                                    @if(count($products))
+
+                                        @foreach($products as $key=>$value)
+
+                                            <tr>
+                                                <td>{{$key+1}}</td>
+                                                <td>
+                                                    <input type="checkbox" class="singlechkbox" name="id[]"
+                                                           value="{{$value->id}}"/>
+                                                </td>
+                                                <td>{{$value->name}}</td>
+                                                <td>{{$value->slug}}</td>
+                                                <td>{{$value->category->name}}</td>
+                                                <td>{{$value->brand->name}}</td>
+                                                <td>{{number_format($value->price)}}</td>
+                                                <td>{{$value->discount}}</td>
+                                                <td>{{number_format($value->count)}}</td>
+                                                <td>
+                                                    <img width="50" height="50" src="{{$value->image->original}}"
+                                                         alt="{{$value->image->original}}">
+                                                </td>
+
+                                                {!! $value->status() !!}
+                                                <td>
+                                                    <a target="_blank"
+                                                       href="{{route('product_media_index',$value->id)}}">
+                                                        <i class="fa fa-image text-success"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a target="_blank"
+                                                       href="{{route('product_gallery_index',$value->id)}}">
+                                                        <i class="fa fa-image text-success"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a target="_blank" href="{{route('products.edit',$value->id)}}">
+                                                        <i class="fa fa-edit text-primary"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('products.destroy', $value->id) }}"
+                                                       onclick="destroyProduct(event, {{ $value->id }})"><i
                                                             class="fa fa-remove text-danger"></i></a>
-                                                <form action="{{ route('products.destroy', $value->id) }}"
-                                                      method="post" id="destroy-Product-{{ $value->id }}">
-                                                    @csrf
-                                                    @method('delete')
-                                                </form>
-                                            </td>
-                                        </tr>
+                                                    <form action="{{ route('products.destroy', $value->id) }}"
+                                                          method="post" id="destroy-Product-{{ $value->id }}">
+                                                        @csrf
+                                                        @method('delete')
+                                                    </form>
+                                                </td>
+                                            </tr>
 
-                                    @endforeach
+                                        @endforeach
 
-                                @else
+                                    @else
 
-                                    <div class="alert alert-danger text-center">
-                                        <p>اطلاعات این بخش ثبت نشده است</p>
-                                    </div>
+                                        <div class="alert alert-danger text-center">
+                                            <p>اطلاعات این بخش ثبت نشده است</p>
+                                        </div>
 
-                                @endif
+                                    @endif
 
-                            </table>
+                                </table>
 
-                        </div>
+                            </div>
 
-                        <div class="pagination mt-3">
-                            {!! $products->withQueryString()->links() !!}
-                        </div>
+                            <div class="pagination mt-3">
+                                {!! $products->withQueryString()->links() !!}
+                            </div>
+
+                            <div class="card-footer">
+                                <button data-message="آیا از حذف گروهی اطمینان دارید ؟"
+                                        id="{{route('products.destroy_all')}}" type="submit" class="btn btn-danger">حذف
+                                    گروهی
+                                </button>
+                                <button data-message="آیا از فعال کردن گروهی اطمینان دارید ؟"
+                                        id="{{route('products.active_all')}}" type="submit" class="btn btn-success">فعال
+                                    کردن گروهی
+                                </button>
+                                <button data-message="آیا از غیر فعال کردن گروهی اطمینان دارید ؟"
+                                        id="{{route('products.inactive_all')}}" type="submit" class="btn btn-warning">
+                                    غیر فعال کردن گروهی
+                                </button>
+                            </div>
+
+                        </form>
 
                     </div>
 
@@ -150,13 +235,28 @@
 
 <script type="text/javascript">
 
+    jQuery(function ($) {
+        $('body').on('click', '#selectall', function () {
+            $('.singlechkbox').prop('checked', this.checked);
+        });
+
+        $('body').on('click', '.singlechkbox', function () {
+            if ($('.singlechkbox').length == $('.singlechkbox:checked').length) {
+                $('#selectall').prop('checked', true);
+            } else {
+                $("#selectall").prop('checked', false);
+            }
+
+        });
+    });
+
     $('#filterForm').on('submit', function (e) {
         e.preventDefault();
         var base_url = window.location.href;
         var route = "{{route('products.index')}}";
         var search = $('#search').val();
 
-        if (search.length!==0){
+        if (search.length !== 0) {
             if (base_url.indexOf('?' + 'search' + '=') != -1 || base_url.indexOf('&' + 'search' + '=') != -1) {
                 var new_url = replaceUrlParam(base_url, 'search', search);
                 window.location.href = removeURLParameter(new_url, 'page');
@@ -171,6 +271,54 @@
         }
 
     })
+
+    $('#paginate').on('change', function (e) {
+        e.preventDefault();
+        var base_url = window.location.href;
+        var route = "{{route('products.index')}}";
+        var paginate = $('#paginate').val();
+
+        if (paginate.length !== 0) {
+            if (base_url.indexOf('?' + 'paginate' + '=') != -1 || base_url.indexOf('&' + 'paginate' + '=') != -1) {
+                var new_url = replaceUrlParam(base_url, 'paginate', paginate);
+                window.location.href = new_url;
+            } else {
+                if (base_url === route) {
+                    $('#paginateForm').submit();
+                } else {
+                    var new_url = base_url + '&paginate=' + paginate;
+                    window.location.href = new_url;
+                }
+            }
+        }
+    });
+
+    var checkGroups = $('#checkGroups');
+
+    checkGroups.on('submit', function (e) {
+        e.preventDefault();
+
+        if ($('.singlechkbox:checked').length >= 1) {
+            var route = $(this).find("button[type=submit]:focus").attr('id');
+            var message = $(this).find("button[type=submit]:focus").attr('data-message');
+            Swal.fire({
+                title: message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: 'rgb(10,132,16)',
+                cancelButtonColor: 'rgb(221, 51, 51)',
+                confirmButtonText: 'بله',
+                cancelButtonText: 'خیر'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    checkGroups.attr('action', route);
+                    this.submit();
+                }
+            })
+        } else {
+            toastr['warning']('حداقل یک آیتم را انتخاب کنید', 'پیام');
+        }
+    });
 
     function destroyProduct(event, id) {
         event.preventDefault();

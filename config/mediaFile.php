@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\Media\ExcelFileService;
 use App\Services\Media\ImageFileService;
 use App\Services\Media\PdfFileService;
 
@@ -16,6 +17,12 @@ return [
                 "pdf"
             ],
             "handler" => PdfFileService::class
+        ],
+        "excel" => [
+            "extensions" => [
+                "xlsx", "xls"
+            ],
+            "handler" => ExcelFileService::class
         ]
     ]
 ];

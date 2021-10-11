@@ -181,6 +181,19 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="pdf">پی دی اف محصول</label>
+                                    <input accept=".pdf" type="file"
+                                           class="form-control @error('pdf') is-invalid @enderror"
+                                           autofocus id="pdf" name="pdf">
+
+                                    @error('pdf')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
                                     <label for="price">قیمت محصول *</label>
                                     <input onkeyup="this.value=removeSpaces(this.value);separateNum(this.value,this)"
                                            type="text"

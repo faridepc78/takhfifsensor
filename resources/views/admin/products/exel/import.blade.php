@@ -40,8 +40,11 @@
 
                             <br>
 
-                            <a target="_blank" href="{{asset('assets/common/images/excel.png')}}"
-                               class="btn btn-info">تصویر راهنما</a>
+                            <a target="_blank" href="{{asset('assets/common/images/excel-en.png')}}"
+                               class="btn btn-info">تصویر راهنما (انگلیسی)</a>
+
+                            <a target="_blank" href="{{asset('assets/common/images/excel-fa.png')}}"
+                               class="btn btn-info">تصویر راهنما (فارسی)</a>
 
                             <a href="{{route('products.export')}}"
                                class="btn btn-success">اکسپورت محصولات</a>
@@ -49,6 +52,35 @@
                             @csrf
 
                             <div class="card-body">
+
+                                <div class="form-group">
+                                    <label for="group_id">گروه محصولات *</label>
+                                    <select class="form-control  @error('group_id') is-invalid @enderror"
+                                            id="group_id"
+                                            name="group_id">
+                                        <option selected disabled value="">لطفا گروه محصولات را انتخاب کنید</option>
+
+                                        @if (count($groups))
+
+                                            @foreach($groups as $value)
+
+                                                <option @if ($value->id==old('group_id'))
+                                                        selected="selected"
+                                                        @endif
+                                                        value="{{$value->id}}">{{$value->name}}</option>
+
+                                            @endforeach
+
+                                        @endif
+
+                                    </select>
+
+                                    @error('category_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
 
                                 <div class="form-group">
                                     <label for="file">فایل محصولات *</label>
@@ -87,12 +119,20 @@
         $('#import_product_file').validate({
 
             rules: {
+                group_id: {
+                    required: true
+                },
+
                 file: {
                     required: true
                 }
             },
 
             messages: {
+                group_id: {
+                    required: "لطفا گروه محصولات را انتخاب کنید"
+                },
+
                 file: {
                     required: "لطفا فایل محصولات را انتخاب کنید"
                 }

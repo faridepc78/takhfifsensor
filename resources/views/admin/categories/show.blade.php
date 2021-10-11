@@ -53,6 +53,7 @@
                                     @if ($category['level']==1)
                                         <th>زیر دسته ها</th>
                                     @endif
+                                    <th>تصویر</th>
                                     <th>ویرایش</th>
                                     <th>حذف</th>
                                 </tr>
@@ -78,6 +79,15 @@
                                                     <td><i class="fa fa-close text-warning"></i></td>
                                                 @endif
                                             @endif
+
+                                            <td>
+                                                @if (!empty($value->image->files))
+                                                    <img class="img-size-64" src="{{$value->image->original}}"
+                                                         alt="{{$value->image->original}}">
+                                                @else
+                                                    <p class="text text-danger">ندارد</p>
+                                                @endif
+                                            </td>
 
                                             <td>
                                                 <a target="_blank" href="{{route('categories.edit',$value->id)}}">

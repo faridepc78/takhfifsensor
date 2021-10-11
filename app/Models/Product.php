@@ -24,12 +24,15 @@ class Product extends Model
             'category_id',
             'brand_id',
             'image_id',
+            'pdf_id',
             'price',
             'discount',
             'text',
             'count',
             'status',
-            'sale'
+            'sale',
+            'group_id',
+            'code'
         ];
 
     const ACTIVE = 'active';
@@ -50,9 +53,19 @@ class Product extends Model
         return $this->belongsTo(Media::class, 'image_id', 'id')->withDefault();
     }
 
+    public function pdf()
+    {
+        return $this->belongsTo(Media::class, 'pdf_id', 'id')->withDefault();
+    }
+
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id', 'id')->withDefault();
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class, 'group_id', 'id')->withDefault();
     }
 
     public function gallery()
@@ -81,10 +94,10 @@ class Product extends Model
 
     public function finalPrice()
     {
-        if ($this->discount!=null) {
-            return ($this->price-($this->price*$this->discount/100));
-        }else{
-            return  $this->price;
+        if ($this->discount != null) {
+            return ($this->price - ($this->price * $this->discount / 100));
+        } else {
+            return $this->price;
         }
     }
 }

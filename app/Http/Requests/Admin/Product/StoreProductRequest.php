@@ -31,6 +31,7 @@ class StoreProductRequest extends FormRequest
             'category_id' => ['required', 'exists:categories,id'],
             'brand_id' => ['required', 'exists:brands,id'],
             'image' => ['required', 'mimes:jpg,png,jpeg', 'max:5120'],
+            'pdf' => ['nullable', 'mimes:pdf', 'max:5120'],
             'price' => ['required', 'numeric', 'min:1000'],
             'discount' => ['nullable', 'numeric', 'between:1,100'],
             'text' => ['required', 'string'],
@@ -47,10 +48,11 @@ class StoreProductRequest extends FormRequest
             'category_id' => 'دسته بندی محصول',
             'brand_id' => 'برند محصول',
             'image' => 'تصویر محصول',
+            'pdf' => 'پی دی اف محصول',
             'price' => 'قیمت محصول',
             'discount' => 'درصد تخفیف محصول',
             'text' => 'توضیحات محصول',
-            'count'=>'تعداد موجودی محصول',
+            'count' => 'تعداد موجودی محصول',
             'status' => 'وضعیت محصول'
         ];
     }
