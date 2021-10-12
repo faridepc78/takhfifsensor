@@ -79,6 +79,14 @@ class ProductRepository
             ->findOrFail($id);
     }
 
+    public function whereInPaginate($ids)
+    {
+        return Product::query()
+            ->where('status', '=', Product::ACTIVE)
+            ->whereIn('id', $ids)
+            ->paginate(21);
+    }
+
     public function checkByGroupId($group_id)
     {
         return Product::query()
@@ -163,22 +171,54 @@ class ProductRepository
             ->count();
     }
 
-    public function new($count)
+    public function new($count, $paginate = false)
     {
-        return Product::query()
-            ->where('status', '=', Product::ACTIVE)
-            ->latest()
-            ->limit($count)
-            ->get();
+        if ($paginate == true) {
+            return Product::query()
+                ->where('status', '=', Product::ACTIVE)
+                ->latest()
+                ->paginate($count);
+        } else {
+            return Product::query()
+                ->where('status', '=', Product::ACTIVE)
+                ->latest()
+                ->limit($count)
+                ->get();
+        }
     }
 
-    public function mostSales()
+    public function mostSales($paginate = false)
     {
-        return Product::query()
-            ->where('status', '=', Product::ACTIVE)
-            ->orderBy('sale', 'desc')
-            ->limit(14)
-            ->get();
+        if ($paginate == true) {
+            return Product::query()
+                ->where('status', '=', Product::ACTIVE)
+                ->orderBy('sale', 'desc')
+                ->paginate(21);
+        } else {
+            return Product::query()
+                ->where('status', '=', Product::ACTIVE)
+                ->orderBy('sale', 'desc')
+                ->limit(14)
+                ->get();
+        }
+    }
+
+    public function byDiscount($paginate = false)
+    {
+        if ($paginate == true) {
+            return Product::query()
+                ->where('status', '=', Product::ACTIVE)
+                ->whereNotNull('discount')
+                ->where('discount', '!=', '')
+                ->paginate(21);
+        } else {
+            return Product::query()
+                ->where('status', '=', Product::ACTIVE)
+                ->whereNotNull('discount')
+                ->where('discount', '!=', '')
+                ->limit(14)
+                ->get();
+        }
     }
 
     public function related($category_id, $product_id)

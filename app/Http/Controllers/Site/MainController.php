@@ -35,16 +35,16 @@ class MainController extends Controller
     private $orderRepository;
     private $basketBuyService;
 
-    public function __construct(SliderRepository $sliderRepository,
-                                BrandRepository $brandRepository,
-                                BannerRepository $bannerRepository,
+    public function __construct(SliderRepository    $sliderRepository,
+                                BrandRepository     $brandRepository,
+                                BannerRepository    $bannerRepository,
                                 ContactUsRepository $contactUsRepository,
-                                ProductRepository $productRepository,
-                                CategoryRepository $categoryRepository,
-                                ProvinceRepository $provinceRepository,
-                                CityRepository $cityRepository,
-                                OrderRepository $orderRepository,
-                                BasketBuyService $basketBuyService)
+                                ProductRepository   $productRepository,
+                                CategoryRepository  $categoryRepository,
+                                ProvinceRepository  $provinceRepository,
+                                CityRepository      $cityRepository,
+                                OrderRepository     $orderRepository,
+                                BasketBuyService    $basketBuyService)
     {
         $this->sliderRepository = $sliderRepository;
         $this->brandRepository = $brandRepository;
@@ -65,10 +65,12 @@ class MainController extends Controller
         $banners = $this->bannerRepository->getAll();
         $new_products = $this->productRepository->new(14);
         $mostSales_products = $this->productRepository->mostSales();
+        $discount_products = $this->productRepository->byDiscount();
         $show_categories = $this->categoryRepository->getShow();
         return view('site.home.index',
             compact('sliders', 'brands',
-                'banners', 'new_products', 'mostSales_products', 'show_categories'));
+                'banners', 'new_products', 'mostSales_products',
+                'discount_products', 'show_categories'));
     }
 
     public function about_us()

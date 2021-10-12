@@ -1,5 +1,5 @@
 @section('site_title')
-    <title>تخفیف سنسور | محصولات-دسته بندی ({{$category->name}})</title>
+    <title>تخفیف سنسور | جدید ترین محصولات</title>
 @endsection
 
 @section('site_body')
@@ -13,49 +13,9 @@
             <div class="row">
                 <nav class="woocommerce-breadcrumb">
                     <a href="{{route('home')}}">صفحه اصلی</a>
-                    <i class="tm tm-arrow-left"></i>
-                    محصولات دسته بندی
-
-                    @if ($category['level']==3)
-
-                        <span class="delimiter">
+                    <span class="delimiter">
 							<i class="tm tm-arrow-left"></i>
-                        {{$category->parent->parent->name}}
-						</span>
-
-                        <span class="delimiter">
-							<i class="tm tm-arrow-left"></i>
-                        {{$category->parent->name}}
-						</span>
-
-                        <span class="delimiter text-danger">
-							<i class="tm tm-arrow-left"></i>
-                        {{$category->name}}
-						</span>
-
-                    @endif
-
-                    @if ($category['level']==2)
-
-                        <span class="delimiter">
-							<i class="tm tm-arrow-left"></i>
-                        {{$category->parent->name}}
-						</span>
-
-                        <span class="delimiter text-danger">
-							<i class="tm tm-arrow-left"></i>
-                        {{$category->name}}
-						</span>
-
-                    @endif
-
-                    @if ($category['level']==1)
-                        <span class="delimiter text-danger">
-							<i class="tm tm-arrow-left"></i>
-                        {{$category->name}}
-						</span>
-                    @endif
-
+						</span>جدید ترین محصولات
                 </nav>
 
                 <div id="primary" class="content-area">

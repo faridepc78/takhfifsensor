@@ -74,6 +74,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'check_admin'
     Route::get('orders/items/update/{id}', 'OrderController@update_items')->name('orders.update_items');
     Route::patch('orders/items/update/{id}', 'OrderController@update_items_do')->name('orders.update_items');
     Route::patch('orders/confirm/{id}', 'OrderController@confirm')->name('orders.confirm');
+    Route::post('orders/items/update/{status}', 'OrderController@update_items_status')->name('orders.update_items.status');
 
     Route::get('transactions', 'TransactionController@index')->name('transactions.index');
 
@@ -130,6 +131,10 @@ Route::group(['prefix' => '/', 'middleware' => ['web', 'throttle:50,1', 'block_u
     Route::get('faq', 'MainController@faq')->name('faq');
 
     Route::get('terms-and-conditions', 'MainController@terms_and_conditions')->name('terms-and-conditions');
+
+    Route::get('products/new','ProductController@new')->name('products.new');
+    Route::get('products/by-discount','ProductController@by_discount')->name('products.by-discount');
+    Route::get('products/most-sale','ProductController@most_sale')->name('products.most-sale');
 
     Route::get('products/category/{slug}', 'ProductController@category')->name('products.category');
 

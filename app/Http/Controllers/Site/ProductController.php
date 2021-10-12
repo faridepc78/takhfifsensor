@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Product;
 use App\Repositories\BrandRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\ProductRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class ProductController extends Controller
 {
@@ -14,8 +19,8 @@ class ProductController extends Controller
     private $brandRepository;
     private $categoryRepository;
 
-    public function __construct(ProductRepository $productRepository,
-                                BrandRepository $brandRepository,
+    public function __construct(ProductRepository  $productRepository,
+                                BrandRepository    $brandRepository,
                                 CategoryRepository $categoryRepository)
     {
         $this->productRepository = $productRepository;
@@ -27,7 +32,77 @@ class ProductController extends Controller
     {
         $category_id = extractId($slug);
         $category = $this->categoryRepository->findById($category_id);
-        $products = $this->productRepository->findByCategoryId($category_id);
+        $category_level = $category['level'];
+        $data = $this->categoryRepository->dataByRelations($category_id);
+
+        if ($category_level == 1) {
+            if (count($data[0]['products']) >= 1) {
+                $p = $data[0]['products'];
+            }
+
+            if (count($data[0]['sub']) >= 1) {
+                foreach ($data[0]['sub'] as $key => $item) {
+                    $products[] = $data[0]['sub'][$key]['products'];
+                }
+            }
+
+            if (count($data[0]['sub'][0]['children_recursive']) >= 1) {
+                foreach ($data[0]['sub'][0]['children_recursive'] as $key => $item) {
+                    $r_products[] = $data[0]['sub'][0]['children_recursive'][$key]['products'];
+                }
+            }
+
+            $arraysMerged1 = [];
+            $arraysMerged2 = [];
+
+            foreach ($products as $array) {
+                $arraysMerged1 = array_merge($arraysMerged1, $array);
+            }
+
+            foreach ($r_products as $item) {
+                $arraysMerged2 = array_merge($arraysMerged2, $item);
+            }
+
+            $my = array_merge($arraysMerged1, $arraysMerged2);
+
+            $array = Arr::collapse([$p, $my]);
+
+            foreach ($array as $value) {
+                $ids[] = explode(",", $value['id']);
+            }
+
+            $products = $this->productRepository->whereInPaginate($ids);
+
+        } elseif ($category_level == 2) {
+
+            if (count($data[0]['products']) >= 1) {
+                $p = $data[0]['products'];
+            }
+
+            if (count($data[0]['sub']) >= 1) {
+                foreach ($data[0]['sub'] as $key => $item) {
+                    $products[] = $data[0]['sub'][$key]['products'];
+                }
+            }
+
+            $arraysMerged = [];
+
+            foreach ($products as $array) {
+                $arraysMerged = array_merge($arraysMerged, $array);
+            }
+
+            $array = Arr::collapse([$p, $arraysMerged]);
+
+            foreach ($array as $value) {
+                $ids[] = explode(",", $value['id']);
+            }
+
+            $products = $this->productRepository->whereInPaginate($ids);
+
+        } elseif ($category_level == 3) {
+            $products = $this->productRepository->findByCategoryId($category_id);
+        }
+
         return view('site.products.category.index',
             compact('category', 'products'));
     }
@@ -55,5 +130,23 @@ class ProductController extends Controller
         $product = $this->productRepository->findById($product_id);
         $related_products = $this->productRepository->related($product->category->id, $product_id);
         return view('site.products.index', compact('product', 'related_products'));
+    }
+
+    public function new()
+    {
+        $products = $this->productRepository->new(21, true);
+        return view('site.products.new.index', compact('products'));
+    }
+
+    public function by_discount()
+    {
+        $products = $this->productRepository->byDiscount(true);
+        return view('site.products.by-discount.index', compact('products'));
+    }
+
+    public function most_sale()
+    {
+        $products = $this->productRepository->mostSales(true);
+        return view('site.products.most-sale.index', compact('products'));
     }
 }

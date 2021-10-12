@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Lang;
 
 class OrderItem extends Model
 {
@@ -20,7 +21,16 @@ class OrderItem extends Model
             'order_id',
             'product_id',
             'price',
-            'count'
+            'count',
+            'status'
+        ];
+
+    const AVAILABLE = 'available';
+    const UNAVAILABLE = 'unavailable';
+    static $statuses =
+        [
+            self::AVAILABLE,
+            self::UNAVAILABLE
         ];
 
     public function order()
@@ -31,5 +41,14 @@ class OrderItem extends Model
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id')->withDefault();
+    }
+
+    public function status()
+    {
+        if ($this->status == OrderItem::AVAILABLE) {
+            return '<td class="alert alert-success">'.Lang::get(self::AVAILABLE).'</td>';
+        } elseif ($this->status == OrderItem::UNAVAILABLE) {
+            return '<td class="alert alert-danger">'.Lang::get(self::UNAVAILABLE).'</td>';
+        }
     }
 }

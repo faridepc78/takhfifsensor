@@ -18,6 +18,8 @@ class Status extends Filter
         }
         elseif ($keyword == 'pending') {
             return $builder->where('status', '=', Order::PENDING);
+        }else{
+            return $builder;
         }
     }
 }

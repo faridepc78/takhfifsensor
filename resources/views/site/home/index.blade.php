@@ -16,9 +16,9 @@
 
                         @include('site.home.sliders')
 
-                        @include('site.home.features-list')
-
                         @include('site.home.newest-products')
+
+                        @include('site.home.discount-products')
 
                         @include('site.home.bestSellers-products')
 

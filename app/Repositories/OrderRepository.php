@@ -123,6 +123,7 @@ class OrderRepository
         if ($no_paginate == true) {
             return OrderItem::query()
                 ->where('order_id', '=', $order_id)
+                ->where('status', '=', OrderItem::AVAILABLE)
                 ->latest()
                 ->get();
         } else {
@@ -131,5 +132,14 @@ class OrderRepository
                 ->latest()
                 ->paginate(10);
         }
+    }
+
+    public function updateStatusOrderItem($id, $status)
+    {
+        return OrderItem::query()
+            ->where('id', '=', $id)
+            ->update([
+                'status' => $status
+            ]);
     }
 }

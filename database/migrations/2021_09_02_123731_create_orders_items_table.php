@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\OrderItem;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,6 +20,7 @@ class CreateOrdersItemsTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('price');
             $table->unsignedBigInteger('count');
+            $table->enum('status', OrderItem::$statuses)->default(OrderItem::AVAILABLE);
             $table->timestamps();
 
             $table->foreign('order_id')

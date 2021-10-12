@@ -78,87 +78,80 @@
 
                             @endauth
 
-                            <li class="menu-item menu-item-has-children animate-dropdown dropdown">
-                                <a title="صفحات" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" href="#">صفحات <span class="caret"></span></a>
-                                <ul role="menu" class=" dropdown-menu">
+                                <li class="yamm-fw menu-item menu-item-has-children animate-dropdown dropdown">
+                                    <a title="Pages" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" href="#">دسته بندی ها <span class="caret"></span></a>
+                                    <ul role="menu" class=" dropdown-menu">
+                                        <li class="menu-item menu-item-object-static_block animate-dropdown">
+                                            <div class="yamm-content">
+                                                <div class="tm-mega-menu">
 
-                                    <li class="menu-item animate-dropdown">
-                                        <a title="وبلاگ" href="{{route('blog')}}">وبلاگ</a>
-                                    </li>
+                                                    @if (count($categories))
 
-                                    <li class="menu-item animate-dropdown">
-                                        <a title="درباره ما" href="{{route('about-us')}}">درباره ما</a>
-                                    </li>
+                                                        @foreach($categories as $value)
 
-                                    <li class="menu-item animate-dropdown">
-                                        <a title="تماس با ما" href="{{route('contact-us')}}">تماس با ما</a>
-                                    </li>
+                                                            @if (count($value->sub))
 
-                                    <li class="menu-item animate-dropdown">
-                                        <a title="پرسش و پاسخ ها" href="{{route('faq')}}">پرسش و پاسخ ها</a>
-                                    </li>
-
-                                    <li class="menu-item animate-dropdown">
-                                        <a title="شرایط و ضوابط" href="{{route('terms-and-conditions')}}">شرایط و ضوابط</a>
-                                    </li>
-
-                                </ul>
-                            </li>
-
-                            <li class="yamm-fw menu-item menu-item-has-children animate-dropdown dropdown">
-                                <a title="Pages" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" href="#">دسته بندی ها <span class="caret"></span></a>
-                                <ul role="menu" class=" dropdown-menu">
-                                    <li class="menu-item menu-item-object-static_block animate-dropdown">
-                                        <div class="yamm-content">
-                                            <div class="tm-mega-menu">
-
-                                                @if (count($categories))
-
-                                                    @foreach($categories as $value)
-
-                                                        @if (count($value->sub))
-
-                                                            <div class="widget widget_nav_menu">
-                                                                <ul class="menu">
-                                                                    <li class="nav-title menu-item">
-                                                                        <a style="font-weight: bold;font-size: 18px" href="{{$value->path()}}">{{$value->name}}</a>
-                                                                    </li>
-
-                                                                    @foreach($value->sub as $item)
-
-                                                                        <li class="menu-item">
-                                                                            <a style="font-size: 16px;padding-right: 60px" href="{{$item->path()}}">{{$item->name}}</a>
+                                                                <div class="widget widget_nav_menu">
+                                                                    <ul class="menu">
+                                                                        <li class="nav-title menu-item">
+                                                                            <a style="font-weight: bold;font-size: 18px" href="{{$value->path()}}">{{$value->name}}</a>
                                                                         </li>
 
-                                                                        @if (count($item->sub))
+                                                                        @foreach($value->sub as $item)
 
-                                                                            @foreach($item->sub as $v)
+                                                                            <li class="menu-item">
+                                                                                <a style="font-size: 16px;padding-right: 60px" href="{{$item->path()}}">{{$item->name}}</a>
+                                                                            </li>
 
-                                                                                <li class="menu-item">
-                                                                                    <a style="padding-right: 100px" href="{{$v->path()}}">{{$v->name}}</a>
-                                                                                </li>
+                                                                            @if (count($item->sub))
 
-                                                                            @endforeach
+                                                                                @foreach($item->sub as $v)
 
-                                                                        @endif
+                                                                                    <li class="menu-item">
+                                                                                        <a style="padding-right: 100px" href="{{$v->path()}}">{{$v->name}}</a>
+                                                                                    </li>
 
-                                                                    @endforeach
+                                                                                @endforeach
 
-                                                                </ul>
+                                                                            @endif
 
-                                                            </div>
+                                                                        @endforeach
 
-                                                        @endif
+                                                                    </ul>
 
-                                                    @endforeach
+                                                                </div>
 
-                                                @endif
+                                                            @endif
 
+                                                        @endforeach
+
+                                                    @endif
+
+                                                </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="menu-item animate-dropdown">
+                                    <a title="وبلاگ" href="{{route('blog')}}">وبلاگ</a>
+                                </li>
+
+                                <li class="menu-item animate-dropdown">
+                                    <a title="درباره ما" href="{{route('about-us')}}">درباره ما</a>
+                                </li>
+
+                                <li class="menu-item animate-dropdown">
+                                    <a title="تماس با ما" href="{{route('contact-us')}}">تماس با ما</a>
+                                </li>
+
+                                <li class="menu-item animate-dropdown">
+                                    <a title="پرسش و پاسخ ها" href="{{route('faq')}}">پرسش و پاسخ ها</a>
+                                </li>
+
+                                <li class="menu-item animate-dropdown">
+                                    <a title="شرایط و ضوابط" href="{{route('terms-and-conditions')}}">شرایط و ضوابط</a>
+                                </li>
 
                         </ul>
                     </nav>

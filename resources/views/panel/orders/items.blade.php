@@ -42,6 +42,7 @@
                                     <th>نام</th>
                                     <th>قیمت</th>
                                     <th>تعداد</th>
+                                    <th>وضعیت</th>
                                 </tr>
 
                                 @if(count($items))
@@ -53,6 +54,7 @@
                                             <td>{{$value->product->name}}</td>
                                             <td>{{number_format($value->price)}}</td>
                                             <td>{{number_format($value->count)}}</td>
+                                            {!! $value->status() !!}
                                         </tr>
 
                                     @endforeach

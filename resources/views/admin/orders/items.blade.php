@@ -34,52 +34,76 @@
                             <h3 class="card-title">محصولات سفارش ({{$order->code}}-{{$order->user->fullName}})</h3>
                         </div>
 
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-hover table-bordered text-center">
+                        <form id="checkGroups" method="post">
 
-                                <tr>
-                                    <th>ردیف</th>
-                                    <th>نام</th>
-                                    <th>قیمت</th>
-                                    <th>تعداد</th>
-                                    <th>تعداد موجودی</th>
-                                    <th>ویرایش</th>
-                                </tr>
+                            @csrf
 
-                                @if(count($items))
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-hover table-bordered text-center">
 
-                                    @foreach($items as $key=>$value)
+                                    <tr>
+                                        <th>ردیف</th>
+                                        <th><input type="checkbox" id="selectall"/></th>
+                                        <th>نام</th>
+                                        <th>قیمت</th>
+                                        <th>تعداد</th>
+                                        <th>تعداد موجودی</th>
+                                        <th>وضعیت</th>
+                                        <th>ویرایش</th>
+                                    </tr>
 
-                                        <tr>
-                                            <td>{{$key+1}}</td>
-                                            <td>{{$value->product->name}}</td>
-                                            <td>{{number_format($value->price)}}</td>
-                                            <td>{{number_format($value->count)}}</td>
-                                            <td>{{number_format($value->product->count)}}</td>
-                                            <td>
-                                                <a target="_blank" href="{{route('orders.update_items',$value->id)}}">
-                                                    <i class="fa fa-edit text-primary"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                    @if(count($items))
 
-                                    @endforeach
+                                        @foreach($items as $key=>$value)
 
-                                @else
+                                            <tr>
+                                                <td>{{$key+1}}</td>
+                                                <td>
+                                                    <input type="checkbox" class="singlechkbox" name="id[]"
+                                                           value="{{$value->id}}"/>
+                                                </td>
+                                                <td>{{$value->product->name}}</td>
+                                                <td>{{number_format($value->price)}}</td>
+                                                <td>{{number_format($value->count)}}</td>
+                                                <td>{{number_format($value->product->count)}}</td>
+                                                {!! $value->status() !!}
+                                                <td>
+                                                    <a target="_blank" href="{{route('orders.update_items',$value->id)}}">
+                                                        <i class="fa fa-edit text-primary"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
 
-                                    <div class="alert alert-danger text-center">
-                                        <p>اطلاعات این بخش ثبت نشده است</p>
-                                    </div>
+                                        @endforeach
 
-                                @endif
+                                    @else
 
-                            </table>
+                                        <div class="alert alert-danger text-center">
+                                            <p>اطلاعات این بخش ثبت نشده است</p>
+                                        </div>
 
-                        </div>
+                                    @endif
 
-                        <div class="pagination mt-3">
-                            {!! $items->links() !!}
-                        </div>
+                                </table>
+
+                            </div>
+
+                            <div class="pagination mt-3">
+                                {!! $items->links() !!}
+                            </div>
+
+                            <div class="card-footer">
+                                <button data-message="آیا از موجود کردن گروهی اطمینان دارید ؟"
+                                        id="{{route('orders.update_items.status',[\App\Models\OrderItem::AVAILABLE])}}" type="submit" class="btn btn-success">موجود
+                                    کردن گروهی
+                                </button>
+                                <button data-message="آیا از ناموجود گروهی اطمینان دارید ؟"
+                                        id="{{route('orders.update_items.status',[\App\Models\OrderItem::UNAVAILABLE])}}" type="submit" class="btn btn-danger">
+                                    ناموجود کردن گروهی
+                                </button>
+                            </div>
+
+                        </form>
 
                     </div>
 
@@ -91,3 +115,49 @@
 </div>
 
 @include('admin.layout.footer')
+
+<script type="text/javascript">
+
+    jQuery(function ($) {
+        $('body').on('click', '#selectall', function () {
+            $('.singlechkbox').prop('checked', this.checked);
+        });
+
+        $('body').on('click', '.singlechkbox', function () {
+            if ($('.singlechkbox').length == $('.singlechkbox:checked').length) {
+                $('#selectall').prop('checked', true);
+            } else {
+                $("#selectall").prop('checked', false);
+            }
+
+        });
+    });
+
+    var checkGroups = $('#checkGroups');
+
+    checkGroups.on('submit', function (e) {
+        e.preventDefault();
+
+        if ($('.singlechkbox:checked').length >= 1) {
+            var route = $(this).find("button[type=submit]:focus").attr('id');
+            var message = $(this).find("button[type=submit]:focus").attr('data-message');
+            Swal.fire({
+                title: message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: 'rgb(10,132,16)',
+                cancelButtonColor: 'rgb(221, 51, 51)',
+                confirmButtonText: 'بله',
+                cancelButtonText: 'خیر'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    checkGroups.attr('action', route);
+                    this.submit();
+                }
+            })
+        } else {
+            toastr['warning']('حداقل یک آیتم را انتخاب کنید', 'پیام');
+        }
+    });
+
+</script>

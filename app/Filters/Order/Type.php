@@ -17,6 +17,8 @@ class Type extends Filter
             return $builder->where('type', '=', Order::PAID);
         } elseif ($keyword == 'unpaid') {
             return $builder->where('type', '=', Order::UNPAID);
+        }else{
+            return $builder;
         }
     }
 }

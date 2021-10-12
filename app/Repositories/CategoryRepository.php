@@ -92,6 +92,16 @@ class CategoryRepository
         }
     }
 
+    public function dataByRelations($category_id)
+    {
+        return Category::with(['products',
+            'sub.products',
+            'sub.childrenRecursive.products'])
+            ->where('id', '=', $category_id)
+            ->get()
+            ->toArray();
+    }
+
     /*START SHOW*/
 
     public function storeShow($values)

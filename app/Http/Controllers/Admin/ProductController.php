@@ -319,7 +319,6 @@ class ProductController extends Controller
 
             newFeedback();
         } catch (Exception $exception) {
-            dd($exception);
             newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
         }
         return redirect()->route('products.import_page');

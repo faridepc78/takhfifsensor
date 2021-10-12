@@ -57,9 +57,6 @@
                             <a href="{{route('orders.index','status='.\App\Models\Order::ACCEPT)}}"
                                class="btn btn-success">تایید شده</a>
 
-                            <a href="{{route('orders.index','status='.\App\Models\Order::UPDATED)}}"
-                               class="btn btn-primary">بروزرسانی شده</a>
-
                             <a href="{{route('orders.index','status='.\App\Models\Order::PENDING)}}"
                                class="btn btn-warning">برسی نشده</a>
 

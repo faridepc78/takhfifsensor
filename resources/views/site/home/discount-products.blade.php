@@ -1,7 +1,7 @@
 <section class="section-hot-new-arrivals section-products-carousel-tabs techmarket-tabs">
     <div class="section-products-carousel-tabs-wrap">
         <header class="section-header">
-            <a target="_blank" href="{{route('products.new')}}"><h2 class="section-title">جدید ترین محصولات</h2></a>
+            <a target="_blank" href="{{route('products.by-discount')}}"><h2 class="section-title">محصولات تخفیف دار</h2></a>
         </header>
 
         <div class="tab-content">
@@ -13,9 +13,9 @@
                         <div class="woocommerce">
                             <div class="products">
 
-                                @if (count($new_products))
+                                @if (count($discount_products))
 
-                                    @foreach($new_products as $value)
+                                    @foreach($discount_products as $value)
 
                                         <div class="product">
                                             <a href="{{$value->path()}}"
@@ -47,8 +47,7 @@
                                                 <h2 class="woocommerce-loop-product__title">{{$value->name}}</h2>
                                             </a>
                                             <div class="hover-area">
-                                                <a class="button add_to_cart_button"
-                                                   href="{{route('cart.add',[\Vinkla\Hashids\Facades\Hashids::encode($value->id),\Vinkla\Hashids\Facades\Hashids::encode(1)])}}"
+                                                <a class="button add_to_cart_button" href="{{route('cart.add',[\Vinkla\Hashids\Facades\Hashids::encode($value->id),\Vinkla\Hashids\Facades\Hashids::encode(1)])}}"
                                                    rel="nofollow">افزودن به سبد</a>
                                             </div>
                                         </div>

@@ -50,6 +50,15 @@ class Category extends Model
         return $this->hasMany(Product::class, 'category_id', 'id');
     }
 
+    public function subproducts()
+    {
+        return $this->hasManyThrough(Product::class, Category::class, 'parent_id', 'category_id');
+    }
+
+    public function childrenRecursive() {
+        return $this->sub()->with('childrenRecursive');
+    }
+
     public function scopeGetProducts()
     {
         return $this->products()->limit(8)->latest()->get();

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Order\UpdateOrderItemRequest;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Notifications\ConfirmOrder;
 use App\Repositories\OrderRepository;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
@@ -64,6 +66,39 @@ class OrderController extends Controller
             newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
         }
         return redirect()->route('orders.update_items', $id);
+    }
+
+    public function update_items_status(Request $request, $status)
+    {
+        try {
+            if ($request->exists('id')) {
+                $ids = $request->id;
+                if ($status == OrderItem::AVAILABLE) {
+                    foreach ($ids as $id) {
+                        $item = $this->orderRepository->findByItemId($id);
+                        if ($item['status'] == OrderItem::UNAVAILABLE) {
+                            $this->orderRepository->updateStatusOrderItem($id,OrderItem::AVAILABLE);
+                        }
+                    }
+                } elseif ($status == OrderItem::UNAVAILABLE) {
+                    foreach ($ids as $id) {
+                        $item = $this->orderRepository->findByItemId($id);
+                        if ($item['status'] == OrderItem::AVAILABLE) {
+                            $this->orderRepository->updateStatusOrderItem($id,OrderItem::UNAVAILABLE);
+                        }
+                    }
+                } else {
+                    newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
+                }
+            } else {
+                newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
+            }
+            newFeedback();
+        } catch (Exception $exception) {
+            newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
+        }
+
+        return redirect()->back();
     }
 
     public function confirm($id)

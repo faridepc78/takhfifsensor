@@ -79,15 +79,15 @@
                                              data-slick="{&quot;infinite&quot;:false,&quot;slidesToShow&quot;:4,&quot;slidesToScroll&quot;:1,&quot;dots&quot;:false,&quot;arrows&quot;:true,&quot;vertical&quot;:true,&quot;verticalSwiping&quot;:true,&quot;focusOnSelect&quot;:true,&quot;touchMove&quot;:true,&quot;prevArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;tm tm-arrow-up\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;nextArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;tm tm-arrow-down\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;asNavFor&quot;:&quot;#techmarket-single-product-gallery .woocommerce-product-gallery__wrapper&quot;,&quot;responsive&quot;:[{&quot;breakpoint&quot;:765,&quot;settings&quot;:{&quot;vertical&quot;:false,&quot;horizontal&quot;:true,&quot;verticalSwiping&quot;:false,&quot;slidesToShow&quot;:4}}]}">
                                             <figure class="techmarket-single-product-gallery-thumbnails__wrapper">
 
-                                                <figure data-thumb="{{$product->image->original}}"
-                                                        class="techmarket-wc-product-gallery__image">
-                                                    <img width="180" height="180"
-                                                         src="{{$product->image->original}}"
-                                                         class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
-                                                         alt="">
-                                                </figure>
-
                                                 @if (count($product->gallery))
+
+                                                    <figure data-thumb="{{$product->image->original}}"
+                                                            class="techmarket-wc-product-gallery__image">
+                                                        <img width="180" height="180"
+                                                             src="{{$product->image->original}}"
+                                                             class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
+                                                             alt="">
+                                                    </figure>
 
                                                     @foreach($product->gallery as $value)
 
@@ -110,6 +110,9 @@
                                 <div class="summary entry-summary">
                                     <div class="single-product-header">
                                         <h1 class="product_title entry-title">{{$product->name}}</h1>
+                                        @if (!empty($product->pdf->files))
+                                            <a href="{{$product->pdf->original}}" class="text text-success"><p>دانلود پی دی اف</p></a>
+                                        @endif
                                     </div>
 
                                     <div class="single-product-meta">
@@ -136,10 +139,6 @@
                                                     class="count">1</span> دیدگاه مشتریان)</a>
                                         </div>
                                     </div>--}}
-
-                                    <div class="woocommerce-product-details__short-description">
-                                        {!! $product->feature !!}
-                                    </div>
 
                                     <div class="product-actions-wrapper">
                                         <div class="product-actions">
@@ -219,6 +218,7 @@
 																	</span>
 
                                                         <h2 class="woocommerce-loop-product__title">{{$value->name}}</h2>
+
                                                     </a>
                                                     <div class="hover-area">
                                                         <a class="button add_to_cart_button" href="{{route('cart.add',[\Vinkla\Hashids\Facades\Hashids::encode($value->id),\Vinkla\Hashids\Facades\Hashids::encode(1)])}}"
@@ -236,10 +236,10 @@
 
                             <div class="woocommerce-tabs wc-tabs-wrapper">
                                 <ul role="tablist" class="nav tabs wc-tabs">
-                                    <li class="nav-item description_tab">
+                                    {{--<li class="nav-item description_tab">
                                         <a class="nav-link" data-toggle="tab" role="tab" aria-controls="tab-description"
                                            href="#tab-description">توضیحات</a>
-                                    </li>
+                                    </li>--}}
 
                                     {{--<li class="nav-item specification_tab">
                                         <a class="nav-link" data-toggle="tab" role="tab"

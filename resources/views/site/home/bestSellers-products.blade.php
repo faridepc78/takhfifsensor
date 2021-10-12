@@ -1,7 +1,7 @@
 <section class="section-hot-new-arrivals section-products-carousel-tabs techmarket-tabs">
     <div class="section-products-carousel-tabs-wrap">
         <header class="section-header">
-            <h2 class="section-title">پرفروش ترین محصولات</h2>
+            <a target="_blank" href="{{route('products.most-sale')}}"><h2 class="section-title">پرفروش ترین محصولات</h2></a>
         </header>
 
         <div class="tab-content">
