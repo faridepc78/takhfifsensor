@@ -2,30 +2,37 @@
 
 namespace App\Repositories;
 
-use App\Filters\Contact\Search;
-use App\Filters\Contact\Type;
-use App\Models\ContactUs;
+use App\Filters\Inquiry\Search;
+use App\Filters\Inquiry\Type;
+use App\Models\Inquiry;
 use Illuminate\Pipeline\Pipeline;
 
-class ContactUsRepository
+class InquiryRepository
 {
     public function store($values)
     {
-        return ContactUs::query()
+        return Inquiry::query()
             ->create([
-                'f_name' => $values['f_name'],
-                'l_name' => $values['l_name'],
-                'mobile' => $values['mobile'],
                 'user_id' => $values['user_id'],
-                'subject' => $values['subject'],
-                'text' => $values['text']
+                'media_id' => null,
+                'text' => $values['text'],
+                'type' => $values['type']
+            ]);
+    }
+
+    public function addMedia($media_id, $id)
+    {
+        return Inquiry::query()
+            ->where('id', '=', $id)
+            ->update([
+                'media_id' => $media_id
             ]);
     }
 
     public function paginate()
     {
         return app(Pipeline::class)
-            ->send(ContactUs::query())
+            ->send(Inquiry::query())
             ->through([
                 Type::class,
                 Search::class
@@ -38,16 +45,16 @@ class ContactUsRepository
 
     public function findById($id)
     {
-        return ContactUs::query()
+        return Inquiry::query()
             ->findOrFail($id);
     }
 
     public function updateType($id)
     {
-        return ContactUs::query()
+        return Inquiry::query()
             ->where('id', '=', $id)
             ->update([
-                'type' => ContactUs::READ
+                'type' => Inquiry::READ
             ]);
     }
 }

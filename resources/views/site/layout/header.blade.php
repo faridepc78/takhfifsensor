@@ -95,12 +95,18 @@
                                                                     <ul class="menu">
                                                                         <li class="nav-title menu-item">
                                                                             <a style="font-weight: bold;font-size: 18px" href="{{$value->path()}}">{{$value->name}}</a>
+                                                                            @if (!empty($value->image->files))
+                                                                                <img width="100" height="100" src="{{$value->image->original}}" alt="{{$value->image->original}}">
+                                                                            @endif
                                                                         </li>
 
                                                                         @foreach($value->sub as $item)
 
                                                                             <li class="menu-item">
                                                                                 <a style="font-size: 16px;padding-right: 60px" href="{{$item->path()}}">{{$item->name}}</a>
+                                                                                @if (!empty($item->image->files))
+                                                                                    <img width="100" height="100" src="{{$value->image->original}}" alt="{{$value->image->original}}">
+                                                                                @endif
                                                                             </li>
 
                                                                             @if (count($item->sub))
@@ -109,6 +115,9 @@
 
                                                                                     <li class="menu-item">
                                                                                         <a style="padding-right: 100px" href="{{$v->path()}}">{{$v->name}}</a>
+                                                                                        @if (!empty($v->image->files))
+                                                                                            <img width="100" height="100" src="{{$value->image->original}}" alt="{{$value->image->original}}">
+                                                                                        @endif
                                                                                     </li>
 
                                                                                 @endforeach
@@ -143,6 +152,10 @@
 
                                 <li class="menu-item animate-dropdown">
                                     <a title="تماس با ما" href="{{route('contact-us')}}">تماس با ما</a>
+                                </li>
+
+                                <li class="menu-item animate-dropdown">
+                                    <a title="استعلام" href="{{route('inquiry')}}">استعلام</a>
                                 </li>
 
                                 <li class="menu-item animate-dropdown">
@@ -192,7 +205,8 @@
                                                                         <ul>
                                                                             <li class="nav-title"
                                                                                 style="font-weight: bold;font-size: 18px"><a
-                                                                                    href="{{$item->path()}}">{{$item->name}}</a></li>
+                                                                                    href="{{$item->path()}}">{{$item->name}}</a>
+                                                                            </li>
 
                                                                             @if (count($item->sub))
 
@@ -392,6 +406,10 @@
                                         </li>
 
                                         <li class="highlight menu-item animate-dropdown">
+                                            <a title="استعلام" href="{{route('inquiry')}}">استعلام</a>
+                                        </li>
+
+                                        <li class="highlight menu-item animate-dropdown">
                                             <a title="پرسش و پاسخ ها" href="{{route('faq')}}">پرسش و پاسخ ها</a>
                                         </li>
 
@@ -494,3 +512,28 @@
         </div>
 
     </header>
+
+    <style>
+        .float{
+            position:fixed;
+            width:60px;
+            height:60px;
+            bottom:40px;
+            right:40px;
+            background-color:#25d366;
+            color:#FFF;
+            border-radius:50px;
+            text-align:center;
+            font-size:30px;
+            box-shadow: 2px 2px 3px #999;
+            z-index:100;
+        }
+
+        .my-float{
+            margin-top:16px;
+        }
+    </style>
+
+    <a href="https://wa.me/+989013503030?text=سلام. وقت بخیر من از طریق سایت تخفیف سنسور با شما ارتباط میگیرم" class="float" target="_blank">
+        <i class="fa fa-whatsapp my-float"></i>
+    </a>

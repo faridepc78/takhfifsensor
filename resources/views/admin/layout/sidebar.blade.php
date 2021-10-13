@@ -473,6 +473,32 @@
                         </ul>
                     </li>
 
+                    <li class="nav-item has-treeview {{ request()->routeIs(['inquiries.index',
+'inquiries.single']) ? 'menu-open' : '' }}">
+
+                        <a href="#"
+                           class="nav-link {{ request()->routeIs(['inquiries.index',
+'inquiries.single']) ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-circle"></i>
+                            <p>
+                                استعلام ها
+                                <i class="fa fa-angle-left right"></i>
+                            </p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+
+                            <li class="nav-item">
+                                <a href="{{ route('inquiries.index') }}"
+                                   class="nav-link {{ request()->routeIs(['inquiries.index','inquiries.single']) ? 'active' : '' }}">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>مدیریت استعلام ها</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
                     <li class="nav-item has-treeview {{ request()->routeIs(['orders.index',
 'orders.pending',
 'orders.items',

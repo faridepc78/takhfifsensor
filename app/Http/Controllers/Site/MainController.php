@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Site\ContactUs\ContactUsRequest;
+use App\Http\Requests\Site\Inquiry\InquiryRequest;
 use App\Http\Requests\Site\Order\OrderRequest;
 use App\Notifications\RegisterOrder;
 use App\Repositories\BannerRepository;
@@ -11,11 +12,13 @@ use App\Repositories\BrandRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\CityRepository;
 use App\Repositories\ContactUsRepository;
+use App\Repositories\InquiryRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\ProvinceRepository;
 use App\Repositories\SliderRepository;
 use App\Services\BasketBuy\BasketBuyService;
+use App\Services\Media\MediaFileService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -34,6 +37,7 @@ class MainController extends Controller
     private $cityRepository;
     private $orderRepository;
     private $basketBuyService;
+    private $inquiryRepository;
 
     public function __construct(SliderRepository    $sliderRepository,
                                 BrandRepository     $brandRepository,
@@ -44,7 +48,8 @@ class MainController extends Controller
                                 ProvinceRepository  $provinceRepository,
                                 CityRepository      $cityRepository,
                                 OrderRepository     $orderRepository,
-                                BasketBuyService    $basketBuyService)
+                                BasketBuyService    $basketBuyService,
+                                InquiryRepository   $inquiryRepository)
     {
         $this->sliderRepository = $sliderRepository;
         $this->brandRepository = $brandRepository;
@@ -56,6 +61,7 @@ class MainController extends Controller
         $this->cityRepository = $cityRepository;
         $this->orderRepository = $orderRepository;
         $this->basketBuyService = $basketBuyService;
+        $this->inquiryRepository = $inquiryRepository;
     }
 
     public function home()
@@ -92,6 +98,29 @@ class MainController extends Controller
             newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
         }
         return redirect()->route('contact-us');
+    }
+
+    public function inquiry()
+    {
+        return view('site.inquiry.index');
+    }
+
+    public function inquiry_post(InquiryRequest $request)
+    {
+        try {
+            DB::transaction(function () use ($request) {
+                $inquiry = $this->inquiryRepository->store($request);
+                $image_id = MediaFileService::publicUpload($request->file('media'),
+                    'inquiries', null)->id;
+                $this->inquiryRepository->addMedia($image_id, $inquiry->id);
+            });
+            DB::commit();
+            newFeedback('پیام', 'درخواست شما با موفقیت ارسال شد', 'success');
+        } catch (Exception $exception) {
+            DB::rollBack();
+            newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
+        }
+        return redirect()->route('inquiry');
     }
 
     public function faq()

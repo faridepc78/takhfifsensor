@@ -68,6 +68,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'check_admin'
     Route::get('contacts', 'ContactController@index')->name('contacts.index');
     Route::get('contacts/single/{id}', 'ContactController@single')->name('contacts.single');
 
+    Route::get('inquiries', 'InquiryController@index')->name('inquiries.index');
+    Route::get('inquiries/single/{id}', 'InquiryController@single')->name('inquiries.single');
+
     Route::get('orders/pending', 'OrderController@pending')->name('orders.pending');
     Route::get('orders', 'OrderController@index')->name('orders.index');
     Route::get('orders/items/{id}', 'OrderController@items')->name('orders.items');
@@ -128,13 +131,16 @@ Route::group(['prefix' => '/', 'middleware' => ['web', 'throttle:50,1', 'block_u
     Route::get('contact-us', 'MainController@contact_us')->name('contact-us');
     Route::post('contact-us', 'MainController@contact_us_post')->name('contact-us');
 
+    Route::get('inquiry', 'MainController@inquiry')->name('inquiry')->middleware('auth');
+    Route::post('inquiry', 'MainController@inquiry_post')->name('inquiry')->middleware('auth');
+
     Route::get('faq', 'MainController@faq')->name('faq');
 
     Route::get('terms-and-conditions', 'MainController@terms_and_conditions')->name('terms-and-conditions');
 
-    Route::get('products/new','ProductController@new')->name('products.new');
-    Route::get('products/by-discount','ProductController@by_discount')->name('products.by-discount');
-    Route::get('products/most-sale','ProductController@most_sale')->name('products.most-sale');
+    Route::get('products/new', 'ProductController@new')->name('products.new');
+    Route::get('products/by-discount', 'ProductController@by_discount')->name('products.by-discount');
+    Route::get('products/most-sale', 'ProductController@most_sale')->name('products.most-sale');
 
     Route::get('products/category/{slug}', 'ProductController@category')->name('products.category');
 

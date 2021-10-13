@@ -13,12 +13,16 @@ class Status extends Filter
     {
         $keyword = request($this->filterName());
 
-        if ($keyword == 'active') {
-            return $builder->where('status', '=', Transaction::ACTIVE);
-        } elseif ($keyword == 'pending') {
-            return $builder->where('status', '=', Transaction::PENDING);
-        } elseif ($keyword == 'inactive') {
-            return $builder->where('status', '=', Transaction::INACTIVE);
+        if ($keyword == Transaction::S_SUCCESS) {
+            return $builder->where('status', '=', Transaction::S_SUCCESS);
+        } elseif ($keyword == Transaction::S_FAIL) {
+            return $builder->where('status', '=', Transaction::S_FAIL);
+        } elseif ($keyword == Transaction::S_PENDING) {
+            return $builder->where('status', '=', Transaction::S_PENDING);
+        } elseif ($keyword == Transaction::S_CANCEL) {
+            return $builder->where('status', '=', Transaction::S_CANCEL);
+        } else {
+            return $builder;
         }
     }
 }

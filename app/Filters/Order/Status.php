@@ -13,10 +13,10 @@ class Status extends Filter
     {
         $keyword = request($this->filterName());
 
-        if ($keyword == 'accept') {
+        if ($keyword == Order::ACCEPT) {
             return $builder->where('status', '=', Order::ACCEPT);
         }
-        elseif ($keyword == 'pending') {
+        elseif ($keyword == Order::PENDING) {
             return $builder->where('status', '=', Order::PENDING);
         }else{
             return $builder;

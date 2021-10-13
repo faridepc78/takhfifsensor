@@ -73,13 +73,16 @@
                                 </form>
                             </div>
 
-                            <a href="{{route('user.transactions.index','status='.\App\Models\Transaction::ACTIVE)}}"
+                            <a href="{{route('user.transactions.index','status='.\App\Models\Transaction::S_SUCCESS)}}"
                                class="btn btn-success">موفق</a>
 
-                            <a href="{{route('user.transactions.index','status='.\App\Models\Transaction::PENDING)}}"
+                            <a href="{{route('user.transactions.index','status='.\App\Models\Transaction::S_CANCEL)}}"
                                class="btn btn-warning">در حال تراکنش</a>
 
-                            <a href="{{route('user.transactions.index','status='.\App\Models\Transaction::INACTIVE)}}"
+                            <a href="{{route('user.transactions.index','status='.\App\Models\Transaction::S_PENDING)}}"
+                               class="btn btn-info">کنسل شده</a>
+
+                            <a href="{{route('user.transactions.index','status='.\App\Models\Transaction::S_FAIL)}}"
                                class="btn btn-danger">ناموفق</a>
 
                         </div>

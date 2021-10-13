@@ -307,13 +307,11 @@
 											<i class="tm tm-call-us-footer"></i>
 										</span>
                                 <div class="media-body">
-                                    <span class="call-us-title">سوالی دارید، مطرح کنید، 24/7!</span>
-                                    <span class="call-us-text">(800) 8001-8588, (0600) 874 548</span>
-                                    <address class="footer-contact-address">ایران، تهران، خیابان فلانی، کوچه فلانی
-                                        نسب
+                                    <span class="call-us-title">سوالی دارید، مطرح کنید</span>
+                                    <span class="call-us-text">3030 350 901 98+</span>
+                                    <address class="footer-contact-address">
+                                        سایر یزد بخش مرکزی ، شهر شاهدیه، محله (گردفرامرز) بخشی ، خیابان تلاش ، خیابان دست آورد ، پلاک 0 ، طبقه همکف
                                     </address>
-                                    <a href="#" class="footer-address-map-link">
-                                        <i class="tm tm-map-marker"></i>جستجو بروی مپ</a>
                                 </div>
 
                             </div>
@@ -364,6 +362,9 @@
                                         </li>
                                         <li class="menu-item">
                                             <a href="{{route('contact-us')}}">تماس با ما</a>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a title="استعلام" href="{{route('inquiry')}}">استعلام</a>
                                         </li>
                                         <li class="menu-item">
                                             <a href="{{route('about-us')}}">درباره ما</a>

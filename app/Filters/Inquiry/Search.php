@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Filters\Contact;
+namespace App\Filters\Inquiry;
 
 
 use App\Filters\Filter;

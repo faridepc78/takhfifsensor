@@ -1,6 +1,6 @@
 <footer class="main-footer text-center" dir="ltr">
     <img width="50" src="{{asset('assets/common/images/pattern.jpg')}}" alt="Pattern Group">
-    <strong>© Designing & Development By : <a href="http://patterndp.ir">Pattern Group</a></strong>
+    <strong>© Designing & Development By : <a href="https://patterndp.ir">Pattern Group</a></strong>
 </footer>
 </div>
 

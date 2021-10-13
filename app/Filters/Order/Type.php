@@ -13,11 +13,11 @@ class Type extends Filter
     {
         $keyword = request($this->filterName());
 
-        if ($keyword == 'paid') {
+        if ($keyword == Order::PAID) {
             return $builder->where('type', '=', Order::PAID);
-        } elseif ($keyword == 'unpaid') {
+        } elseif ($keyword == Order::UNPAID) {
             return $builder->where('type', '=', Order::UNPAID);
-        }else{
+        } else {
             return $builder;
         }
     }
