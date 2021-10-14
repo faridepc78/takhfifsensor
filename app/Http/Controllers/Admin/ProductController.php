@@ -298,7 +298,7 @@ class ProductController extends Controller
                             'code' => $row[12]
                         ];
 
-                    $this->productRepository->updateOrCreateByCode($row[12], $key, $values);
+                    $this->productRepository->updateOrCreateByCode($row[12], $group['id'], $key, $values);
                 }
 
                 if ($group->excel) {

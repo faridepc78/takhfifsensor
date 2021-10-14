@@ -94,13 +94,14 @@ class ProductRepository
             ->count();
     }
 
-    public function updateOrCreateByCode($code, $key, $values)
+    public function updateOrCreateByCode($code, $group_id, $key, $values)
     {
         $product = Product::query()->where('code', '=', $code)->first();
 
         if ($product !== null) {
             Product::query()
                 ->where('code', '=', $code)
+                ->where('group_id', '=', $group_id)
                 ->update(
                     [
                         'name' => $values[$key]['name'],
