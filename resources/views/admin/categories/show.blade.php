@@ -71,7 +71,7 @@
                                             @if ($category['level']==1)
                                                 @if (count($value->sub))
                                                     <td>
-                                                        <a target="_blank" href="{{route('categories.show',$value->id)}}">
+                                                        <a href="{{route('categories.show',$value->id)}}">
                                                             <i class="fa fa-eye text-success"></i>
                                                         </a>
                                                     </td>
