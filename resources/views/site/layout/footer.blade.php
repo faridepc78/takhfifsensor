@@ -309,9 +309,9 @@
                                 <div class="media-body">
                                     <span class="call-us-title">سوالی دارید، مطرح کنید</span>
                                     <span class="call-us-text">3030 350 901 98+</span>
-                                    <address class="footer-contact-address">
-                                        سایر یزد بخش مرکزی ، شهر شاهدیه، محله (گردفرامرز) بخشی ، خیابان تلاش ، خیابان دست آورد ، پلاک 0 ، طبقه همکف
-                                    </address>
+{{--                                    <address class="footer-contact-address">--}}
+{{--                                        سایر یزد بخش مرکزی ، شهر شاهدیه، محله (گردفرامرز) بخشی ، خیابان تلاش ، خیابان دست آورد ، پلاک 0 ، طبقه همکف--}}
+{{--                                    </address>--}}
                                 </div>
 
                             </div>
@@ -364,7 +364,7 @@
                                             <a href="{{route('contact-us')}}">تماس با ما</a>
                                         </li>
                                         <li class="menu-item">
-                                            <a title="استعلام" href="{{route('inquiry')}}">استعلام</a>
+                                            <a title="استعلام ویژه کارخانجات و شرکت ها" href="{{route('inquiry')}}">استعلام ویژه کارخانجات و شرکت ها</a>
                                         </li>
                                         <li class="menu-item">
                                             <a href="{{route('about-us')}}">درباره ما</a>

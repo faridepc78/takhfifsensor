@@ -1,5 +1,5 @@
 @section('site_title')
-    <title>تخفیف سنسور | استعلام</title>
+    <title>تخفیف سنسور | استعلام ویژه کارخانجات و شرکت ها</title>
 @endsection
 
 @section('site_body')
@@ -16,7 +16,7 @@
                     <span class="delimiter">
 							<i class="tm tm-arrow-left"></i>
 						</span>
-                    استعلام
+                    استعلام ویژه کارخانجات و شرکت ها
                 </nav>
 
                 <div id="primary" class="content-area">
@@ -24,7 +24,7 @@
                         <div class="type-page hentry">
                             <header class="entry-header">
                                 <div class="page-header-caption">
-                                    <h1 class="entry-title">استعلام</h1>
+                                    <h1 class="entry-title">استعلام ویژه کارخانجات و شرکت ها</h1>
                                 </div>
                             </header>
 

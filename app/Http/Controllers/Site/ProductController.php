@@ -38,18 +38,24 @@ class ProductController extends Controller
         if ($category_level == 1) {
             if (count($data[0]['products']) >= 1) {
                 $p = $data[0]['products'];
+            } else {
+                $p = [];
             }
 
             if (count($data[0]['sub']) >= 1) {
                 foreach ($data[0]['sub'] as $key => $item) {
                     $products[] = $data[0]['sub'][$key]['products'];
                 }
+            } else {
+                $products = [];
             }
 
             if (count($data[0]['sub'][0]['children_recursive']) >= 1) {
                 foreach ($data[0]['sub'][0]['children_recursive'] as $key => $item) {
                     $r_products[] = $data[0]['sub'][0]['children_recursive'][$key]['products'];
                 }
+            } else {
+                $r_products = [];
             }
 
             $arraysMerged1 = [];
@@ -83,6 +89,8 @@ class ProductController extends Controller
                 foreach ($data[0]['sub'] as $key => $item) {
                     $products[] = $data[0]['sub'][$key]['products'];
                 }
+            } else {
+                $products = [];
             }
 
             $arraysMerged = [];

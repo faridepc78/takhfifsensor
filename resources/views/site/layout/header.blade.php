@@ -78,11 +78,42 @@
 
                             @endauth
 
+                                <li class="menu-item menu-item-has-children animate-dropdown dropdown">
+                                    <a title="صفحات" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" href="#">صفحات <span class="caret"></span></a>
+                                    <ul role="menu" class=" dropdown-menu">
+
+                                        <li class="menu-item animate-dropdown">
+                                            <a title="وبلاگ" href="{{route('blog')}}">وبلاگ</a>
+                                        </li>
+
+                                        <li class="menu-item animate-dropdown">
+                                            <a title="درباره ما" href="{{route('about-us')}}">درباره ما</a>
+                                        </li>
+
+                                        <li class="menu-item animate-dropdown">
+                                            <a title="تماس با ما" href="{{route('contact-us')}}">تماس با ما</a>
+                                        </li>
+
+                                        <li class="menu-item animate-dropdown">
+                                            <a title="استعلام ویژه کارخانجات و شرکت ها" href="{{route('inquiry')}}">استعلام ویژه کارخانجات و شرکت ها</a>
+                                        </li>
+
+                                        <li class="menu-item animate-dropdown">
+                                            <a title="پرسش و پاسخ ها" href="{{route('faq')}}">پرسش و پاسخ ها</a>
+                                        </li>
+
+                                        <li class="menu-item animate-dropdown">
+                                            <a title="شرایط و ضوابط" href="{{route('terms-and-conditions')}}">شرایط و ضوابط</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+
                                 <li class="yamm-fw menu-item menu-item-has-children animate-dropdown dropdown">
                                     <a title="Pages" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" href="#">دسته بندی ها <span class="caret"></span></a>
                                     <ul role="menu" class=" dropdown-menu">
                                         <li class="menu-item menu-item-object-static_block animate-dropdown">
-                                            <div class="yamm-content">
+                                            <div class="yamm-content" style="overflow-y: auto;max-height: 500px">
                                                 <div class="tm-mega-menu">
 
                                                     @if (count($categories))
@@ -142,30 +173,6 @@
                                     </ul>
                                 </li>
 
-                                <li class="menu-item animate-dropdown">
-                                    <a title="وبلاگ" href="{{route('blog')}}">وبلاگ</a>
-                                </li>
-
-                                <li class="menu-item animate-dropdown">
-                                    <a title="درباره ما" href="{{route('about-us')}}">درباره ما</a>
-                                </li>
-
-                                <li class="menu-item animate-dropdown">
-                                    <a title="تماس با ما" href="{{route('contact-us')}}">تماس با ما</a>
-                                </li>
-
-                                <li class="menu-item animate-dropdown">
-                                    <a title="استعلام" href="{{route('inquiry')}}">استعلام</a>
-                                </li>
-
-                                <li class="menu-item animate-dropdown">
-                                    <a title="پرسش و پاسخ ها" href="{{route('faq')}}">پرسش و پاسخ ها</a>
-                                </li>
-
-                                <li class="menu-item animate-dropdown">
-                                    <a title="شرایط و ضوابط" href="{{route('terms-and-conditions')}}">شرایط و ضوابط</a>
-                                </li>
-
                         </ul>
                     </nav>
 
@@ -193,7 +200,7 @@
                                                 class="caret"></span></a>
                                         <ul role="menu" class=" dropdown-menu">
                                             <li class="menu-item menu-item-object-static_block animate-dropdown">
-                                                <div class="yamm-content">
+                                                <div class="yamm-content" style="overflow-y: auto;max-height: 500px">
 
                                                     <div class="row yamm-content-row">
 
@@ -406,7 +413,7 @@
                                         </li>
 
                                         <li class="highlight menu-item animate-dropdown">
-                                            <a title="استعلام" href="{{route('inquiry')}}">استعلام</a>
+                                            <a title="استعلام ویژه کارخانجات و شرکت ها" href="{{route('inquiry')}}">استعلام ویژه کارخانجات و شرکت ها</a>
                                         </li>
 
                                         <li class="highlight menu-item animate-dropdown">
