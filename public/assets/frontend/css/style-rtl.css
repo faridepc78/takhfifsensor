@@ -9555,7 +9555,7 @@ a#variations_clear:before {
     display: inline-block; }
     .primary-navigation .nav > li > a,
     .navbar-primary .nav > li > a {
-      color: #444;
+      color: antiquewhite;
       text-transform: uppercase;
       font-weight: bold;
       position: relative; }

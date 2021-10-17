@@ -87,18 +87,6 @@
                                         </li>
 
                                         <li class="menu-item animate-dropdown">
-                                            <a title="درباره ما" href="{{route('about-us')}}">درباره ما</a>
-                                        </li>
-
-                                        <li class="menu-item animate-dropdown">
-                                            <a title="تماس با ما" href="{{route('contact-us')}}">تماس با ما</a>
-                                        </li>
-
-                                        <li class="menu-item animate-dropdown">
-                                            <a title="استعلام ویژه کارخانجات و شرکت ها" href="{{route('inquiry')}}">استعلام ویژه کارخانجات و شرکت ها</a>
-                                        </li>
-
-                                        <li class="menu-item animate-dropdown">
                                             <a title="پرسش و پاسخ ها" href="{{route('faq')}}">پرسش و پاسخ ها</a>
                                         </li>
 
@@ -171,6 +159,18 @@
                                             </div>
                                         </li>
                                     </ul>
+                                </li>
+
+                                <li class="menu-item animate-dropdown">
+                                    <a title="درباره ما" href="{{route('about-us')}}">درباره ما</a>
+                                </li>
+
+                                <li class="menu-item animate-dropdown">
+                                    <a title="تماس با ما" href="{{route('contact-us')}}">تماس با ما</a>
+                                </li>
+
+                                <li class="menu-item animate-dropdown">
+                                    <a title="استعلام ویژه کارخانجات و شرکت ها" href="{{route('inquiry')}}">استعلام ویژه کارخانجات و شرکت ها</a>
                                 </li>
 
                         </ul>
