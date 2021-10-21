@@ -373,7 +373,7 @@
                                             <a href="{{route('terms-and-conditions')}}">شرایط استفاده</a>
                                         </li>
                                         <li class="menu-item">
-                                            <a href="{{route('faq')}}">پرسش های پاسخ</a>
+                                            <a href="{{route('faq')}}">پرسش و پاسخ ها</a>
                                         </li>
                                     </ul>
                                 </div>

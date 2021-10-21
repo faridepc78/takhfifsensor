@@ -20,6 +20,7 @@ use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\ProvinceRepository;
 use App\Repositories\SliderRepository;
+use App\Repositories\UserRepository;
 use App\Services\BasketBuy\BasketBuyService;
 use App\Services\Media\MediaFileService;
 use Exception;
@@ -41,6 +42,7 @@ class MainController extends Controller
     private $orderRepository;
     private $basketBuyService;
     private $inquiryRepository;
+    private $userRepository;
 
     public function __construct(SliderRepository    $sliderRepository,
                                 BrandRepository     $brandRepository,
@@ -52,7 +54,8 @@ class MainController extends Controller
                                 CityRepository      $cityRepository,
                                 OrderRepository     $orderRepository,
                                 BasketBuyService    $basketBuyService,
-                                InquiryRepository   $inquiryRepository)
+                                InquiryRepository   $inquiryRepository,
+                                UserRepository      $userRepository)
     {
         $this->sliderRepository = $sliderRepository;
         $this->brandRepository = $brandRepository;
@@ -65,6 +68,7 @@ class MainController extends Controller
         $this->orderRepository = $orderRepository;
         $this->basketBuyService = $basketBuyService;
         $this->inquiryRepository = $inquiryRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function home()
@@ -89,6 +93,7 @@ class MainController extends Controller
 
     public function contact_us()
     {
+        $admin = $this->userRepository->getAdmin();
         return view('site.contact-us.index');
     }
 
@@ -96,7 +101,7 @@ class MainController extends Controller
     {
         try {
             $contact = $this->contactUsRepository->store($request);
-            $admin = $request->get('admin');
+            $admin = $this->userRepository->getAdmin();
             $admin->notify(new ContactNotification($admin->fullName, $contact['code']));
             newFeedback('پیام', 'پیام شما با موفقیت ارسال شد', 'success');
         } catch (Exception $exception) {
@@ -118,7 +123,7 @@ class MainController extends Controller
                 $image_id = MediaFileService::publicUpload($request->file('media'),
                     'inquiries', null)->id;
                 $this->inquiryRepository->addMedia($image_id, $inquiry->id);
-                $admin = $request->get('admin');
+                $admin = $this->userRepository->getAdmin();
                 $admin->notify(new InquiryNotification($admin->fullName, $inquiry['code']));
             });
             DB::commit();
@@ -182,7 +187,7 @@ class MainController extends Controller
                     }
                 }
 
-                $admin = $request->get('admin');
+                $admin = $this->userRepository->getAdmin();
 
                 Auth::user()->notify(new RegisterOrder(Auth::user()->fullName, $order['code'],
                     User::USER));

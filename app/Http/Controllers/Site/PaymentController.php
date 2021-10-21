@@ -11,6 +11,7 @@ use App\Notifications\PaymentNotification;
 use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\TransactionRepository;
+use App\Repositories\UserRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,14 +26,17 @@ class PaymentController extends Controller
     private $orderRepository;
     private $transactionRepository;
     private $productRepository;
+    private $userRepository;
 
     public function __construct(OrderRepository       $orderRepository,
                                 TransactionRepository $transactionRepository,
-                                ProductRepository     $productRepository)
+                                ProductRepository     $productRepository,
+                                UserRepository        $userRepository)
     {
         $this->orderRepository = $orderRepository;
         $this->transactionRepository = $transactionRepository;
         $this->productRepository = $productRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function set_driver($payment)
@@ -168,7 +172,7 @@ class PaymentController extends Controller
             $this->productRepository->updateCount($order_items);
             $this->productRepository->updateSale($order_items);
 
-            $admin = $request->get('admin');
+            $admin = $this->userRepository->getAdmin();
 
             //Start Notifications
 

@@ -26,7 +26,7 @@
                             <header class="entry-header">
                                 <div class="page-header-caption">
                                     <h1 class="entry-title">پرسش و پاسخ ها</h1>
-                                    <p class="entry-subtitle">این جزئیات آخرین بار در 18 فوریه 2016 اصلاح شد.</p>
+{{--                                    <p class="entry-subtitle">این جزئیات آخرین بار در 18 فوریه 2016 اصلاح شد.</p>--}}
                                 </div>
                             </header>
 

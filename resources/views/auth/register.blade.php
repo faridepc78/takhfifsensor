@@ -2,6 +2,10 @@
     <title>تخفیف سنسور | ثبت نام</title>
 @endsection
 
+@section('site_body')
+    <body class="page home page-template-default">
+    @endsection
+
 @include('site.layout.header')
 
 <div id="content" class="site-content">

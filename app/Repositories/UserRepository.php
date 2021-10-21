@@ -75,4 +75,11 @@ class UserRepository
             ->where('mobile', '=', $mobile)
             ->firstOrFail();
     }
+
+    public function getAdmin()
+    {
+        return User::query()
+            ->where('role', '=', User::ADMIN)
+            ->first();
+    }
 }

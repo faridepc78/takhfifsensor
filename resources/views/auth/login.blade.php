@@ -2,6 +2,10 @@
     <title>تخفیف سنسور | ورود</title>
 @endsection
 
+@section('site_body')
+    <body class="page home page-template-default">
+    @endsection
+
 @include('site.layout.header')
 
 <div id="content" class="site-content">
@@ -35,6 +39,10 @@
                                                     <span>{{$errors->first('failed')}}</span>
                                                 </div>
                                             @endif
+
+                                            <div class="alert alert-info text-center">
+                                                <p>رمز عبور شما برای اولین بار بعد از ثبت نام تلفن همراه شما است</p>
+                                            </div>
 
                                             <form class="login" id="login_form" method="post"
                                                   action="{{route('login')}}">
