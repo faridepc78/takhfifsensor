@@ -21,7 +21,10 @@ class SendActiveCode extends Notification
 
     public function toSms($notifiable)
     {
-        return 'تخفیف سنسور
-        کد فعالسازی: ' . $this->active_code;
+        return 'تخفیف سنسور' .
+            "\r\n" .
+            'کد فعالسازی: ' .
+            "\r\n" .
+            $this->active_code;
     }
 }

@@ -4,12 +4,9 @@ namespace App\Http\Controllers\Site;
 
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Product;
 use App\Repositories\BrandRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\ProductRepository;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -46,15 +43,16 @@ class ProductController extends Controller
                 foreach ($data[0]['sub'] as $key => $item) {
                     $products[] = $data[0]['sub'][$key]['products'];
                 }
-            } else {
-                $products = [];
-            }
 
-            if (count($data[0]['sub'][0]['children_recursive']) >= 1) {
-                foreach ($data[0]['sub'][0]['children_recursive'] as $key => $item) {
-                    $r_products[] = $data[0]['sub'][0]['children_recursive'][$key]['products'];
+                if (count($data[0]['sub'][0]['children_recursive']) >= 1) {
+                    foreach ($data[0]['sub'][0]['children_recursive'] as $key => $item) {
+                        $r_products[] = $data[0]['sub'][0]['children_recursive'][$key]['products'];
+                    }
+                } else {
+                    $r_products = [];
                 }
             } else {
+                $products = [];
                 $r_products = [];
             }
 
@@ -77,12 +75,18 @@ class ProductController extends Controller
                 $ids[] = explode(",", $value['id']);
             }
 
+            if (!isset($ids)) {
+                $ids = [];
+            }
+
             $products = $this->productRepository->whereInPaginate($ids);
 
         } elseif ($category_level == 2) {
 
             if (count($data[0]['products']) >= 1) {
                 $p = $data[0]['products'];
+            } else {
+                $p = [];
             }
 
             if (count($data[0]['sub']) >= 1) {

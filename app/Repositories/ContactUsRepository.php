@@ -18,7 +18,8 @@ class ContactUsRepository
                 'mobile' => $values['mobile'],
                 'user_id' => $values['user_id'],
                 'subject' => $values['subject'],
-                'text' => $values['text']
+                'text' => $values['text'],
+                'code' => randomNumbers(5)
             ]);
     }
 

@@ -285,7 +285,7 @@
 									<span class="price-label">سبد خرید</span></span>
                         </a>
 
-                        @if (count($basketBuy_data))
+                        @if ($basketBuy_count>=1)
 
                             <ul class="dropdown-menu dropdown-menu-mini-cart" style="overflow: scroll;height: 500px">
                                 <li>

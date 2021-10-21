@@ -28,18 +28,18 @@ class ConfirmOrder extends Notification
     {
         if ($this->type == Order::ACCEPT) {
             return $this->user_full_name . ' ' . 'عزیز' .
-                'سفارش شما با کد:' . '<br>' .
+                "\r\n" .
+                'سفارش شما با کد: ' .
                 $this->order_code .
-                '<br>' .
+                "\r\n" .
                 'سفارش شما توسط مدیریت تایید شد هم اکنون می توانید از طریق پنل کاربری خود پرداخت را انجام دهید';
         } elseif ($this->type == Order::UPDATED) {
             return $this->user_full_name . ' ' . 'عزیز' .
-                'سفارش شما با کد:' . '<br>' .
+                "\r\n" .
+                'سفارش شما با کد: ' .
                 $this->order_code .
-                '<br>' .
+                "\r\n" .
                 'با تغییراتی توسط مدیریت تایید شد هم اکنون می توانید از طریق پنل کاربری خود پرداخت را انجام دهید';
-        } else {
-            return false;
         }
     }
 }

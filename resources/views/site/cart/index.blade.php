@@ -43,7 +43,7 @@
                                                 </thead>
                                                 <tbody>
 
-                                                @if (count($basketBuy_data))
+                                                @if ($basketBuy_count>=1)
 
                                                     @foreach($basketBuy_data as $data)
 
@@ -136,7 +136,7 @@
 
                                         </form>
 
-                                        @if (count($basketBuy_data))
+                                        @if ($basketBuy_count>=1)
 
                                             <div class="cart-collaterals">
                                                 <div class="cart_totals">

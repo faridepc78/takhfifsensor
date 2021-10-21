@@ -21,7 +21,8 @@ class Inquiry extends Model
             'user_id',
             'media_id',
             'text',
-            'type'
+            'type',
+            'code'
         ];
 
     const READ = 'read';

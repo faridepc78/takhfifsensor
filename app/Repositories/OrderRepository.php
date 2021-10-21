@@ -20,7 +20,7 @@ class OrderRepository
                 'city_id' => $values['city_id'],
                 'address' => $values['address'],
                 'phone' => $values['phone'],
-                'code' => make_token(10)
+                'code' => randomNumbers(10)
             ]);
     }
 

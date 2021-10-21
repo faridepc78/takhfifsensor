@@ -16,7 +16,8 @@ class InquiryRepository
                 'user_id' => $values['user_id'],
                 'media_id' => null,
                 'text' => $values['text'],
-                'type' => $values['type']
+                'type' => $values['type'],
+                'code' => randomNumbers(5)
             ]);
     }
 

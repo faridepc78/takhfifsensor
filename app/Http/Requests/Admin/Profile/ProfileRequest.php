@@ -5,6 +5,7 @@ namespace App\Http\Requests\Admin\Profile;
 use App\Models\User;
 use App\Rules\ValidationMobile;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileRequest extends FormRequest
 {
@@ -18,7 +19,7 @@ class ProfileRequest extends FormRequest
         return [
             'f_name' => ['required', 'string', 'max:255'],
             'l_name' => ['required', 'string', 'max:255'],
-            'mobile' => ['required', 'numeric', 'digits:11', new ValidationMobile()],
+            'mobile' => ['required', 'numeric', 'digits:11', 'unique:users,mobile,' . Auth::id(), new ValidationMobile()],
             'password' => ['nullable', 'string', 'min:8', 'confirmed']
         ];
     }

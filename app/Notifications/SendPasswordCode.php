@@ -21,7 +21,10 @@ class SendPasswordCode extends Notification
 
     public function toSms($notifiable)
     {
-        return 'تخفیف سنسور
-        رمز عبور: ' . $this->password;
+        return 'تخفیف سنسور' .
+            "\r\n" .
+            'رمز عبور: ' .
+            "\r\n" .
+            $this->password;
     }
 }

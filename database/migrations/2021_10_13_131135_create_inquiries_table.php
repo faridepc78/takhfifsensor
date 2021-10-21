@@ -19,6 +19,7 @@ class CreateInquiriesTable extends Migration
             $table->unsignedBigInteger('media_id')->nullable();
             $table->longText('text')->nullable();
             $table->enum('type', \App\Models\Inquiry::$types)->default(\App\Models\Inquiry::UNREAD);
+            $table->string('code')->unique();
             $table->timestamps();
 
             $table->foreign('user_id')

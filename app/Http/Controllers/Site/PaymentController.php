@@ -6,6 +6,8 @@ use App\Helpers\EncryptDecrypt;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Transaction;
+use App\Models\User;
+use App\Notifications\PaymentNotification;
 use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\TransactionRepository;
@@ -165,6 +167,18 @@ class PaymentController extends Controller
             $order_items = $this->orderRepository->getAllItemsByOrderId($order['id'], true);
             $this->productRepository->updateCount($order_items);
             $this->productRepository->updateSale($order_items);
+
+            $admin = $request->get('admin');
+
+            //Start Notifications
+
+            Auth::user()->notify(new PaymentNotification(Auth::user()->fullName, $order->code,
+                $request->payment_id, $transaction->paid, User::USER));
+
+            $admin->notify(new PaymentNotification(Auth::user()->fullName, $order->code,
+                $request->payment_id, $transaction->paid, User::ADMIN, $admin->fullName));
+
+            //End Notifications
 
             return redirect()->route('user.transactions.feedback', 'status=success');
         } catch (Exception | InvalidPaymentException $exception) {

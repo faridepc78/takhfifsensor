@@ -24,7 +24,8 @@ class ContactUs extends Model
             'user_id',
             'subject',
             'text',
-            'type'
+            'type',
+            'code'
         ];
 
     const READ = 'read';

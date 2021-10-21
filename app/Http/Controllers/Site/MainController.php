@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Site\ContactUs\ContactUsRequest;
 use App\Http\Requests\Site\Inquiry\InquiryRequest;
 use App\Http\Requests\Site\Order\OrderRequest;
+use App\Models\User;
+use App\Notifications\ContactNotification;
+use App\Notifications\InquiryNotification;
 use App\Notifications\RegisterOrder;
 use App\Repositories\BannerRepository;
 use App\Repositories\BrandRepository;
@@ -92,7 +95,9 @@ class MainController extends Controller
     public function contact_us_post(ContactUsRequest $request)
     {
         try {
-            $this->contactUsRepository->store($request);
+            $contact = $this->contactUsRepository->store($request);
+            $admin = $request->get('admin');
+            $admin->notify(new ContactNotification($admin->fullName, $contact['code']));
             newFeedback('پیام', 'پیام شما با موفقیت ارسال شد', 'success');
         } catch (Exception $exception) {
             newFeedback('پیام', 'عملیات با شکست مواجه شد', 'error');
@@ -113,6 +118,8 @@ class MainController extends Controller
                 $image_id = MediaFileService::publicUpload($request->file('media'),
                     'inquiries', null)->id;
                 $this->inquiryRepository->addMedia($image_id, $inquiry->id);
+                $admin = $request->get('admin');
+                $admin->notify(new InquiryNotification($admin->fullName, $inquiry['code']));
             });
             DB::commit();
             newFeedback('پیام', 'درخواست شما با موفقیت ارسال شد', 'success');
@@ -175,7 +182,13 @@ class MainController extends Controller
                     }
                 }
 
-                Auth::user()->notify(new RegisterOrder(Auth::user()->fullName, $order['code']));
+                $admin = $request->get('admin');
+
+                Auth::user()->notify(new RegisterOrder(Auth::user()->fullName, $order['code'],
+                    User::USER));
+
+                $admin->notify(new RegisterOrder(Auth::user()->fullName, $order['code'],
+                    User::ADMIN, $admin->fullName));
 
                 $this->basketBuyService::deleteData();
             });

@@ -22,6 +22,7 @@ class CreateContactUsTable extends Migration
             $table->string('subject');
             $table->longText('text');
             $table->enum('type', \App\Models\ContactUs::$types)->default(\App\Models\ContactUs::UNREAD);
+            $table->string('code')->unique();
             $table->timestamps();
 
             $table->foreign('user_id')
