@@ -284,7 +284,7 @@ class ProductController extends Controller
                     $values[] =
                         [
                             'name' => $row[0],
-                            'slug' => $row[1],
+                            'slug' => str_slug_persian($row[1]),
                             'category_id' => $row[2],
                             'brand_id' => $row[3],
                             'image_id' => $row[4],

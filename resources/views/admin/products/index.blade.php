@@ -109,11 +109,6 @@
                                class="btn btn-danger">@lang(\App\Models\Product::INACTIVE)</a>
                         </div>
 
-                        <form id="checkGroups" method="post">
-
-                            @csrf
-                            @method('delete')
-
                             <div class="card-body table-responsive p-0">
                                 <table class="table table-hover table-bordered text-center">
 
@@ -205,9 +200,11 @@
                                 {!! $products->withQueryString()->links() !!}
                             </div>
 
+                        @if (count($products)!=0)
+
                             <div class="card-footer">
-                                <button data-message="آیا از حذف گروهی اطمینان دارید ؟"
-                                        id="{{route('products.destroy_all')}}" type="submit" class="btn btn-danger">حذف
+                                <button onclick="onclick(destroy_products(event,this))" id="btn_group_destroy" data-message="آیا از حذف گروهی اطمینان دارید ؟"
+                                        type="button" class="btn btn-danger">حذف
                                     گروهی
                                 </button>
                                 <button data-message="آیا از فعال کردن گروهی اطمینان دارید ؟"
@@ -220,12 +217,20 @@
                                 </button>
                             </div>
 
-                        </form>
+                            <div style="display: none">
+                                <form id="send_data_for_group_destroy_form" method="post"
+                                      action="{{route('products.destroy_all')}}">
+                                    @csrf
+                                    @method('delete')
+                                </form>
+                            </div>
+
+                        @endif
 
                     </div>
-
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -293,14 +298,10 @@
         }
     });
 
-    var checkGroups = $('#checkGroups');
-
-    checkGroups.on('submit', function (e) {
-        e.preventDefault();
-
+    function destroy_products(event, elem) {
+        event.preventDefault();
         if ($('.singlechkbox:checked').length >= 1) {
-            var route = $(this).find("button[type=submit]:focus").attr('id');
-            var message = $(this).find("button[type=submit]:focus").attr('data-message');
+            var message = $(elem).attr('data-message');
             Swal.fire({
                 title: message,
                 icon: 'warning',
@@ -311,14 +312,23 @@
                 cancelButtonText: 'خیر'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    checkGroups.attr('action', route);
-                    this.submit();
+                    var send_data_for_group_destroy_form = $('#send_data_for_group_destroy_form');
+
+                    var values = $("input[name='id[]']")
+                        .map(function () {
+                            return $(this).val();
+                        }).get();
+
+                    $.each(values, function (key, value) {
+                        send_data_for_group_destroy_form.append($("<input name='id[]' value='" + value + "'>"));
+                        send_data_for_group_destroy_form.submit();
+                    })
                 }
             })
         } else {
             toastr['warning']('حداقل یک آیتم را انتخاب کنید', 'پیام');
         }
-    });
+    }
 
     function destroyProduct(event, id) {
         event.preventDefault();
