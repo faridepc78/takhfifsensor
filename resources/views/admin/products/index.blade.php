@@ -314,7 +314,7 @@
                 if (result.isConfirmed) {
                     var send_data_for_group_destroy_form = $('#send_data_for_group_destroy_form');
 
-                    var values = $("input[name='id[]']")
+                    var values = $("input[name='id[]']:checked")
                         .map(function () {
                             return $(this).val();
                         }).get();

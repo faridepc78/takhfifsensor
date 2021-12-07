@@ -75,7 +75,7 @@
 
                                     </select>
 
-                                    @error('category_id')
+                                    @error('group_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
